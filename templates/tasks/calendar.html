@@ -1,0 +1,203 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <div class="row gx-0 align-items-center">
+        <div class="col-auto d-flex justify-content-end order-md-1">
+          <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 ms-md-2" type="button" data-event="prev" data-bs-toggle="tooltip" title="Previous"><span class="fas fa-arrow-left"></span></button>
+          <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 me-lg-2" type="button" data-event="next" data-bs-toggle="tooltip" title="Next"><span class="fas fa-arrow-right"></span></button>
+        </div>
+        <div class="col-auto col-md-auto order-md-2">
+          <h4 class="mb-0 fs-0 fs-sm-1 fs-lg-2 calendar-title"></h4>
+        </div>
+        <div class="col col-md-auto d-flex justify-content-end order-md-3">
+          <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">{% trans "Today" %}</button>
+        </div>
+        <div class="col-md-auto d-md-none">
+          <hr />
+        </div>
+        <div class="col-auto d-flex order-md-0">
+          <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addEventModal"> <span class="fas fa-plus me-2"></span>{% trans "Add Task" %}</button>
+        </div>
+        <div class="col d-flex justify-content-end order-md-2">
+          <div class="dropdown font-sans-serif me-md-2">
+              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="email-filter" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span data-view-title="data-view-title">{% trans "Month View" %}</span><span class="fas fa-sort ms-2 fs--1"></span></button>
+              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="email-filter"><a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">{% trans "Month View" %}<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">{% trans "Week View" %}<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">{% trans "Day View" %}<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">{% trans "List View" %}<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">{% trans "Year View" %}<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div id="appCalendar"></div>
+    </div>
+  </div>
+    <div class="modal fade" id="eventDetailsModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border"></div>
+          </div>
+        </div>
+        <div class="modal fade" id="addEventModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content border">
+              <form id="addEventForm" autocomplete="off" action="{% url 'calendar' %}" method="post">
+                <div class="modal-header px-card bg-light border-bottom-0">
+                  <h5 class="modal-title">Create Task</h5>
+                  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-card">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {% for field in form %}
+                            {{ field.errors }}
+                            <label class="fs-0" for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+                  <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+{% endblock %}
+
+{% block script %}
+
+       <script>
+          var appCalendar = document.querySelector('#appCalendar');
+          var addEventForm = document.querySelector('#addEventForm');
+          var addEventModal = document.querySelector('#addEventModal');
+          var eventDetailsModal = document.querySelector('#eventDetailsModal');
+
+           var calendarEl = document.getElementById('appCalendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: false,
+              dayMaxEvents: 2,
+              height: 800,
+              stickyHeaderDates: false,
+              views: {
+                week: {
+                  eventLimit: 3
+                }
+              },
+              eventTimeFormat: {
+                hour: 'numeric',
+                minute: '2-digit',
+                omitZeroMinute: true,
+                meridiem: true
+              },
+            events: {{ tasks|safe }},
+            eventClick: function eventClick(info) {
+                if (info.event.url) {
+                  window.open(info.event.url, '_blank');
+                  info.jsEvent.preventDefault();
+                } else {
+                  var template = getTemplate(info);
+                  document.querySelector('#eventDetailsModal .modal-content').innerHTML = template;
+                  var modal = new window.bootstrap.Modal(eventDetailsModal);
+                  modal.show();
+                }
+              },
+            dateClick: function dateClick(info) {
+                var modal = new window.bootstrap.Modal(addEventModal);
+                modal.show();
+                /*eslint-disable-next-line*/
+
+                var flatpickr = document.querySelector('#addEventModal [name="startDate"]')._flatpickr;
+
+                flatpickr.setDate([info.dateStr]);
+              }
+            });
+
+        var updateTitle = function updateTitle(title) {
+            document.querySelector('.calendar-title').textContent = title;
+        };
+
+        document.addEventListener('DOMContentLoaded', function(){
+
+            calendar.render();
+            updateTitle(calendar.currentData.viewTitle);
+        });
+
+        document.querySelectorAll('[data-event]').forEach(function (button) {
+              button.addEventListener('click', function (e) {
+                var el = e.currentTarget;
+                var type = utils.getData(el, 'event');
+
+                switch (type) {
+                  case 'prev':
+                    calendar.prev();
+                    updateTitle(calendar.currentData.viewTitle);
+                    break;
+
+                  case 'next':
+                    calendar.next();
+                    updateTitle(calendar.currentData.viewTitle);
+                    break;
+
+                  case 'today':
+                    calendar.today();
+                    updateTitle(calendar.currentData.viewTitle);z
+                    break;
+
+                  default:
+                    calendar.today();
+                    updateTitle(calendar.currentData.viewTitle);
+                    break;
+                }
+            });
+        });
+    document.querySelectorAll('[data-fc-view]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var el = e.currentTarget;
+        var text = el.textContent;
+        el.parentElement.querySelector('.active').classList.remove('active');
+        el.classList.add('active');
+        document.querySelector('data-view-title').textContent = text;
+        calendar.changeView(utils.getData(el, 'fc-view'));
+        updateTitle(calendar.currentData.viewTitle);
+      });
+    });
+
+
+  addEventModal && addEventModal.addEventListener('shown.bs.modal', function (_ref12) {
+    var currentTarget = _ref12.currentTarget;
+    currentTarget.querySelector('[name="title"]').focus();
+  });
+
+
+    var getStackIcon = function getStackIcon(icon, transform) {
+      return "\n      <span class=\"fa-stack ml-n1 mr-3\">\n        <i class=\"fas fa-circle fa-stack-2x text-200\"></i>\n        <i class=\"".concat(icon, " fa-stack-1x text-primary\" data-fa-transform=").concat(transform, "></i>\n      </span>\n    ");
+    };
+
+    var getTemplate = function getTemplate(info) {
+      return "\n  <div class=\"modal-header bg-light pl-card pr-5 border-bottom-0\">\n    <div>\n      <h5 class=\"modal-title mb-0\">".concat(info.event.title, "</h5>\n      ").concat(info.event.extendedProps.organizer ? "<p class=\"mb-0 fs--1 mt-1\">\n         Created by <a href=\"#!\">".concat(info.event.extendedProps.organizer, "</a>\n Assigned to <a href=\"#!\">").concat(info.event.extendedProps.worker,"</a>      </p>") : '', "\n    </div>\n    <button type=\"button\" class=\"btn-close position-relative right-0 top-0 mt-3 mr-3\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n  </div>\n  <div class=\"modal-body px-card pb-card pt-1 fs--1\">\n    ").concat(info.event.extendedProps.description ? "\n        <div class=\"d-flex mt-3\">\n          ".concat(getStackIcon('fas fa-align-left'), "\n          <div class=\"flex-1\">\n            <h6>Description</h6>\n            <p class=\"mb-0\">\n              \n            ").concat(info.event.extendedProps.description.split(' ').slice(0, 30).join(' '), "\n            </p>\n          </div>\n        </div>\n      ") : '', " \n    <div class=\"d-flex mt-3\">\n      ").concat(getStackIcon('fas fa-calendar-check'), "\n      <div class=\"flex-1\">\n          <h6>Scheduled</h6>\n          <p class=\"mb-1\">\n            ").concat(window.dayjs && window.dayjs(info.event.start).format('dddd, MMMM D, YYYY, h:mm A'), " \n            ").concat(info.event.end ? "\u2013 <br/>".concat(window.dayjs && window.dayjs(info.event.end).subtract(1, 'day').format('dddd, MMMM D, YYYY, h:mm A')) : '', "\n          </p>\n      </div>\n    </div>\n    ").concat(info.event.extendedProps.location ? "\n          <div class=\"d-flex mt-3\">\n            ".concat(getStackIcon('fas fa-map-marker-alt'), "\n            <div class=\"flex-1\">\n                <h6>Location</h6>\n                <p class=\"mb-0\">").concat(info.event.extendedProps.location, "</p>\n            </div>\n          </div>\n        ") : '', "\n    ").concat(info.event.extendedProps.schedules ? "\n          <div class=\"d-flex mt-3\">\n          ".concat(getStackIcon('fas fa-clock'), "\n          <div class=\"flex-1\">\n              <h6>Schedule</h6>\n              \n              <ul class=\"list-unstyled timeline mb-0\">\n                ").concat(info.event.extendedProps.schedules.map(function (schedule) {
+        return "<li>".concat(schedule.title, "</li>");
+      }).join(''), "\n              </ul>\n          </div>\n        ") : '', "\n    </div>\n  </div>\n  <div class=\"modal-footer d-flex justify-content-end bg-light px-card border-top-0\">\n    <a href=\"/tasks/task/").concat(info.event.id).concat("\" class=\"btn btn-falcon-default btn-sm\">\n      <span class=\"fas fa-pencil-alt fs--2 mr-2\"></span> Edit\n    </a>\n </div\n  ");
+    };
+
+document.querySelectorAll('[data-fc-view]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var el = e.currentTarget;
+        var text = el.textContent;
+        el.parentElement.querySelector('.active').classList.remove('.active');
+        el.classList.add('.active');
+        document.querySelector('[data-view-title]').textContent = text;
+        calendar.changeView(utils.getData(el, 'fc-view'));
+        updateTitle(calendar.currentData.viewTitle);
+      });
+    });
+    </script>
+
+{% endblock %}

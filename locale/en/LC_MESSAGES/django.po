@@ -1,0 +1,364 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-02 13:00-0400\n"
+"PO-Revision-Date: 2021-08-02 13:25-0400\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 3.0\n"
+
+#: shepherd_web/settings.py:175
+msgid "English"
+msgstr ""
+
+#: shepherd_web/settings.py:176
+msgid "French"
+msgstr ""
+
+#: shepherd_web/settings.py:177
+msgid "Spanish"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Calendar"
+msgstr ""
+
+msgid "Workers"
+msgstr ""
+
+msgid "Work Orders"
+msgstr ""
+
+msgid "Tasks"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "New Work Order"
+msgstr ""
+
+msgid "New Task"
+msgstr ""
+
+msgid "Inventory"
+msgstr ""
+
+msgid "Shopping List"
+msgstr ""
+
+msgid "Item"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Unit of Measure"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Move"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Farm Profile"
+msgstr ""
+
+msgid "Locations"
+msgstr ""
+
+msgid "Equipment"
+msgstr ""
+
+msgid "Worker"
+msgstr ""
+
+msgid "Plans"
+msgstr ""
+
+msgid "Your Profile"
+msgstr ""
+
+msgid "Manage Subscription"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Plan Year"
+msgstr ""
+
+msgid "Field"
+msgstr ""
+
+msgid "Crop"
+msgstr ""
+
+msgid "Machinery"
+msgstr ""
+
+msgid "Task Available Date"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Is Draft"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Work Order Name"
+msgstr ""
+
+msgid "Activity"
+msgstr ""
+
+msgid "Available Date"
+msgstr ""
+
+msgid "Open Tasks"
+msgstr ""
+
+msgid "In Progress Tasks"
+msgstr ""
+
+msgid "Completed Tasks"
+msgstr ""
+
+msgid "Recent Tasks"
+msgstr ""
+
+msgid "Task"
+msgstr ""
+
+msgid "Weather"
+msgstr ""
+
+msgid "Wind Speed"
+msgstr ""
+
+msgid "24 Hour Precipitation"
+msgstr "24 Hour Precip."
+
+msgid "Assignee"
+msgstr ""
+
+msgid "Created By"
+msgstr ""
+
+msgid "Modified By"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Percent Complete"
+msgstr ""
+
+msgid "Open Work Orders"
+msgstr ""
+
+msgid "In Progress Work Orders"
+msgstr ""
+
+msgid "Completed Work Orders"
+msgstr ""
+
+msgid "Month View"
+msgstr ""
+
+msgid "Week View"
+msgstr ""
+
+msgid "Day View"
+msgstr ""
+
+msgid "List View"
+msgstr ""
+
+msgid "Year View"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Sun"
+msgstr ""
+
+msgid "Mon"
+msgstr ""
+
+msgid "Tue"
+msgstr ""
+
+msgid "Wed"
+msgstr ""
+
+msgid "Thu"
+msgstr ""
+
+msgid "Fri"
+msgstr ""
+
+msgid "Sat"
+msgstr ""
+
+msgid "Overdue Work Orders"
+msgstr ""
+
+msgid "Overdue Tasks"
+msgstr ""
+
+msgid "Equipment Name"
+msgstr ""
+
+msgid "Farm"
+msgstr ""
+
+msgid "Make and Model"
+msgstr ""
+
+msgid "Serial Number"
+msgstr ""
+
+msgid "Farm Name"
+msgstr ""
+
+msgid "Farm Type"
+msgstr ""
+
+msgid "Farm Main Location"
+msgstr ""
+
+msgid "Location Name"
+msgstr ""
+
+msgid "Legal Name"
+msgstr ""
+
+msgid "Location Type"
+msgstr ""
+
+msgid "Drawn Area"
+msgstr ""
+
+msgid "Plan Year/Field/Crop"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Task Notes"
+msgstr ""
+
+msgid "Send task to all selected workers?"
+msgstr ""
+
+msgid "Make"
+msgstr ""
+
+msgid "Model"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Latest Activities"
+msgstr ""
+
+msgid "Farm Members"
+msgstr ""
+
+msgid "All Members"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Acres"
+msgstr ""
+
+msgid "Update Location"
+msgstr ""
+
+msgid "Create Location"
+msgstr ""
+
+msgid "Create Plan"
+msgstr ""
+
+msgid "Update Plan"
+msgstr ""
+
+msgid "Add Task"
+msgstr ""
+
+msgid "Create Task"
+msgstr ""
+
+msgid "Update Task"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Certifications"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Create Work Order"
+msgstr ""
+
+msgid "Update Work Order"
+msgstr ""

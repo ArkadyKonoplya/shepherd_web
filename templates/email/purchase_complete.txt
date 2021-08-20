@@ -1,0 +1,6 @@
+Purchase Complete for  {{ product.name }}
+
+Dear {{ user.first_name }},
+
+You have successfully purchased a subscription for {{ product.name }}!  Welcome to Shepherd Farming!
+

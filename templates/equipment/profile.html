@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load app_filters %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header position-relative min-vh-25 mb-7">
+            <div class="bg-holder rounded-3 rounded-bottom-0" style="background-image:url({% static "img/generic/4.jpg" %});">
+            </div>
+            <!--/.bg-holder-->
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4 class="mb-1">{{ equipment.name }}</h4>
+
+                    <div class="border-dashed-bottom my-4 d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-8 pe-lg-2">
+            <div class="card mb-3">
+                <div class="card-header bg-light d-flex justify-content-between">
+                    <h5 class="mb-0">{% trans "Latest Activities" %}</h5>
+                </div>
+                <div class="card-body fs--1 p-0">
+                    {% for task in tasks %}
+                        <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="{% url 'task_detail' pk=task.task_id.id %}">
+                            <div class="notification-body">
+                                <p class="mb-1">{{ task.update_user.first_name }} {{ task.update_user.last_name }} <strong>{{ task.task_status.name }}</strong> {{ task.task_id.task_activity.name }} {{ task.task_id.task_plan.crop.name }} at {{ task.task_id.task_plan.location.name }}</p>
+                                <span class="notification-time">{{ task.status_date_change|date:"M d, Y h:m:s A" }}</span>
+
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 ps-lg-2">
+            <div class="sticky-sidebar">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

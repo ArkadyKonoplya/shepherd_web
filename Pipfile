@@ -1,0 +1,35 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = "*"
+django-subscriptions = "*"
+psycopg2-binary = "*"
+django-crispy-forms = "*"
+bootstrap4 = "*"
+django-bootstrap4 = "*"
+django-debug-toolbar = "*"
+django-ses = "*"
+gunicorn = "*"
+Pillow = "*"
+django-extensions = "*"
+firebase-admin = "*"
+fcm-django = "*"
+django-timezone-field = "*"
+django-storages = "*"
+django-leaflet = "*"
+darksky_weather = "*"
+django-mathfilters = "*"
+darksky-weather = "*"
+martor = "*"
+stripe = "*"
+django-cors-headers = "*"
+dj-stripe = "*"
+django-modeltranslation = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

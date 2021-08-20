@@ -1,0 +1,143 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load app_filters %}
+{% load i18n %}
+
+{% block content %}
+<div class="card mb-3" id="locationsTable" data-list='{"valueNames":["location", "weather", "wind_speed", "precip", "acres", "location_type", "legal_name"]}'>
+  <div class="card-header">
+<div class="row flex-between-center">
+      <div class="col-6 col-sm-auto d-flex align-items-center pe-0">
+        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Locations</h5>
+      </div>
+      <div class="col-6 col-sm-auto ms-auto text-end ps-0">
+        <div class="d-none" id="table-locations-actions">
+          <div class="d-flex">
+            <select class="form-select form-select-sm" aria-label="Bulk actions">
+              <option selected="">Bulk actions</option>
+              <option value="Delete">Delete</option>
+              <option value="Archive">Archive</option>
+            </select>
+            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
+          </div>
+        </div>
+        <div id="table-locations-replace-element">
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "New" %}</span></button>
+          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "Filter" %}</span></button>
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "Export" %}</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body px-0 py-0">
+    <div class="table-responsive scrollbar">
+      <table class="table table-sm fs--1 mb-0">
+        <thead class="bg-200 text-900">
+          <tr>
+            <th>
+              <div class="form-check mb-0 d-flex align-items-center">
+                <input class="form-check-input" id="checkbox-bulk-locations-select" type="checkbox" data-bulk-select='{"body":"table-locations-body","actions":"table-locations-actions","replacedElement":"table-locations-replace-element"}' />
+              </div>
+            </th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="location">{% trans "Location" %}</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="weather">{% trans "Weather" %}</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="wind_speed">{% trans "Wind Speed" %}</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="precip">{% trans "24 Hour Precipitation" %}</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="image">{% trans "Image" %}</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="acres">{% trans "Acres" %}</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="location_type">{% trans "Location Type" %}</th>
+            <th class="sort pe-1 align-middle white-space-nowrap " data-sort="legal_name">{% trans "Legal Name" %}</th>
+            <th class="no-sort pe-1 align-middle data-table-row-action"></th>
+          </tr>
+        </thead>
+        <tbody class="list" id="table-locations-body">
+        {% for location in locations %}
+          <tr class="btn-reveal-trigger">
+            <td class="align-middle" style="width: 28px;">
+              <div class="form-check mb-0 d-flex align-items-center">
+                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" />
+              </div>
+            </td>
+
+            <td class="align-middle white-space-nowrap location"><a href="{% url 'location_detail' pk=location.id %}">{{ location.name }}</a></td>
+            <td class="align-middle white-space-nowrap weather">
+                {% with weather=location_weather|get_item:location.id %}
+                    <img class="rounded-circle" src="
+                                            {% if "hail" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-hail-50.png" %}
+                                            {% elif "torrential rain" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-torrential-rain-50.png" %}
+                                            {% elif "heavy rain" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-heavy-rain-50.png" %}
+                                            {% elif "moderate rain" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-moderate-rain-50.png" %}
+                                            {% elif "light rain" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-light-rain-50.png" %}
+                                            {% elif "rain" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-rain-50.png" %}
+                                            {% elif "drizzle" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-rain-cloud-50.png" %}
+                                            {% elif "light snow" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-light-snow-50.png" %}
+                                            {% elif "heavy snow" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-snow-storm-50.png" %}
+                                            {% elif "snow" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-snow-50.png" %}
+                                            {% elif "storm" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-storm-50.png" %}
+                                            {% elif "fog" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-fog-50.png" %}
+                                            {% elif "hail" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-hail-50.png" %}
+                                            {% elif "clear" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-sun-50.png" %}
+                                            {% elif "cloudy" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-clouds-50.png" %}
+                                            {% elif "overcast" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-onedrive-50.png" %}
+                                            {% elif "humid" in weather.summary.lower %}
+                                                {% static "img/icons/weather/icons8-humidity-50.png" %}
+                                            {% endif %}
+                                        " alt="{{ weather.summary }}" title="{{ weather.summary }}" style="width:50%;height:50%;" />
+                    </td>
+                    <td class="align-middle white-space-nowrap wind_speed">
+                            {{ weather.wind_speed }} mph
+                    </td>
+                    <td class="align-middle white-space-nowrap precip">
+                            {{ weather.yesterday_precip }} in.
+                    </td>
+                {% endwith %}
+
+            <td class="align-middle white-space-nowrap image"> <img src="https://tycom-shepherd-app-dev.s3.amazonaws.com/{{ location.image }}" alt="Image not found" width="90" height="100"></td>
+            <td class="align-middle white-space-nowrap acres">{{ location.acres }}</td>
+            <td class="align-middle white-space-nowrap location_type">{{ location.type.name }}</td>
+            <td class="align-middle white-space-nowrap legal_name">{{ location.legal_name }}</td>
+            <td class="align-middle white-space-nowrap">
+              <div class="dropdown font-sans-serif">
+                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-end" type="button" id="dropdown0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown0"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Edit</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item text-warning" href="#!">Archive</a><a class="dropdown-item text-danger" href="#!">Delete</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row align-items-center">
+      <div class="pagination d-none"></div>
+      <div class="col">
+        <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"> </span><span class="d-none d-sm-inline-block me-2">&mdash;  </span><a class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a></p>
+      </div>
+      <div class="col-auto d-flex">
+        <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>{% trans "Previous" %}</span></button>
+        <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>{% trans "Next" %}</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

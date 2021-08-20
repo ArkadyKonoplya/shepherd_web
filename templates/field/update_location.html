@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load app_filters %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row g-0">
+        <div class="col-lg-6 pe-lg-2 mb-3">
+            <div class="card-header">
+            <h5 class="mb-0">{% trans "Update Location" %}</h5>
+            </div>
+            <div class="card-body bg-light">
+                {{ form.non_field_errors }}
+                <form method="post" action="{% url 'location_detail' pk=uuid %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.errors }}
+                        {{ form.non_field_errors }}
+                        {{ form.as_table }}
+                    </table>
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 col-xxl-3 mb-3 ps-md-2">
+            <div class="card h-md-25">
+                <div class="card-header d-flex flex-between-center pb-0">
+                    <h6 class="mb-0">{% trans "Weather" %}</h6>
+                </div>
+                <div class="card-body pt-2">
+                {% with location_weather=location_weather|get_item:uuid %}
+                    <div class="row g-0 h-100 align-items-center">
+                        <div class="col">
+                            <div class="d-flex align-items-center"><img class="me-3" src="
+                                    {% if "hail" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-hail-50.png" %}
+                                    {% elif "torrential rain" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-torrential-rain-50.png" %}
+                                    {% elif "heavy rain" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-heavy-rain-50.png" %}
+                                    {% elif "moderate rain" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-moderate-rain-50.png" %}
+                                    {% elif "light rain" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-light-rain-50.png" %}
+                                    {% elif "rain" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-rain-50.png" %}
+                                    {% elif "drizzle" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-rain-cloud-50.png" %}
+                                    {% elif "light snow" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-light-snow-50.png" %}
+                                    {% elif "heavy snow" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-snow-storm-50.png" %}
+                                    {% elif "snow" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-snow-50.png" %}
+                                    {% elif "storm" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-storm-50.png" %}
+                                    {% elif "fog" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-fog-50.png" %}
+                                    {% elif "hail" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-hail-50.png" %}
+                                    {% elif "clear" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-sun-50.png" %}
+                                    {% elif "cloudy" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-clouds-50.png" %}
+                                    {% elif "overcast" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-onedrive-50.png" %}
+                                    {% elif "humid" in location_weather.summary.lower %}
+                                        {% static "img/icons/weather/icons8-humidity-50.png" %}
+                                    {% endif %}
+                                    " alt="{{ location_weather.summary }}" height="60" />
+                                <div>
+                                    <h6 class="mb-2">{{ location_weather.summary }}</h6>
+                                    <div class="fs--2 fw-semi-bold">
+                                        <div class="text-warning">Wind Speed {{ location_weather.wind_speed }} mph.</div>Yesterday's Precip: {{ location_weather.yesterday_precip }} in.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto text-center ps-2">
+                            <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">{{ location_weather.temp }}&deg;</div>
+                            <div class="fs--1 text-800">{{ location_weather.high_temp }}&deg; / {{ location_weather.low_temp }}&deg;</div>
+                        </div>
+                    </div>
+                {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

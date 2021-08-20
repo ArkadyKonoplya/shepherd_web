@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card-header">
+    <h5 class="mb-0">Got Feeback?</h5>
+    </div>
+    <div class="card-body bg-light">
+    <p align="center">
+        Please let us know if you hit an issue, if there is something we can improve, or if we did something awesome!
+    </p>
+    <p align="center">
+        Feedback is always appreciated!
+    </p>
+    <form method="post" action="{% url 'feedback' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+            <table align="center">
+                {{ form.as_table }}
+            </table>
+        <div class="form-actions" align="center">
+            <button class="btn btn-primary btn-lg px-4" type="submit">Submit Feedback</button>
+        </div>
+        </form>
+    </div>
+{% endblock %}

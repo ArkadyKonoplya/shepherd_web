@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card-header">
+        <h5 class="mb-0">{{ title }}</h5>
+    </div>
+    <div class="card-body bg-light">
+
+        {{ form.non_field_errors }}
+        <form method="post"
+              {% if title == "Create Custom Activity" %}
+                action="{% url 'custom_activity_create' %}"
+              {% else %}
+                action="{% url 'custom_activity_detail' pk="{{ pk }}" %}"
+              {% endif %}
+        enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                {{ form.as_table }}
+            </table>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

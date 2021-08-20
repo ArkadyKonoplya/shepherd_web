@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+    <div class="card-header">
+        <h5 class="mb-0">{% trans "Update Plan" %}</h5>
+    </div>
+    <div class="card-body bg-light">
+
+        {{ form.non_field_errors }}
+        <form method="post" action="{% url 'plan_detail' pk=uuid %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                {{ form.as_table }}
+            </table>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

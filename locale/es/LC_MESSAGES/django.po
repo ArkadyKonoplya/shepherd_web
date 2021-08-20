@@ -1,0 +1,364 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-02 13:00-0400\n"
+"PO-Revision-Date: 2021-08-02 13:25-0400\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 3.0\n"
+
+#: shepherd_web/settings.py:175
+msgid "English"
+msgstr "Inglés"
+
+#: shepherd_web/settings.py:176
+msgid "French"
+msgstr "Francés"
+
+#: shepherd_web/settings.py:177
+msgid "Spanish"
+msgstr "Español"
+
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Calendar"
+msgstr "Calendario"
+
+msgid "Workers"
+msgstr "Trabajadores"
+
+msgid "Work Orders"
+msgstr "Órdenes de trabajo"
+
+msgid "Tasks"
+msgstr "Tareas"
+
+msgid "Reports"
+msgstr "Informes"
+
+msgid "New Work Order"
+msgstr "Nueva orden de trabajo"
+
+msgid "New Task"
+msgstr "Nueva tarea"
+
+msgid "Inventory"
+msgstr "Inventario"
+
+msgid "Shopping List"
+msgstr "Lista de la compra"
+
+msgid "Item"
+msgstr "Ítem"
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Unit of Measure"
+msgstr "Unidad de medida"
+
+msgid "Location"
+msgstr "Localización"
+
+msgid "New"
+msgstr "Nuevo"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Move"
+msgstr "Moverse"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Farm Profile"
+msgstr "Perfil de la finca"
+
+msgid "Locations"
+msgstr "Ubicaciones"
+
+msgid "Equipment"
+msgstr "Enseres"
+
+msgid "Worker"
+msgstr "Obrero"
+
+msgid "Plans"
+msgstr "Planes"
+
+msgid "Your Profile"
+msgstr "Tu perfil"
+
+msgid "Manage Subscription"
+msgstr "Administrar suscripción"
+
+msgid "Feedback"
+msgstr "Realimentación"
+
+msgid "Login"
+msgstr "Acceso"
+
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+msgid "Plan Year"
+msgstr "Año del plan"
+
+msgid "Field"
+msgstr "Campo"
+
+msgid "Crop"
+msgstr "Cultivo"
+
+msgid "Machinery"
+msgstr "Maquinaria"
+
+msgid "Task Available Date"
+msgstr "Fecha de disponibilidad de la tarea"
+
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+msgid "End Date"
+msgstr "Fecha final"
+
+msgid "Is Draft"
+msgstr "Es borrador"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Work Order Name"
+msgstr "Nombre de la orden de trabajo"
+
+msgid "Activity"
+msgstr "Actividad"
+
+msgid "Available Date"
+msgstr "Fecha disponible"
+
+msgid "Open Tasks"
+msgstr "Tareas abiertas"
+
+msgid "In Progress Tasks"
+msgstr "Tareas en curso"
+
+msgid "Completed Tasks"
+msgstr "Tareas completadas"
+
+msgid "Recent Tasks"
+msgstr "Tareas recientes"
+
+msgid "Task"
+msgstr "Tarea"
+
+msgid "Weather"
+msgstr "Tiempo"
+
+msgid "Wind Speed"
+msgstr "Velocidad del viento"
+
+msgid "24 Hour Precipitation"
+msgstr "Precipitación de 24 horas"
+
+msgid "Assignee"
+msgstr "Cesionario"
+
+msgid "Created By"
+msgstr "Creado por"
+
+msgid "Modified By"
+msgstr "Modificado por"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Percent Complete"
+msgstr "Porcentaje completo"
+
+msgid "Open Work Orders"
+msgstr "Órdenes de trabajo abiertas"
+
+msgid "In Progress Work Orders"
+msgstr "Órdenes de trabajo en curso"
+
+msgid "Completed Work Orders"
+msgstr "Órdenes de trabajo completadas"
+
+msgid "Month View"
+msgstr "Vista de mes"
+
+msgid "Week View"
+msgstr "Vista de semana"
+
+msgid "Day View"
+msgstr "Vista del día"
+
+msgid "List View"
+msgstr "Vista de la lista"
+
+msgid "Year View"
+msgstr "Vista de año"
+
+msgid "Today"
+msgstr "Hoy dia"
+
+msgid "Sun"
+msgstr "Domingo"
+
+msgid "Mon"
+msgstr "Lunes"
+
+msgid "Tue"
+msgstr "Martes"
+
+msgid "Wed"
+msgstr "Miércoles"
+
+msgid "Thu"
+msgstr "Jueves"
+
+msgid "Fri"
+msgstr "Viernes"
+
+msgid "Sat"
+msgstr "Sábado"
+
+msgid "Overdue Work Orders"
+msgstr "Órdenes de trabajo vencidas"
+
+msgid "Overdue Tasks"
+msgstr "Tareas vencidas"
+
+msgid "Equipment Name"
+msgstr "nombre del equipo"
+
+msgid "Farm"
+msgstr "Granja"
+
+msgid "Make and Model"
+msgstr "Marca y modelo"
+
+msgid "Serial Number"
+msgstr "Número de serie"
+
+msgid "Farm Name"
+msgstr "Nombre de la finca"
+
+msgid "Farm Type"
+msgstr "Tipo de finca"
+
+msgid "Farm Main Location"
+msgstr "Ubicación principal de la granja"
+
+msgid "Location Name"
+msgstr "Nombre del lugar"
+
+msgid "Legal Name"
+msgstr "Nombre legal"
+
+msgid "Location Type"
+msgstr "Tipo de ubicacion"
+
+msgid "Drawn Area"
+msgstr "Área dibujada"
+
+msgid "Plan Year/Field/Crop"
+msgstr "Año planificado / Campo / Cultivo"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Task Notes"
+msgstr "Notas de la tarea"
+
+msgid "Send task to all selected workers?"
+msgstr "¿Enviar tarea a todos los trabajadores seleccionados?"
+
+msgid "Make"
+msgstr "Hacer"
+
+msgid "Model"
+msgstr "Modelo"
+
+msgid "Previous"
+msgstr "Previo"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Latest Activities"
+msgstr "Últimas actividades"
+
+msgid "Farm Members"
+msgstr "Miembros de la granja"
+
+msgid "All Members"
+msgstr "Todos los miembros"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "Acres"
+msgstr "Acres"
+
+msgid "Update Location"
+msgstr "actualización de Localización"
+
+msgid "Create Location"
+msgstr "Crear ubicación"
+
+msgid "Create Plan"
+msgstr "Crear plan"
+
+msgid "Update Plan"
+msgstr "Plan de actualización"
+
+msgid "Add Task"
+msgstr "Agregar tarea"
+
+msgid "Create Task"
+msgstr "Crear tarea"
+
+msgid "Update Task"
+msgstr "Tarea de actualización"
+
+msgid "Roles"
+msgstr "Roles"
+
+msgid "Role"
+msgstr "rol"
+
+msgid "Certifications"
+msgstr "Certificaciones"
+
+msgid "First Name"
+msgstr "nombre de pila"
+
+msgid "Last Name"
+msgstr "nombre de familia"
+
+msgid "Create Work Order"
+msgstr "crear orden de trabajo"
+
+msgid "Update Work Order"
+msgstr "actualizar orden de trabajo"

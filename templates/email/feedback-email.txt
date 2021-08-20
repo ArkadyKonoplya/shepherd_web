@@ -1,0 +1,8 @@
+User Feedback From {{ user.first_name }} {{ user.last_name }}
+
+{{ user.first_name }} {{ user.last_name }} has submitted some feedback for review:
+
+{{ message }}
+
+
+You can respond to this user via their email:  {{ user_email }}

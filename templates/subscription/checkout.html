@@ -1,0 +1,203 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load app_filters %}
+{% load mathfilters %}
+
+{% block content %}
+
+    <div class="row g-0">
+        <div class="col-xl-4 order-xl-1 ps-xl-2">
+            <div class="card mb-3">
+                <div class="card-header bg-light btn-reveal-trigger d-flex flex-between-center">
+                    <h5 class="mb-0">Order Summary</h5><a class="btn btn-link btn-sm btn-reveal text-600" href="../e-commerce/shopping-cart.html"><span class="fas fa-pencil-alt"></span></a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless fs--1 mb-0">
+                        <tr class="border-bottom">
+                            <th class="ps-0 pt-0">{{ product.name }}
+                                <div class="text-400 fw-normal fs--2"></div>
+                            </th>
+                            {% for plan in product.plan_set.all %}
+                                <th class="pe-0 text-end pt-0">{{ plan.human_readable_price }}</th>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light">
+                    <div class="fw-semi-bold">Payable Total</div>
+                    {% for plan in product.plan_set.all %}
+                        <div class="fw-bold">{{ plan.human_readable_price }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Payment Method</h5>
+                </div>
+                <div class="card-body">
+                    <form id="payment-form">
+                        <div class="row gx-0 ps-2 mb-4">
+                            <div class="col-sm-8 px-3">
+                                <div id="card-element">
+
+                                </div>
+                                <div class="sr-field-error" id="card-element-errors" role="alert"></div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="border-dashed-bottom my-5"></div>
+                        <div class="row">
+                            <div class="col-md-7 col-xl-12 col-xxl-7 px-md-3 mb-xxl-0 position-relative">
+                                <div class="vertical-line d-none d-md-block d-xl-none d-xxl-block"> </div>
+
+                                <div class="border-dashed-bottom d-block d-md-none d-xl-block d-xxl-none my-4"></div>
+                                {% for plan in product.plan_set.all %}
+                                <div class="fs-2 fw-semi-bold">All Total: <span class="text-primary">{{ plan.human_readable_price }}</span></div>
+                                {% endfor %}
+                                <button class="btn btn-success mt-3 px-5" type="submit" id="submit">Confirm &amp; Pay</button>
+                                <p class="fs--1 mt-3 mb-0">By clicking <strong>Confirm & Pay </strong>button you agree to the <a href="#!">Terms &amp; Conditions</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript">
+
+        stripeElements();
+
+        function stripeElements(){
+            stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+
+            if(document.getElementById('card-element')){
+                let elements = stripe.elements();
+
+                let style = {
+                    base: {
+                        color: "#32325d",
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        fontSmoothing: "antialiased",
+                        fontSize: "16px",
+                        "::placeholder": {
+                            color: "#aab7c4"
+                        }
+                    },
+                    invalid: {
+                        color: "#fa755a",
+                        iconColor: "#fa755a"
+                    }
+                };
+
+
+                card = elements.create('card', { style: style });
+
+                card.mount('#card-element');
+
+                card.on('focus', function () {
+                    let el = document.getElementById('card-element-errors');
+                    el.classList.add('focused');
+                });
+
+                card.on('blur', function () {
+                    let el = document.getElementById('card-element-errors');
+                    el.classList.remove('focused');
+                });
+
+                card.on('change', function (event) {
+                    displayError(event);
+                });
+            }
+            //we'll add payment form handling here
+        }
+
+        function displayError(event) {
+
+            let displayError = document.getElementById('card-element-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        }
+
+        let paymentForm = document.getElementById('payment-form');
+        if(paymentForm){
+            paymentForm.addEventListener('submit', function(evt){
+                evt.preventDefault();
+                changeLoadingState(true);
+
+                createPaymentMethod({ card });
+            });
+        }
+
+        function createPaymentMethod({ card }) {
+
+            // Set up payment method for recurring usage
+            let billingName = '{{user.username}}';
+
+            stripe
+                .createPaymentMethod({
+                    type: 'card',
+                    card: card,
+                    billing_details: {
+                        name: billingName,
+                    },
+                })
+                .then((result) => {
+                    if (result.error) {
+                        displayError(result);
+                    } else {
+                        const paymentParams = {
+                            price_id: document.getElementById("priceId").innerHTML,
+                            payment_method: result.paymentMethod.id,
+                        };
+                        fetch("{% url "create_sub" %}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken':'{% csrf_token %}',
+                            },
+                            credentials: 'same-origin',
+                            body: JSON.stringify(paymentParams),
+                        }).then((response) => {
+                            return response.json();
+                        }).then((result) => {
+                            if (result.error) {
+                                // The card had an error when trying to attach it to a customer
+                                throw result;
+                            }
+                            return result;
+                        }).then((result) => {
+                            if (result && result.status === 'active') {
+
+                                window.location.href = '{% url "complete" %}';
+                            };
+                        }).catch(function (error) {
+                            displayError(result.error.message);
+
+                        });
+                    }
+                });
+        }
+
+        var changeLoadingState = function(isLoading) {
+            if (isLoading) {
+                document.getElementById("submit").disabled = true;
+                document.querySelector("#spinner").classList.remove("hidden");
+                document.querySelector("#button-text").classList.add("hidden");
+            } else {
+                document.getElementById("submit").disabled = false;
+                document.querySelector("#spinner").classList.add("hidden");
+                document.querySelector("#button-text").classList.remove("hidden");
+            }
+        };
+    </script>
+
+{% endblock %}

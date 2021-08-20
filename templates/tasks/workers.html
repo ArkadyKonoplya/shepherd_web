@@ -1,0 +1,109 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="kanban-container scrollbar me-n3">
+        {% for worker, task_list in tasks.items %}
+            <div class="kanban-column">
+                <div class="kanban-column-header">
+                    <h5 id="worker_name" class="fs-0 mb-0">{{ worker }} <span class="text-500"></span></h5>
+                    <div class="dropdown font-sans-serif btn-reveal-trigger">
+                      <button class="btn btn-sm btn-reveal py-0 px-2" type="button" id="kanbanColumn0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                      <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="kanbanColumn0"><a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="kanban-items-container scrollbar">
+                {% for list, id in task_list.items %}
+                    {% for id, task in id.items %}
+                        <div class="kanban-item">
+                          <div class="card kanban-item-card hover-actions-trigger">
+                            <div class="card-body  {{ task.className }}">
+                              <div id="task_id" hidden="True">{{ task.id }}</div>
+                              <div class="position-relative">
+                                <div class="dropdown font-sans-serif">
+                                  <button class="btn btn-sm btn-falcon-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h" data-fa-transform="shrink-2"></span></button>
+                                  <div class="dropdown-menu dropdown-menu-end py-0"><a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                                  </div>
+                                </div>
+                              </div>
+                                <p class="mb-0 fw-medium font-sans-serif stretched-link" data-bs-toggle="modal" data-bs-target="#kanban-modal-{{ id }}">{{ task.title }}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="kanban-modal-label-{{ id }}" aria-hidden="true" id="kanban-modal-{{ id }}">
+                              <div class="modal-dialog modal-lg mt-6" role="document">
+                                <div class="modal-content border-0">
+                                  <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body p-0">
+                                    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                      <h4 class="mb-1" id="kanban-modal-label-{{ id }}">{{ task.title }}</h4>
+                                      <p class="fs--2 mb-0">Created by <a class="link-600 fw-semi-bold" href="#!">{{ task.organizer }}</a></p>
+                                    </div>
+                                    <div class="p-4">
+                                      <div class="row">
+                                        <div class="col-lg-9">
+                                          <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-align-left" data-fa-transform="shrink-2"></i></span>
+                                            <div class="flex-1">
+                                              <h5 class="mb-2 fs-0">Description</h5>
+                                                <p class="text-word-break fs--1">{{ task.description }}</p>
+                                            </div>
+                                              <hr class="my-4"/>
+                                          </div>
+                                          <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-calendar-check" data-fa-transform="shrink-2"></i></span>
+                                            <div class="flex-1">
+                                                <h5 class="mb-2 fs-0">Scheduled</h5>
+                                                <p class="text-word-break fs--1">{{ task.start }} - {{ task.end }}</p>
+                                            </div>
+                                              <hr class="my-4"/>
+                                          </div>
+                                          <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-map-marker-alt" data-fa-transform="shrink-2"></i></span>
+                                            <div class="flex-1">
+                                                <h5 class="mb-2 fs-0">Location</h5>
+                                                <p class="text-word-break fs--1">{{ task.location }}</p>
+                                            </div>
+                                              <hr class="my-4"/>
+                                          </div>
+                                          <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fa-stack-2x text-200"></i><i class="fa-stack-1x text-primary" data-fa-transform="shrink-2"></i></span>
+                                            <div class="flex-1">
+                                                <div class="modal-footer d-flex justify-content-end bg-light px-card border-top-0">
+                                                    <a href="{% url 'task_detail' pk=id %}" class="btn btn-falcon-default btn-sm">
+                                                        <span class="fas fa-pencil-alt fs--2 mr-2"></span> Edit
+                                                    </a>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    <div class="kanban-column-footer">
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $('#worker_name').click(function(event){
+            event.stopPropagation();
+            alert("I got clicked!");
+        })
+
+        $('kanban-column-header').on('click', function(){
+           alert('I got dropped!')
+        });
+    </script>
+{% endblock %}

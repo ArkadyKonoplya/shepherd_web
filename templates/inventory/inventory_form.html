@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card-header">
+    {% if type == 'inventory' %}
+        <h5 class="mb-0">Create Inventory Item</h5>
+    {% else %}
+        <h5 class="mb-0">Create Shopping Item</h5>
+    {% endif %}
+    </div>
+    <div class="card-body bg-light">
+
+    <script src="{% static "admin/js/jquery.js" %}"></script>
+    <script src="{% static "admin/js/jquery.init.js" %}"></script>
+        {{ form.non_field_errors }}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                {{ form.as_table }}
+            </table>
+        <div class="form-actions">
+            <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+        </div>
+        </form>
+    </div>
+
+
+{% endblock %}

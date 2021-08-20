@@ -1,0 +1,102 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <div class="col-lg-8 pe-lg-2 mb-3">
+        <div class="card-header">
+        <h5 class="mb-0">{% trans "Update Work Order" %}</h5>
+        </div>
+        <div class="card-body bg-light">
+
+            {{ form.non_field_errors }}
+            <form method="post" action="{% url 'work_order_detail' pk=uuid %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.errors }}
+                    {{ form.as_table }}
+                </table>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-lg px-4" name="work_order_form" type="submit">Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8 pe-lg-2 mb-3">
+
+        <div class="card-header">
+        <h5 class="mb-0">Add Task</h5>
+        </div>
+        <div class="card-body-bg-light">
+            {{ task_form.non_field_errors }}
+            <form method="post" action="{% url 'work_order_detail' pk=uuid %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ task_form.errors }}
+                    {{ task_form.as_table }}
+                </table>
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-lg px-4" name="work_order_task_form" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mb-3" id="recentPurchaseTable" data-list=''>
+        <div class="card-header">
+            <div class="row flex-between-center">
+                <div class="col-6 col-sm-auto d-flex align-items-center pe-0">
+                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Associated Tasks</h5>
+                </div>
+                <div class="col-6 col-sm-auto ms-auto text-end ps-0">
+                    <div class="d-none" id="table-purchases-actions">
+                        <div class="d-flex">
+                            <select class="form-select form-select-sm" aria-label="Bulk actions">
+                                <option selected="">Bulk actions</option>
+                                <option value="Delete">Delete</option>
+                                <option value="Archive">Archive</option>
+                            </select>
+                            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
+                        </div>
+                    </div>
+                    <div id="table-purchases-replace-element">
+                        <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body px-0 py-0">
+        <div class="table-responsive scrollbar">
+            <table class="table table-sm fs--1 mb-0">
+                <thead class="bg-200 text-900">
+                <tr>
+                    <th>
+                        <div class="form-check mb-0 d-flex align-items-center">
+                            <input class="form-check-input" id="checkbox-bulk-purchases-select" type="checkbox" data-bulk-select='{"body":"table-purchase-body","actions":"table-purchases-actions","replacedElement":"table-purchases-replace-element"}' />
+                        </div>
+                    </th>
+                    <th class="sort pe-1 align-middle white-space-nowrap" data-sort="task_id">{% trans "Task" %}</th>
+                    <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="assignee">{% trans "Assignee" %}</th>
+                    <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="creator">{% trans "Created By" %}</th>
+                    <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="status">{% trans "Status" %}</th>
+                </tr>
+                </thead>
+                <tbody class="list" id="table-purchase-body">
+              {% for task in tasks %}
+                  <tr class="btn-reveal-trigger">
+                      <td class="align-middle" style="width: 28px;">
+                          <div class="form-check mb-0 d-flex align-items-center">
+                              <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" />
+                          </div>
+                      </td>
+                      <td class="align-middle white-space-nowrap task"><a href="{% url 'task_detail' pk=task.id %}">{{ task.task_activity.name }} {{ task.task_plan.crop.name }} in {{ task.task_plan.location.name }}</a></td>
+                      <td class="align-right white-space-nowrap assignee">{{ task.task_assignee.first_name }} {{ task.task_assignee.last_name }}</td>
+                      <td class="align-right white-space-nowrap creator">{{ task.task_creator.first_name }} {{ task.task_creator.last_name }}</td>
+                      <td class="align-right white-space-nowrap status">{{ task.task_status.name }}</td>
+                  </tr>
+              {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}
