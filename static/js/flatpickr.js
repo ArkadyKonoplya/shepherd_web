@@ -182,6 +182,17 @@ eval("\nif (typeof Object.assign !== \"function\") {\n    Object.assign = functi
 
 /***/ }),
 
+/***/ "./node_modules/flatpickr/dist/l10n/bn.js":
+/*!************************************************!*\
+  !*** ./node_modules/flatpickr/dist/l10n/bn.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("(function (global, factory) {\n   true ? factory(exports) :\n  undefined;\n}(this, (function (exports) { 'use strict';\n\n  var fp = typeof window !== \"undefined\" && window.flatpickr !== undefined\n      ? window.flatpickr\n      : {\n          l10ns: {},\n      };\n  var Bangla = {\n      weekdays: {\n          shorthand: [\"রবি\", \"সোম\", \"মঙ্গল\", \"বুধ\", \"বৃহস্পতি\", \"শুক্র\", \"শনি\"],\n          longhand: [\n              \"রবিবার\",\n              \"সোমবার\",\n              \"মঙ্গলবার\",\n              \"বুধবার\",\n              \"বৃহস্পতিবার\",\n              \"শুক্রবার\",\n              \"শনিবার\",\n          ],\n      },\n      months: {\n          shorthand: [\n              \"জানু\",\n              \"ফেব্রু\",\n              \"মার্চ\",\n              \"এপ্রিল\",\n              \"মে\",\n              \"জুন\",\n              \"জুলাই\",\n              \"আগ\",\n              \"সেপ্টে\",\n              \"অক্টো\",\n              \"নভে\",\n              \"ডিসে\",\n          ],\n          longhand: [\n              \"জানুয়ারী\",\n              \"ফেব্রুয়ারী\",\n              \"মার্চ\",\n              \"এপ্রিল\",\n              \"মে\",\n              \"জুন\",\n              \"জুলাই\",\n              \"আগস্ট\",\n              \"সেপ্টেম্বর\",\n              \"অক্টোবর\",\n              \"নভেম্বর\",\n              \"ডিসেম্বর\",\n          ],\n      },\n  };\n  fp.l10ns.bn = Bangla;\n  var bn = fp.l10ns;\n\n  exports.Bangla = Bangla;\n  exports.default = bn;\n\n  Object.defineProperty(exports, '__esModule', { value: true });\n\n})));\n\n\n//# sourceURL=webpack:///./node_modules/flatpickr/dist/l10n/bn.js?");
+
+/***/ }),
+
 /***/ "./src/js/flatpickr.js":
 /*!*****************************!*\
   !*** ./src/js/flatpickr.js ***!
@@ -190,7 +201,7 @@ eval("\nif (typeof Object.assign !== \"function\") {\n    Object.assign = functi
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flatpickr */ \"./node_modules/flatpickr/dist/esm/index.js\");\n\n\n/* -------------------------------------------------------------------------- */\n/*                                    Utils                                   */\n/* -------------------------------------------------------------------------- */\n\nconst camelize = (str) => {\n  const text = str.replace(/[-_\\s.]+(.)?/g, (_, c) =>\n    c ? c.toUpperCase() : \"\"\n  );\n  return `${text.substr(0, 1).toLowerCase()}${text.substr(1)}`;\n};\n\nconst getData = (el, data) => {\n  try {\n    return JSON.parse(el.dataset[camelize(data)]);\n  } catch (e) {\n    return el.dataset[camelize(data)];\n  }\n};\n\n/* -------------------------------------------------------------------------- */\n/*                                  Flatpickr                                 */\n/* -------------------------------------------------------------------------- */\n\ndocument.querySelectorAll(\".datetimepicker\").forEach((item) => {\n  Object(flatpickr__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(item, getData(item, \"options\"));\n});\n\n\n//# sourceURL=webpack:///./src/js/flatpickr.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flatpickr */ \"./node_modules/flatpickr/dist/esm/index.js\");\n/* harmony import */ var flatpickr_dist_l10n_bn_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr/dist/l10n/bn.js */ \"./node_modules/flatpickr/dist/l10n/bn.js\");\n/* harmony import */ var flatpickr_dist_l10n_bn_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_l10n_bn_js__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\n/* -------------------------------------------------------------------------- */\r\n/*                                    Utils                                   */\r\n/* -------------------------------------------------------------------------- */\r\n\r\nconst camelize = str => {\r\n  const text = str.replace(/[-_\\s.]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''));\r\n  return `${text.substr(0, 1).toLowerCase()}${text.substr(1)}`;\r\n};\r\n\r\nconst getData = (el, data) => {\r\n  try {\r\n    return JSON.parse(el.dataset[camelize(data)]);\r\n  } catch (e) {\r\n    return el.dataset[camelize(data)];\r\n  }\r\n};\r\n\r\n/* -------------------------------------------------------------------------- */\r\n/*                                  Flatpickr                                 */\r\n/* -------------------------------------------------------------------------- */\r\n\r\ndocument.querySelectorAll('.datetimepicker').forEach(item => {\r\n  Object(flatpickr__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(item, getData(item, 'options'));\r\n});\r\n\n\n//# sourceURL=webpack:///./src/js/flatpickr.js?");
 
 /***/ })
 

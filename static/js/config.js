@@ -5,17 +5,18 @@
 /*                           Navbar vertical config                           */
 
 /* -------------------------------------------------------------------------- */
+var urlParams = new URLSearchParams(window.location.search);
 var CONFIG = {
-  isNavbarVerticalCollapsed: false,
-  theme: 'light',
+  isNavbarVerticalCollapsed: urlParams.get('isNavbarVerticalCollapsed') || false,
+  theme: urlParams.get('theme') || 'light',
   // window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-  isRTL: false,
-  isFluid: true,
-  navbarStyle: 'transparent',
-  navbarPosition: 'vertical'
+  isRTL: urlParams.get('isRTL') || false,
+  isFluid: urlParams.get('isFluid') || false,
+  navbarStyle: urlParams.get('navbarStyle') || 'transparent',
+  navbarPosition: urlParams.get('navbarPosition') || 'vertical'
 };
 Object.keys(CONFIG).forEach(function (key) {
-  if (localStorage.getItem(key) === null) {
+  if (urlParams.get(key) || localStorage.getItem(key) === null) {
     localStorage.setItem(key, CONFIG[key]);
   }
 });

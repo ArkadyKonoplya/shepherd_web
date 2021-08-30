@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -10,13 +12,13 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -101,6 +103,19 @@ var getColors = function getColors(dom) {
     danger: getColor('danger', dom),
     light: getColor('light', dom),
     dark: getColor('dark', dom)
+  };
+};
+
+var getSoftColors = function getSoftColors(dom) {
+  return {
+    primary: getColor('soft-primary', dom),
+    secondary: getColor('soft-secondary', dom),
+    success: getColor('soft-success', dom),
+    info: getColor('soft-info', dom),
+    warning: getColor('soft-warning', dom),
+    danger: getColor('soft-danger', dom),
+    light: getColor('soft-light', dom),
+    dark: getColor('soft-dark', dom)
   };
 };
 
@@ -231,6 +246,51 @@ var getStoreSpace = function getStoreSpace() {
   var store = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : localStorage;
   return parseFloat((escape(encodeURIComponent(JSON.stringify(store))).length / (1024 * 1024)).toFixed(2));
 };
+/* get Dates between */
+
+
+var getDates = function getDates(startDate, endDate) {
+  var interval = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000 * 60 * 60 * 24;
+  var duration = endDate - startDate;
+  var steps = duration / interval;
+  return Array.from({
+    length: steps + 1
+  }, function (v, i) {
+    return new Date(startDate.valueOf() + interval * i);
+  });
+};
+
+var getPastDates = function getPastDates(duration) {
+  var days;
+
+  switch (duration) {
+    case 'week':
+      days = 7;
+      break;
+
+    case 'month':
+      days = 30;
+      break;
+
+    case 'year':
+      days = 365;
+      break;
+
+    default:
+      days = duration;
+  }
+
+  var date = new Date();
+  var endDate = date;
+  var startDate = new Date(new Date().setDate(date.getDate() - (days - 1)));
+  return getDates(startDate, endDate);
+};
+/* Get Random Number */
+
+
+var getRandomNumber = function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+};
 
 var utils = {
   docReady: docReady,
@@ -244,6 +304,7 @@ var utils = {
   rgbaColor: rgbaColor,
   getColor: getColor,
   getColors: getColors,
+  getSoftColors: getSoftColors,
   getGrays: getGrays,
   getOffset: getOffset,
   isScrolledIntoView: isScrolledIntoView,
@@ -254,7 +315,10 @@ var utils = {
   settings: settings,
   getItemFromStore: getItemFromStore,
   setItemToStore: setItemToStore,
-  getStoreSpace: getStoreSpace
+  getStoreSpace: getStoreSpace,
+  getDates: getDates,
+  getPastDates: getPastDates,
+  getRandomNumber: getRandomNumber
 };
 /* -------------------------------------------------------------------------- */
 
@@ -281,18 +345,18 @@ var detectorInit = function detectorInit() {
   navigator.userAgent.match('CriOS') && addClass(html, 'chrome');
 };
 /*-----------------------------------------------
-|   Node
+|   DomNode
 -----------------------------------------------*/
 
 
-var Node = /*#__PURE__*/function () {
-  function Node(node) {
-    _classCallCheck(this, Node);
+var DomNode = /*#__PURE__*/function () {
+  function DomNode(node) {
+    _classCallCheck(this, DomNode);
 
     this.node = node;
   }
 
-  _createClass(Node, [{
+  _createClass(DomNode, [{
     key: "addClass",
     value: function addClass(className) {
       this.isValidNode() && this.node.classList.add(className);
@@ -366,10 +430,8 @@ var Node = /*#__PURE__*/function () {
     }
   }]);
 
-  return Node;
-}(); // eslint-disable-next-line
-// Node.prototype.__proto__ = document.__proto__.__proto__;
-
+  return DomNode;
+}();
 /* -------------------------------------------------------------------------- */
 
 /*                                  Anchor JS                                 */
@@ -390,7 +452,7 @@ var BulkSelect = /*#__PURE__*/function () {
   function BulkSelect(element, option) {
     _classCallCheck(this, BulkSelect);
 
-    this.element = new Node(element);
+    this.element = new DomNode(element);
     this.option = _objectSpread({
       displayNoneClassName: 'd-none'
     }, option);
@@ -411,8 +473,8 @@ var BulkSelect = /*#__PURE__*/function () {
           actions = _this$element$data.actions,
           replacedElement = _this$element$data.replacedElement;
 
-      this.actions = new Node(document.getElementById(actions));
-      this.replacedElement = new Node(document.getElementById(replacedElement));
+      this.actions = new DomNode(document.getElementById(actions));
+      this.replacedElement = new DomNode(document.getElementById(replacedElement));
       this.bulkSelectRows = document.getElementById(body).querySelectorAll('[data-bulk-select-row]');
     }
   }, {
@@ -430,7 +492,7 @@ var BulkSelect = /*#__PURE__*/function () {
           _this.removeBulkCheck();
 
           _this.bulkSelectRows.forEach(function (el) {
-            var rowCheck = new Node(el);
+            var rowCheck = new DomNode(el);
             rowCheck.setProp('checked', false);
             rowCheck.setAttribute('checked', false);
           });
@@ -441,7 +503,7 @@ var BulkSelect = /*#__PURE__*/function () {
         _this.toggleDisplay();
 
         _this.bulkSelectRows.forEach(function (el) {
-          var rowCheck = new Node(el);
+          var rowCheck = new DomNode(el);
           rowCheck.setProp('checked', _this.element.attr('checked'));
           rowCheck.setAttribute('checked', _this.element.attr('checked'));
         });
@@ -454,7 +516,7 @@ var BulkSelect = /*#__PURE__*/function () {
 
       // Handle click event in checkbox of each row
       this.bulkSelectRows.forEach(function (el) {
-        var rowCheck = new Node(el);
+        var rowCheck = new DomNode(el);
         rowCheck.on('click', function () {
           if (_this2.element.attr('indeterminate') !== 'indeterminate') {
             _this2.element.setProp('indeterminate', true);
@@ -570,7 +632,7 @@ var chatInit = function chatInit() {
       var $this = e.currentTarget;
       $this.classList.add('active'); // Hide contact list sidebar on responsive
 
-      window.innerWidth < 768 && ($chatSidebar.style.left = '-100%'); // Remove unread-message class when read
+      window.innerWidth < 768 && !e.target.classList.contains('hover-actions') && ($chatSidebar.style.left = '-100%'); // Remove unread-message class when read
 
       $this.classList.contains(ClassName.UNREAD_MESSAGE) && $this.classList.remove(ClassName.UNREAD_MESSAGE);
     });
@@ -828,17 +890,44 @@ var draggableInit = function draggableInit() {
 
     sortable.on(Events.DRAG_STOP, function (_ref2) {
       var el = _ref2.data.source;
-
-      alert(el.querySelector())
-
       var columnContainer = el.closest(Selectors.KANBAN_ITEMS_CONTAINER);
       var form = columnContainer.querySelector(Selectors.ADD_CARD_FORM);
       !el.nextElementSibling && columnContainer.appendChild(form);
-
-
     });
   }
 };
+/*-----------------------------------------------
+|   Dashboard Table dropdown
+-----------------------------------------------*/
+
+
+var dropdownMenuInit = function dropdownMenuInit() {
+  // Only for ios
+  if (window.is.ios()) {
+    var Event = {
+      SHOWN_BS_DROPDOWN: 'shown.bs.dropdown',
+      HIDDEN_BS_DROPDOWN: 'hidden.bs.dropdown'
+    };
+    var Selector = {
+      TABLE_RESPONSIVE: '.table-responsive',
+      DROPDOWN_MENU: '.dropdown-menu'
+    };
+    document.querySelectorAll(Selector.TABLE_RESPONSIVE).forEach(function (table) {
+      table.addEventListener(Event.SHOWN_BS_DROPDOWN, function (e) {
+        var t = e.currentTarget;
+
+        if (t.scrollWidth > t.clientWidth) {
+          t.style.paddingBottom = "".concat(e.target.nextElementSibling.clientHeight, "px");
+        }
+      });
+      table.addEventListener(Event.HIDDEN_BS_DROPDOWN, function (e) {
+        e.currentTarget.style.paddingBottom = '';
+      });
+    });
+  }
+}; // Reference
+// https://github.com/twbs/bootstrap/issues/11037#issuecomment-274870381
+
 /* -------------------------------------------------------------------------- */
 
 /*                           Open dropdown on hover                           */
@@ -851,11 +940,18 @@ var dropdownOnHover = function dropdownOnHover() {
 
   if (navbarArea) {
     navbarArea.addEventListener('mouseover', function (e) {
-      if (e.target.className.includes('dropdown-toggle')) {
+      if (e.target.className.includes('dropdown-toggle') && window.innerWidth > 992) {
         var dropdownInstance = new window.bootstrap.Dropdown(e.target);
-        window.is.not.mobile() && dropdownInstance.show();
+        /* eslint-disable no-underscore-dangle */
+
+        dropdownInstance._element.classList.add('show');
+
+        dropdownInstance._menu.classList.add('show');
+
+        dropdownInstance._menu.setAttribute('data-bs-popper', 'none');
+
         e.target.parentNode.addEventListener('mouseleave', function () {
-          window.is.not.mobile() && dropdownInstance.hide();
+          dropdownInstance.hide();
         });
       }
     });
@@ -932,7 +1028,7 @@ var dropzoneInit = function dropzoneInit() {
       }
     }, userOptions); // eslint-disable-next-line
 
-    item.querySelector(Selector.DZ_PREVIEW).innerHTML = '';
+    item.querySelector(Selector.DZ_PREVIEW).innerHTML = "";
     var dropzone = new window.Dropzone(item, options);
     dropzone.on(Events.ADDED_FILE, function () {
       if (item.querySelector(Selector.DZ_PREVIEW_COVER)) {
@@ -950,7 +1046,76 @@ var dropzoneInit = function dropzoneInit() {
     });
   });
 };
+/* -------------------------------------------------------------------------- */
 
+/*                               from-validation                              */
+
+/* -------------------------------------------------------------------------- */
+
+
+var formValidationInit = function formValidationInit() {
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation'); // Loop over them and prevent submission
+
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated');
+    }, false);
+  });
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                FullCalendar                                */
+
+/* -------------------------------------------------------------------------- */
+
+
+var merge = window._.merge;
+
+var renderCalendar = function renderCalendar(el, option) {
+  var _document$querySelect;
+
+  var options = merge({
+    initialView: 'dayGridMonth',
+    editable: true,
+    direction: document.querySelector('html').getAttribute('dir'),
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    buttonText: {
+      month: 'Month',
+      week: 'Week',
+      day: 'Day'
+    }
+  }, option);
+  var calendar = new window.FullCalendar.Calendar(el, options);
+  calendar.render();
+  (_document$querySelect = document.querySelector('.navbar-vertical-toggle')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.addEventListener('navbar.vertical.toggle', function () {
+    return calendar.updateSize();
+  });
+  return calendar;
+};
+
+var fullCalendarInit = function fullCalendarInit() {
+  var calendars = document.querySelectorAll('[data-calendar]');
+  calendars.forEach(function (item) {
+    var options = utils.getData(item, 'options');
+    renderCalendar(item, options);
+  });
+};
+
+var fullCalendar = {
+  renderCalendar: renderCalendar,
+  fullCalendarInit: fullCalendarInit
+};
 /* -------------------------------------------------------------------------- */
 
 /*                                 Glightbox                                */
@@ -1866,6 +2031,21 @@ function initMap() {
         }, {
           visibility: 'on'
         }]
+      }],
+      Cobalt: [{
+        featureType: 'all',
+        elementType: 'all',
+        stylers: [{
+          invert_lightness: true
+        }, {
+          saturation: 10
+        }, {
+          lightness: 30
+        }, {
+          gamma: 0.5
+        }, {
+          hue: '#435158'
+        }]
       }]
     };
     $googlemaps.forEach(function (itm) {
@@ -1895,7 +2075,7 @@ function initMap() {
         zoom: zoom,
         scrollwheel: utils.getData(itm, 'scrollwheel'),
         center: new window.google.maps.LatLng(latLng[0], latLng[1]),
-        styles: localStorage.getItem('theme') === 'dark' ? mapStyles.Midnight : mapStyles[mapStyle]
+        styles: localStorage.getItem('theme') === 'dark' ? mapStyles.Cobalt : mapStyles[mapStyle]
       };
       var map = new window.google.maps.Map(mapElement, mapOptions);
       var infowindow = new window.google.maps.InfoWindow({
@@ -1915,13 +2095,39 @@ function initMap() {
             value = _ref3$detail.value;
 
         if (control === 'theme') {
-          map.set('styles', value === 'dark' ? mapStyles.Midnight : mapStyles[mapStyle]);
+          map.set('styles', value === 'dark' ? mapStyles.Cobalt : mapStyles[mapStyle]);
         }
       });
       return null;
     });
   }
 }
+/* -------------------------------------------------------------------------- */
+
+/*                           Icon copy to clipboard                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var iconCopiedInit = function iconCopiedInit() {
+  var iconList = document.getElementById('icon-list');
+  var iconCopiedToast = document.getElementById('icon-copied-toast');
+  var iconCopiedToastInstance = new window.bootstrap.Toast(iconCopiedToast);
+
+  if (iconList) {
+    iconList.addEventListener('click', function (e) {
+      var el = e.target;
+
+      if (el.tagName === 'INPUT') {
+        el.select();
+        el.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        iconCopiedToast.querySelector('.toast-body').innerHTML = "<span class=\"fw-black\">Copied:</span> <code>".concat(el.value, "</code>");
+        iconCopiedToastInstance.show();
+      }
+    });
+  }
+};
 /* -------------------------------------------------------------------------- */
 
 /*                                   Kanbah                                   */
@@ -3066,11 +3272,34 @@ var listInit = function listInit() {
     if (lists.length) {
       lists.forEach(function (el) {
         var options = utils.getData(el, 'list');
+
+        if (options.pagination) {
+          options = _objectSpread(_objectSpread({}, options), {}, {
+            pagination: _objectSpread({
+              item: '<li><button class=\'page\' type=\'button\'></button></li>'
+            }, options.pagination)
+          });
+        }
+
         var paginationButtonNext = el.querySelector('[data-list-pagination="next"]');
         var paginationButtonPrev = el.querySelector('[data-list-pagination="prev"]');
         var viewAll = el.querySelector('[data-list-view="*"]');
+        var viewLess = el.querySelector('[data-list-view="less"]');
         var listInfo = el.querySelector('[data-list-info]');
-        var list = new window.List(el, options);
+        var list = new window.List(el, options); //-------fallback-----------
+
+        list.on('updated', function (item) {
+          var fallback = el.querySelector('.fallback') || document.getElementById(options.fallback);
+
+          if (fallback) {
+            if (item.matchingItems.length === 0) {
+              fallback.classList.remove('d-none');
+            } else {
+              fallback.classList.add('d-none');
+            }
+          }
+        }); // ---------------------------------------
+
         var totalItem = list.items.length;
         var itemsPerPage = list.page;
         var btnDropdownClose = list.listContainer.querySelector('.btn-close');
@@ -3117,6 +3346,11 @@ var listInit = function listInit() {
           });
         }
 
+        var toggleViewBtn = function toggleViewBtn() {
+          viewLess.classList.toggle('d-none');
+          viewAll.classList.toggle('d-none');
+        };
+
         if (viewAll) {
           viewAll.addEventListener('click', function () {
             list.show(1, totalItem);
@@ -3124,6 +3358,18 @@ var listInit = function listInit() {
             pageCount = 1;
             numberOfcurrentItems = totalItem;
             updateListControls();
+            toggleViewBtn();
+          });
+        }
+
+        if (viewLess) {
+          viewLess.addEventListener('click', function () {
+            list.show(1, itemsPerPage);
+            pageQuantity = Math.ceil(totalItem / itemsPerPage);
+            pageCount = 1;
+            numberOfcurrentItems = list.visibleItems.length;
+            updateListControls();
+            toggleViewBtn();
           });
         } // numbering pagination
 
@@ -3245,9 +3491,12 @@ var navbarDarkenOnScroll = function navbarDarkenOnScroll() {
   };
   var navbar = document.querySelector(Selector.NAVBAR);
 
-  if (navbar) {
-    var theme = localStorage.getItem('theme');
+  function removeNavbarBgClass() {
+    navbar.classList.remove('bg-dark');
+    navbar.classList.remove('bg-100');
+  }
 
+  var toggleThemeClass = function toggleThemeClass(theme) {
     if (theme === 'dark') {
       navbar.classList.remove('navbar-dark');
       navbar.classList.add('navbar-light');
@@ -3255,20 +3504,47 @@ var navbarDarkenOnScroll = function navbarDarkenOnScroll() {
       navbar.classList.remove('navbar-light');
       navbar.classList.add('navbar-dark');
     }
+  };
 
-    var defaultColorName = theme === 'dark' ? '100' : 'dark';
+  function getBgClassName(name, defaultColorName) {
     var parent = document.documentElement;
-    var windowHeight = window.innerHeight;
-    var html = document.documentElement;
-    var navbarCollapse = navbar.querySelector(Selector.NAVBAR_COLLAPSE);
 
     var allColors = _objectSpread(_objectSpread({}, utils.getColors(parent)), utils.getGrays(parent));
 
-    var name = utils.getData(navbar, DataKey.NAVBAR_DARKEN_ON_SCROLL);
     var colorName = Object.keys(allColors).includes(name) ? name : defaultColorName;
     var color = allColors[colorName];
     var bgClassName = "bg-".concat(colorName);
-    var colorRgb = utils.hexToRgb(color);
+    return {
+      color: color,
+      bgClassName: bgClassName
+    };
+  }
+
+  if (navbar) {
+    var theme = localStorage.getItem('theme');
+    var defaultColorName = theme === 'dark' ? '100' : 'dark';
+    var name = utils.getData(navbar, DataKey.NAVBAR_DARKEN_ON_SCROLL);
+    toggleThemeClass(theme);
+    var themeController = document.body;
+    themeController.addEventListener('clickControl', function (_ref10) {
+      var _ref10$detail = _ref10.detail,
+          control = _ref10$detail.control,
+          value = _ref10$detail.value;
+
+      if (control === 'theme') {
+        toggleThemeClass(value);
+        defaultColorName = value === 'dark' ? '100' : 'dark';
+
+        if (navbar.classList.contains('bg-dark') || navbar.classList.contains('bg-100')) {
+          removeNavbarBgClass();
+          navbar.classList.add(getBgClassName(name, defaultColorName).bgClassName);
+        }
+      }
+    });
+    var windowHeight = window.innerHeight;
+    var html = document.documentElement;
+    var navbarCollapse = navbar.querySelector(Selector.NAVBAR_COLLAPSE);
+    var colorRgb = utils.hexToRgb(getBgClassName(name, defaultColorName).color);
 
     var _window$getComputedSt = window.getComputedStyle(navbar),
         backgroundImage = _window$getComputedSt.backgroundImage;
@@ -3288,11 +3564,11 @@ var navbarDarkenOnScroll = function navbarDarkenOnScroll() {
       var breakPoint = utils.getBreakpoint(navbar);
 
       if (window.innerWidth > breakPoint) {
-        navbar.classList.remove(bgClassName);
+        removeNavbarBgClass();
         navbar.style.backgroundImage = html.scrollTop ? backgroundImage : 'none';
         navbar.style.transition = 'none';
       } else if (!utils.hasClass(navbar.querySelector(Selector.NAVBAR_TOGGLER), ClassNames.COLLAPSED)) {
-        navbar.classList.add(bgClassName);
+        removeNavbarBgClass();
         navbar.style.backgroundImage = backgroundImage;
       }
 
@@ -3301,12 +3577,12 @@ var navbarDarkenOnScroll = function navbarDarkenOnScroll() {
       }
     });
     navbarCollapse.addEventListener(Events.SHOW_BS_COLLAPSE, function () {
-      navbar.classList.add(bgClassName);
+      navbar.classList.add(getBgClassName(name, defaultColorName).bgClassName);
       navbar.style.backgroundImage = backgroundImage;
       navbar.style.transition = transition;
     });
     navbarCollapse.addEventListener(Events.HIDE_BS_COLLAPSE, function () {
-      navbar.classList.remove(bgClassName);
+      removeNavbarBgClass();
       !html.scrollTop && (navbar.style.backgroundImage = 'none');
     });
     navbarCollapse.addEventListener(Events.HIDDEN_BS_COLLAPSE, function () {
@@ -3417,6 +3693,7 @@ var handleNavbarVerticalCollapsed = function handleNavbarVerticalCollapsed() {
 
   if (navbarVerticalToggle) {
     navbarVerticalToggle.addEventListener(Events.CLICK, function (e) {
+      navbarVerticalToggle.blur();
       html.classList.toggle(ClassNames.NAVBAR_VERTICAL_COLLAPSED); // Set collapse state on localStorage
 
       var isNavbarVerticalCollapsed = utils.getItemFromStore('isNavbarVerticalCollapsed');
@@ -3471,9 +3748,7 @@ var plyrInit = function plyrInit() {
 var popoverInit = function popoverInit() {
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
   popoverTriggerList.map(function (popoverTriggerEl) {
-    return new window.bootstrap.Popover(popoverTriggerEl, {
-      trigger: 'focus'
-    });
+    return new window.bootstrap.Popover(popoverTriggerEl);
   });
 };
 /* -------------------------------------------------------------------------- */
@@ -3567,8 +3842,8 @@ var progressBar = function progressBar() {
       window.addEventListener('scroll', function () {
         progressCircleAnimation();
       });
-      document.body.addEventListener('clickControl', function (_ref10) {
-        var control = _ref10.detail.control;
+      document.body.addEventListener('clickControl', function (_ref11) {
+        var control = _ref11.detail.control;
 
         if (control === 'theme') {
           bar.trail.setAttribute('stroke', utils.getGrays()['200']);
@@ -3631,6 +3906,7 @@ var ratingInit = function ratingInit() {
   var raters = document.querySelectorAll('[data-rater]');
   raters.forEach(function (rater) {
     var options = _objectSpread({
+      reverse: utils.getItemFromStore('isRTL'),
       starSize: 32,
       step: 0.5,
       element: rater,
@@ -3669,18 +3945,36 @@ var scrollToTop = function scrollToTop() {
 };
 /* -------------------------------------------------------------------------- */
 
-/*                              Search Suggestion                             */
+/*                                 Scrollbars                                 */
 
 /* -------------------------------------------------------------------------- */
 
 
+var scrollbarInit = function scrollbarInit() {
+  Array.prototype.forEach.call(document.querySelectorAll('.scrollbar-overlay'), function (el) {
+    return new window.OverlayScrollbars(el, {
+      scrollbars: {
+        autoHide: 'leave',
+        autoHideDelay: 200
+      }
+    });
+  });
+};
+
 var searchInit = function searchInit() {
   var Selectors = {
-    SEARCH_DISMISS: '[data-dismiss="search"]',
+    SEARCH_DISMISS: '[data-bs-dismiss="search"]',
     DROPDOWN_TOGGLE: '[data-bs-toggle="dropdown"]',
+    DROPDOWN_MENU: '.dropdown-menu',
     SEARCH_BOX: '.search-box',
     SEARCH_INPUT: '.search-input',
     SEARCH_TOGGLE: '[data-bs-toggle="search"]'
+  };
+  var ClassName = {
+    SHOW: 'show'
+  };
+  var Attribute = {
+    ARIA_EXPANDED: 'aria-expanded'
   };
   var Events = {
     CLICK: 'click',
@@ -3691,8 +3985,10 @@ var searchInit = function searchInit() {
 
   var hideSearchSuggestion = function hideSearchSuggestion(searchArea) {
     var el = searchArea.querySelector(Selectors.SEARCH_TOGGLE);
-    var dropdown = window.bootstrap.Dropdown.getInstance(el);
-    dropdown === null || dropdown === void 0 ? void 0 : dropdown.hide();
+    var dropdownMenu = searchArea.querySelector(Selectors.DROPDOWN_MENU);
+    el.setAttribute(Attribute.ARIA_EXPANDED, 'false');
+    el.classList.remove(ClassName.SHOW);
+    dropdownMenu.classList.remove(ClassName.SHOW);
   };
 
   var searchAreas = document.querySelectorAll(Selectors.SEARCH_BOX);
@@ -3704,14 +4000,20 @@ var searchInit = function searchInit() {
   searchAreas.forEach(function (searchArea) {
     var input = searchArea.querySelector(Selectors.SEARCH_INPUT);
     var btnDropdownClose = searchArea.querySelector(Selectors.SEARCH_DISMISS);
-    input.addEventListener(Events.FOCUS, function () {
-      hideAllSearchAreas();
-      var el = searchArea.querySelector(Selectors.SEARCH_TOGGLE);
-      var dropdown = new window.bootstrap.Dropdown(el);
-      dropdown.show();
-    });
-    document.addEventListener(Events.CLICK, function (_ref11) {
-      var target = _ref11.target;
+    var dropdownMenu = searchArea.querySelector(Selectors.DROPDOWN_MENU);
+
+    if (input) {
+      input.addEventListener(Events.FOCUS, function () {
+        hideAllSearchAreas();
+        var el = searchArea.querySelector(Selectors.SEARCH_TOGGLE);
+        el.setAttribute(Attribute.ARIA_EXPANDED, 'true');
+        el.classList.add(ClassName.SHOW);
+        dropdownMenu.classList.add(ClassName.SHOW);
+      });
+    }
+
+    document.addEventListener(Events.CLICK, function (_ref12) {
+      var target = _ref12.target;
       !searchArea.contains(target) && hideSearchSuggestion(searchArea);
     });
     btnDropdownClose && btnDropdownClose.addEventListener(Events.CLICK, function (e) {
@@ -3830,6 +4132,8 @@ var swiperInit = function swiperInit() {
 
 /* -------------------------------------------------------------------------- */
 
+/* eslint-disable no-param-reassign */
+
 
 var initialDomSetup = function initialDomSetup(element) {
   if (!element) return;
@@ -3844,7 +4148,11 @@ var initialDomSetup = function initialDomSetup(element) {
     }
 
     if (el.type === 'checkbox') {
-      localStorageValue && el.setAttribute('checked', true);
+      if (inputDataAttributeValue === 'theme') {
+        localStorageValue === 'dark' && el.setAttribute('checked', true);
+      } else {
+        localStorageValue && el.setAttribute('checked', true);
+      }
     } else {
       var isChecked = localStorageValue === el.value;
       isChecked && el.setAttribute('checked', true);
@@ -3852,12 +4160,25 @@ var initialDomSetup = function initialDomSetup(element) {
   });
 };
 
+var changeTheme = function changeTheme(element) {
+  element.querySelectorAll('[data-theme-control = "theme"]').forEach(function (el) {
+    var inputDataAttributeValue = getData(el, 'theme-control');
+    var localStorageValue = getItemFromStore(inputDataAttributeValue);
+
+    if (el.type === 'checkbox') {
+      localStorageValue === 'dark' ? el.checked = true : el.checked = false;
+    } else {
+      localStorageValue === el.value ? el.checked = true : el.checked = false;
+    }
+  });
+};
+
 var themeControl = function themeControl() {
-  var themeController = new Node(document.body);
+  var themeController = new DomNode(document.body);
   var navbarVertical = document.querySelector('.navbar-vertical');
   initialDomSetup(themeController.node);
   themeController.on('click', function (e) {
-    var target = new Node(e.target);
+    var target = new DomNode(e.target);
 
     if (target.data('theme-control')) {
       var control = target.data('theme-control');
@@ -3880,6 +4201,7 @@ var themeControl = function themeControl() {
               }
             });
             e.currentTarget.dispatchEvent(clickControl);
+            changeTheme(themeController.node);
             break;
           }
 
@@ -3933,9 +4255,22 @@ var tinymceInit = function tinymceInit() {
         },
         statusbar: false,
         plugins: 'link,image,lists,table,media',
-        toolbar: 'styleselect | bold italic link bullist numlist image blockquote table media undo redo'
+        toolbar: 'styleselect | bold italic link bullist numlist image blockquote table media undo redo',
+        directionality: utils.getItemFromStore('isRTL') ? 'rtl' : 'ltr',
+        theme_advanced_toolbar_align: 'center'
       });
     }
+
+    var themeController = document.body;
+    themeController && themeController.addEventListener('clickControl', function (_ref13) {
+      var control = _ref13.detail.control;
+
+      if (control === 'theme') {
+        window.tinyMCE.editors.forEach(function (el) {
+          el.dom.addStyle(".mce-content-body{color: ".concat(utils.getGrays().black, " !important;}"));
+        });
+      }
+    });
   }
 };
 /* -------------------------------------------------------------------------- */
@@ -3950,6 +4285,14 @@ var toastInit = function toastInit() {
   toastElList.map(function (toastEl) {
     return new window.bootstrap.Toast(toastEl);
   });
+  var liveToastBtn = document.getElementById('liveToastBtn');
+
+  if (liveToastBtn) {
+    var liveToast = new window.bootstrap.Toast(document.getElementById('liveToast'));
+    liveToastBtn.addEventListener('click', function () {
+      liveToast && liveToast.show();
+    });
+  }
 };
 /* -------------------------------------------------------------------------- */
 
@@ -3961,7 +4304,9 @@ var toastInit = function toastInit() {
 var tooltipInit = function tooltipInit() {
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new window.bootstrap.Tooltip(tooltipTriggerEl);
+    return new window.bootstrap.Tooltip(tooltipTriggerEl, {
+      trigger: 'hover'
+    });
   });
 };
 /* -------------------------------------------------------------------------- */
@@ -3985,60 +4330,106 @@ var typedTextInit = function typedTextInit() {
     });
   }
 };
+/* -------------------------------------------------------------------------- */
+
+/*                                 step wizard                                */
+
+/* -------------------------------------------------------------------------- */
+
 
 var wizardInit = function wizardInit() {
-  var tabEl = document.querySelectorAll('.theme-wizard a[data-bs-toggle="tab"]');
-
-  if (tabEl.length) {
-    var nextButton = document.querySelector('.next');
-    var prevButton = document.querySelector('.previous button');
-    var cardFooter = document.querySelector('.theme-wizard .card-footer');
+  var wizards = document.querySelectorAll('.theme-wizard');
+  var tabPillEl = document.querySelectorAll('#pill-tab2 [data-bs-toggle="pill"]');
+  var tabProgressBar = document.querySelector('.theme-wizard .progress');
+  wizards.forEach(function (wizard) {
+    var tabToggleButtonEl = wizard.querySelectorAll('[data-wizard-step]');
+    var inputEmail = wizard.querySelector('[data-wizard-validate-email]');
+    var emailPattern = inputEmail.getAttribute('pattern');
+    var inputPassword = wizard.querySelector('[data-wizard-validate-password]');
+    var inputConfirmPassword = wizard.querySelector('[data-wizard-validate-confirm-password]');
+    var form = wizard.querySelector('[novalidate]');
+    var nextButton = wizard.querySelector('.next button');
+    var prevButton = wizard.querySelector('.previous button');
+    var cardFooter = wizard.querySelector('.theme-wizard .card-footer');
     var count = 0;
+
+    var validatePattern = function validatePattern(pattern, value) {
+      var regexPattern = new RegExp(pattern);
+      return regexPattern.test(String(value).toLowerCase());
+    };
+
     prevButton.classList.add('d-none'); // on button click tab change
 
     nextButton.addEventListener('click', function () {
-      count += 1;
-      var tab = new window.bootstrap.Tab(tabEl[count]);
-      tab.show();
+      if ((!(inputEmail.value && validatePattern(emailPattern, inputEmail.value)) || !inputPassword.value || !inputConfirmPassword.value) && form.className.includes('needs-validation')) {
+        form.classList.add('was-validated');
+      } else {
+        count += 1;
+        var tab = new window.bootstrap.Tab(tabToggleButtonEl[count]);
+        tab.show();
+      }
     });
     prevButton.addEventListener('click', function () {
       count -= 1;
-      var tab = new window.bootstrap.Tab(tabEl[count]);
+      var tab = new window.bootstrap.Tab(tabToggleButtonEl[count]);
       tab.show();
     });
-    tabEl.forEach(function (item, index) {
+
+    if (tabToggleButtonEl.length) {
+      tabToggleButtonEl.forEach(function (item, index) {
+        /* eslint-disable */
+        item.addEventListener('show.bs.tab', function (e) {
+          if ((!(inputEmail.value && validatePattern(emailPattern, inputEmail.value)) || !inputPassword.value || !inputConfirmPassword.value) && form.className.includes('needs-validation')) {
+            e.preventDefault();
+            form.classList.add('was-validated');
+            return null;
+            /* eslint-enable */
+          }
+
+          count = index; // can't go back tab
+
+          if (count === tabToggleButtonEl.length - 1) {
+            tabToggleButtonEl.forEach(function (tab) {
+              tab.setAttribute('data-bs-toggle', 'modal');
+              tab.setAttribute('data-bs-target', '#error-modal');
+            });
+          } //add done class
+
+
+          for (var i = 0; i < count; i += 1) {
+            tabToggleButtonEl[i].classList.add('done');
+          } //remove done class
+
+
+          for (var j = count; j < tabToggleButtonEl.length; j += 1) {
+            tabToggleButtonEl[j].classList.remove('done');
+          } // card footer remove at last step
+
+
+          if (count > tabToggleButtonEl.length - 2) {
+            item.classList.add('done');
+            cardFooter.classList.add('d-none');
+          } else {
+            cardFooter.classList.remove('d-none');
+          } // prev-button removing
+
+
+          if (count > 0) {
+            prevButton.classList.remove('d-none');
+          } else {
+            prevButton.classList.add('d-none');
+          }
+        });
+      });
+    }
+  }); // control wizard progressbar
+
+  if (tabPillEl.length) {
+    var dividedProgressbar = 100 / tabPillEl.length;
+    tabProgressBar.querySelector('.progress-bar').style.width = "".concat(dividedProgressbar, "%");
+    tabPillEl.forEach(function (item, index) {
       item.addEventListener('show.bs.tab', function () {
-        count = index; // cant go back tab
-
-        if (count === tabEl.length - 1) {
-          tabEl.forEach(function (tab) {
-            tab.setAttribute('data-bs-toggle', 'modal');
-            tab.setAttribute('data-bs-target', '#error-modal');
-          });
-        } //add done class
-
-
-        for (var i = 0; i < count; i += 1) {
-          tabEl[i].classList.add('done');
-        } //remove done class
-
-
-        for (var j = count; j < tabEl.length; j += 1) {
-          tabEl[j].classList.remove('done');
-        }
-
-        if (count > tabEl.length - 2) {
-          item.classList.add('done');
-          cardFooter.classList.add('d-none');
-        } else {
-          cardFooter.classList.remove('d-none');
-        }
-
-        if (count > 0) {
-          prevButton.classList.remove('d-none');
-        } else {
-          prevButton.classList.add('d-none');
-        }
+        tabProgressBar.querySelector('.progress-bar').style.width = "".concat(dividedProgressbar * (index + 1), "%");
       });
     });
   }
@@ -4051,233 +4442,2159 @@ var currentMonth = dayjs && dayjs().format('MM');
 var prevMonth = dayjs && dayjs().subtract(1, 'month').format('MM');
 var nextMonth = dayjs && dayjs().add(1, 'month').format('MM');
 var currentYear = dayjs && dayjs().format('YYYY');
+var events = [{
+  title: 'Boot Camp',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-01 10:00:00"),
+  end: "".concat(currentYear, "-").concat(currentMonth, "-03 16:00:00"),
+  description: "Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council and the City of Boston is proud to announce the New Year's Eve Midnight Harbor Fireworks! This beloved nearly 40-year old tradition is made possible by the generous support of local waterfront organizations and businesses and the support of the City of Boston and the Office of Mayor Marty Walsh.",
+  className: 'bg-soft-success',
+  location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+  organizer: 'Boston Harbor Now'
+}, {
+  title: 'Crain\'s New York Business ',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-11"),
+  description: "Crain's 2020 Hall of Fame. Sponsored Content By Crain's Content Studio. Crain's Content Studio Presents: New Jersey: Perfect for Business. Crain's Business Forum: Letitia James, New York State Attorney General. Crain's NYC Summit: Examining racial disparities during the pandemic",
+  className: 'bg-soft-primary'
+}, {
+  title: 'Conference',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-").concat(currentDay),
+  description: 'The Milken Institute Global Conference gathered the best minds in the world to tackle some of its most stubborn challenges. It was a unique experience in which individuals with the power to enact change connected with experts who are reinventing health, technology, philanthropy, industry, and media.',
+  className: 'bg-soft-success',
+  allDay: true,
+  schedules: [{
+    title: 'Reporting',
+    start: "".concat(currentYear, "-").concat(currentMonth, "-").concat(currentDay, " 11:00:00"),
+    description: 'Time to start the conference and will briefly describe all information about the event.  ',
+    className: 'event-bg-soft-success'
+  }, {
+    title: 'Lunch',
+    start: "".concat(currentYear, "-").concat(currentMonth, "-").concat(currentDay, " 14:00:00"),
+    description: 'Lunch facility for all the attendance in the conference.',
+    className: 'event-bg-soft-success'
+  }, {
+    title: 'Contest',
+    start: "".concat(currentYear, "-").concat(currentMonth, "-").concat(currentDay, " 16:00:00"),
+    description: 'The starting of the programming contest',
+    className: 'event-bg-soft-success'
+  }, {
+    title: 'Dinner',
+    start: "".concat(currentYear, "-").concat(currentMonth, "-").concat(currentDay, " 22:00:00"),
+    description: 'Dinner facility for all the attendance in the conference',
+    className: 'event-bg-soft-success'
+  }]
+}, {
+  title: "ICT Expo ".concat(currentYear, " - Product Release"),
+  start: "".concat(currentYear, "-").concat(currentMonth, "-16 10:00:00"),
+  description: "ICT Expo ".concat(currentYear, " is the largest private-sector exposition aimed at showcasing IT and ITES products and services in Switzerland."),
+  end: "".concat(currentYear, "-").concat(currentMonth, "-18 16:00:00"),
+  className: 'bg-soft-warning'
+}, {
+  title: 'Meeting',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-07 10:00:00"),
+  description: 'Discuss about the upcoming projects in current year and assign all tasks to the individuals'
+}, {
+  title: 'Contest',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-14 10:00:00"),
+  description: 'PeaceX is an international peace and amity organisation that aims at casting a pall at the striking issues surmounting the development of peoples and is committed to impacting the lives of young people all over the world.'
+}, {
+  title: 'Event With Url',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-23"),
+  description: 'Sample example of a event with url. Click the event, will redirect to the given link.',
+  className: 'bg-soft-success',
+  url: 'http://google.com'
+}, {
+  title: 'Competition',
+  start: "".concat(currentYear, "-").concat(currentMonth, "-26"),
+  description: 'The Future of Zambia – Top 30 Under 30 is an annual award, ranking scheme, and recognition platform for young Zambian achievers under the age of 30, who are building brands, creating jobs, changing the game, and transforming the country.',
+  className: 'bg-soft-danger'
+}, {
+  title: 'Birthday Party',
+  start: "".concat(currentYear, "-").concat(nextMonth, "-05"),
+  description: 'Will celebrate birthday party with my friends and family',
+  className: 'bg-soft-primary'
+}, {
+  title: 'Click for Google',
+  url: 'http://google.com/',
+  start: "".concat(currentYear, "-").concat(prevMonth, "-10"),
+  description: 'Applications are open for the New Media Writing Prize 2020. The New Media Writing Prize (NMWP) showcases exciting and inventive stories and poetry that integrate a variety of formats, platforms, and digital media.',
+  className: 'bg-soft-primary'
+}];
+/*-----------------------------------------------
+|   Calendar
+-----------------------------------------------*/
 
-/* -------------------------------------------------------------------------- */
+var appCalendarInit = function appCalendarInit() {
+  var Selectors = {
+    ACTIVE: '.active',
+    ADD_EVENT_FORM: '#addEventForm',
+    ADD_EVENT_MODAL: '#addEventModal',
+    CALENDAR: '#appCalendar',
+    CALENDAR_TITLE: '.calendar-title',
+    DATA_CALENDAR_VIEW: '[data-fc-view]',
+    DATA_EVENT: '[data-event]',
+    DATA_VIEW_TITLE: '[data-view-title]',
+    EVENT_DETAILS_MODAL: '#eventDetailsModal',
+    EVENT_DETAILS_MODAL_CONTENT: '#eventDetailsModal .modal-content',
+    EVENT_START_DATE: '#addEventModal [name="startDate"]',
+    INPUT_TITLE: '[name="title"]'
+  };
+  var Events = {
+    CLICK: 'click',
+    SHOWN_BS_MODAL: 'shown.bs.modal',
+    SUBMIT: 'submit'
+  };
+  var DataKeys = {
+    EVENT: 'event',
+    FC_VIEW: 'fc-view'
+  };
+  var ClassNames = {
+    ACTIVE: 'active'
+  };
+  var eventList = events.reduce(function (acc, val) {
+    return val.schedules ? acc.concat(val.schedules.concat(val)) : acc.concat(val);
+  }, []);
 
-/*                                 Line Chart                                 */
+  var updateTitle = function updateTitle(title) {
+    document.querySelector(Selectors.CALENDAR_TITLE).textContent = title;
+  };
 
-/* -------------------------------------------------------------------------- */
+  var appCalendar = document.querySelector(Selectors.CALENDAR);
+  var addEventForm = document.querySelector(Selectors.ADD_EVENT_FORM);
+  var addEventModal = document.querySelector(Selectors.ADD_EVENT_MODAL);
+  var eventDetailsModal = document.querySelector(Selectors.EVENT_DETAILS_MODAL);
 
+  if (appCalendar) {
+    var calendar = renderCalendar(appCalendar, {
+      headerToolbar: false,
+      dayMaxEvents: 2,
+      height: 800,
+      stickyHeaderDates: false,
+      views: {
+        week: {
+          eventLimit: 3
+        }
+      },
+      eventTimeFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        omitZeroMinute: true,
+        meridiem: true
+      },
+      events: eventList,
+      eventClick: function eventClick(info) {
+        if (info.event.url) {
+          window.open(info.event.url, '_blank');
+          info.jsEvent.preventDefault();
+        } else {
+          var template = getTemplate(info.event);
+          document.querySelector(Selectors.EVENT_DETAILS_MODAL_CONTENT).innerHTML = template;
+          var modal = new window.bootstrap.Modal(eventDetailsModal);
+          modal.show();
+        }
+      },
+      dateClick: function dateClick(info) {
+        var modal = new window.bootstrap.Modal(addEventModal);
+        modal.show();
+        /*eslint-disable-next-line*/
 
-var chartLinePaymentInit = function chartLinePaymentInit() {
-  /*-----------------------------------------------
-  |   Helper functions and Data
-  -----------------------------------------------*/
-  var chartData = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7];
-  var labels = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
-  /*-----------------------------------------------
-  |   Line Chart
-  -----------------------------------------------*/
+        var flatpickr = document.querySelector(Selectors.EVENT_START_DATE)._flatpickr;
 
-  var chartLine = document.getElementById('chart-line');
-
-  if (chartLine) {
-    var getChartBackground = function getChartBackground(chart) {
-      var ctx = chart.getContext('2d');
-
-      if (localStorage.getItem('theme') === 'light') {
-        var _gradientFill = ctx.createLinearGradient(0, 0, 0, 250);
-
-        _gradientFill.addColorStop(0, 'rgba(255, 255, 255, 0.3)');
-
-        _gradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-        return _gradientFill;
+        flatpickr.setDate([info.dateStr]);
       }
+    });
+    updateTitle(calendar.currentData.viewTitle);
+    document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
+      button.addEventListener(Events.CLICK, function (e) {
+        var el = e.currentTarget;
+        var type = utils.getData(el, DataKeys.EVENT);
 
-      var gradientFill = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-      gradientFill.addColorStop(0, utils.rgbaColor(utils.getColors().primary, 0.5));
-      gradientFill.addColorStop(1, 'transparent');
-      return gradientFill;
+        switch (type) {
+          case 'prev':
+            calendar.prev();
+            updateTitle(calendar.currentData.viewTitle);
+            break;
+
+          case 'next':
+            calendar.next();
+            updateTitle(calendar.currentData.viewTitle);
+            break;
+
+          case 'today':
+            calendar.today();
+            updateTitle(calendar.currentData.viewTitle);
+            break;
+
+          default:
+            calendar.today();
+            updateTitle(calendar.currentData.viewTitle);
+            break;
+        }
+      });
+    });
+    document.querySelectorAll(Selectors.DATA_CALENDAR_VIEW).forEach(function (link) {
+      link.addEventListener(Events.CLICK, function (e) {
+        e.preventDefault();
+        var el = e.currentTarget;
+        var text = el.textContent;
+        el.parentElement.querySelector(Selectors.ACTIVE).classList.remove(ClassNames.ACTIVE);
+        el.classList.add(ClassNames.ACTIVE);
+        document.querySelector(Selectors.DATA_VIEW_TITLE).textContent = text;
+        calendar.changeView(utils.getData(el, DataKeys.FC_VIEW));
+        updateTitle(calendar.currentData.viewTitle);
+      });
+    });
+    addEventForm && addEventForm.addEventListener(Events.SUBMIT, function (e) {
+      e.preventDefault();
+      var _e$target = e.target,
+          title = _e$target.title,
+          startDate = _e$target.startDate,
+          endDate = _e$target.endDate,
+          label = _e$target.label,
+          description = _e$target.description,
+          allDay = _e$target.allDay;
+      calendar.addEvent({
+        title: title.value,
+        start: startDate.value,
+        end: endDate.value ? endDate.value : null,
+        allDay: allDay.checked,
+        className: allDay.checked && label.value ? "bg-soft-".concat(label.value) : '',
+        description: description.value
+      });
+      e.target.reset();
+      window.bootstrap.Modal.getInstance(addEventModal).hide();
+    });
+  }
+
+  addEventModal && addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref14) {
+    var currentTarget = _ref14.currentTarget;
+    currentTarget.querySelector(Selectors.INPUT_TITLE).focus();
+  });
+};
+/*-----------------------------------------------
+|   Project Management Calendar
+-----------------------------------------------*/
+
+
+var managementCalendarInit = function managementCalendarInit() {
+  var Selectors = {
+    ADD_EVENT_FORM: '#addEventForm',
+    ADD_EVENT_MODAL: '#addEventModal',
+    CALENDAR: '#managementAppCalendar',
+    EVENT_DETAILS_MODAL: '#eventDetailsModal',
+    EVENT_DETAILS_MODAL_CONTENT: '#eventDetailsModal .modal-content',
+    DATA_EVENT: '[data-event]',
+    DATA_VIEW_TITLE: '[data-view-title]',
+    EVENT_START_DATE: '#addEventModal [name="startDate"]',
+    EVENT_MANAGEMENT_INFO: '[data-calendar-events]'
+  };
+  var Events = {
+    CLICK: 'click',
+    SUBMIT: 'submit'
+  };
+  var managementEventList = [];
+  var DataKeys = {
+    EVENT: 'event'
+  };
+  var managementCalendar = document.querySelector(Selectors.CALENDAR);
+
+  if (managementCalendar) {
+    var calendarData = utils.getData(managementCalendar, 'calendar-option');
+    var managementCalendarEvents = document.getElementById(calendarData === null || calendarData === void 0 ? void 0 : calendarData.events);
+    var addEventForm = document.querySelector(Selectors.ADD_EVENT_FORM);
+    var addEventModal = document.querySelector(Selectors.ADD_EVENT_MODAL);
+    var eventDetailsModal = document.querySelector(Selectors.EVENT_DETAILS_MODAL);
+
+    var updateTitle = function updateTitle(title) {
+      var selectTitle = document.getElementById(calendarData === null || calendarData === void 0 ? void 0 : calendarData.title);
+
+      if (selectTitle) {
+        selectTitle.textContent = title;
+      }
     };
 
-    var dashboardLineChart = utils.newChart(chartLine, {
-      type: 'line',
+    var updateDay = function updateDay(day) {
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var selectDay = document.getElementById(calendarData === null || calendarData === void 0 ? void 0 : calendarData.day);
+
+      if (selectDay) {
+        selectDay.textContent = days[day];
+      }
+    };
+
+    if (managementEvents) {
+      managementEvents.forEach(function (e) {
+        managementEventList.push({
+          start: e.start,
+          end: e.end,
+          display: 'background',
+          classNames: "border border-2 border-".concat(e.classNames, " bg-100")
+        });
+      });
+    }
+
+    if (managementCalendarEvents) {
+      managementEvents.forEach(function (e) {
+        managementCalendarEvents.innerHTML += "\n          <li class= 'border-top pt-3 mb-3 pb-1 cursor-pointer' data-calendar-events>\n            <div class= 'border-start border-3 border-".concat(e.classNames, " ps-3 mt-1'>\n              <h6 class=\"mb-1 fw-semi-bold text-700\">").concat(e.title, "</h6>\n              <p class= 'fs--2 text-600 mb-0'>").concat(e.startTime || '', " ").concat(e.endTime ? '-' : '', " ").concat(e.endTime || '', "</p>\n            </div>\n          </li> ");
+      });
+    }
+
+    var eventManagementInfo = document.querySelectorAll(Selectors.EVENT_MANAGEMENT_INFO);
+
+    if (eventManagementInfo) {
+      eventManagementInfo.forEach(function (li, index) {
+        li.addEventListener(Events.CLICK, function () {
+          var event = managementEvents[index];
+          var template = getTemplate(event);
+          document.querySelector(Selectors.EVENT_DETAILS_MODAL_CONTENT).innerHTML = template;
+          var modal = new window.bootstrap.Modal(eventDetailsModal);
+          modal.show();
+        });
+      });
+    }
+
+    if (managementCalendar) {
+      var calendar = renderCalendar(managementCalendar, {
+        headerToolbar: false,
+        dayMaxEvents: 2,
+        height: 360,
+        stickyHeaderDates: false,
+        dateClick: function dateClick(info) {
+          var modal = new window.bootstrap.Modal(addEventModal);
+          modal.show();
+          /*eslint-disable-next-line*/
+
+          var flatpickr = document.querySelector(Selectors.EVENT_START_DATE)._flatpickr;
+
+          flatpickr.setDate([info.dateStr]);
+        },
+        events: managementEventList
+      });
+      updateTitle(calendar.currentData.viewTitle);
+      updateDay(calendar.currentData.currentDate.getDay());
+      document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
+        button.addEventListener(Events.CLICK, function (e) {
+          var el = e.currentTarget;
+          var type = utils.getData(el, DataKeys.EVENT);
+
+          switch (type) {
+            case 'prev':
+              calendar.prev();
+              updateTitle(calendar.currentData.viewTitle);
+              break;
+
+            case 'next':
+              calendar.next();
+              updateTitle(calendar.currentData.viewTitle);
+              break;
+
+            case 'today':
+              calendar.today();
+              updateTitle(calendar.currentData.viewTitle);
+              break;
+
+            default:
+              calendar.today();
+              updateTitle(calendar.currentData.viewTitle);
+              break;
+          }
+        });
+      });
+
+      if (addEventForm) {
+        addEventForm.addEventListener(Events.SUBMIT, function (e) {
+          e.preventDefault();
+          e.target.reset();
+          window.bootstrap.Modal.getInstance(addEventModal).hide();
+        });
+      }
+    }
+  }
+};
+
+var thisDay = window.dayjs && window.dayjs().format('DD');
+var plus2Day = window.dayjs && window.dayjs().add(2, 'day').format('DD');
+var thisMonthNumber = window.dayjs && window.dayjs().format('MM');
+var thisMonthName = window.dayjs && window.dayjs().format('MMM');
+var upcomingMonthNumber = window.dayjs && window.dayjs().add(1, 'month').format('MM');
+var upcomingMonthName = window.dayjs && window.dayjs().format('MMM');
+var thisYear = window.dayjs && window.dayjs().format('YYYY');
+var managementEvents = [{
+  title: 'Monthly team meeting for Falcon React Project',
+  start: "".concat(thisYear, "-").concat(thisMonthNumber, "-07"),
+  end: "".concat(thisYear, "-").concat(thisMonthNumber, "-09"),
+  startTime: "07 ".concat(thisMonthName, ", ").concat(thisYear),
+  endTime: "10 ".concat(thisMonthName, ", ").concat(thisYear),
+  classNames: 'primary',
+  extendedProps: {
+    description: 'Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council.',
+    location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+    organizer: 'Boston Harbor Now'
+  }
+}, {
+  title: 'Newmarket Nights',
+  start: "".concat(thisYear, "-").concat(thisMonthNumber, "-16"),
+  end: "".concat(thisYear, "-").concat(thisMonthNumber, "-18"),
+  startTime: "16 ".concat(thisMonthName, ", ").concat(thisYear),
+  classNames: 'success',
+  extendedProps: {
+    description: 'Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council.',
+    location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+    organizer: 'Boston Harbor Now'
+  }
+}, {
+  title: 'Folk Festival',
+  start: "".concat(thisYear, "-").concat(thisMonthNumber, "-25"),
+  end: "".concat(thisYear, "-").concat(thisMonthNumber, "-28"),
+  startTime: "07 ".concat(thisMonthName, ", ").concat(thisYear),
+  endTime: "10 ".concat(thisMonthName, ", ").concat(thisYear),
+  classNames: 'warning',
+  extendedProps: {
+    description: 'Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council.',
+    location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+    organizer: 'Boston Harbor Now'
+  }
+}, {
+  title: 'Film Festival',
+  start: "".concat(thisYear, "-").concat(upcomingMonthNumber, "-").concat(thisDay),
+  end: "".concat(thisYear, "-").concat(upcomingMonthNumber, "-").concat(plus2Day),
+  startTime: "07 ".concat(upcomingMonthName, ", ").concat(thisYear),
+  endTime: "10 ".concat(upcomingMonthName, ", ").concat(thisYear),
+  classNames: 'danger',
+  extendedProps: {
+    description: 'Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council.',
+    location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+    organizer: 'Boston Harbor Now'
+  }
+}, {
+  title: 'Meeting',
+  start: "".concat(thisYear, "-").concat(upcomingMonthNumber, "-28"),
+  startTime: "07 ".concat(upcomingMonthName, ", ").concat(thisYear),
+  classNames: 'warning',
+  extendedProps: {
+    description: 'Boston Harbor Now in partnership with the Friends of Christopher Columbus Park, the Wharf District Council.',
+    location: 'Boston Harborwalk, Christopher Columbus Park, </br> Boston, MA 02109, United States',
+    organizer: 'Boston Harbor Now'
+  }
+}];
+
+var getStackIcon = function getStackIcon(icon, transform) {
+  return "\n  <span class=\"fa-stack ms-n1 me-3\">\n    <i class=\"fas fa-circle fa-stack-2x text-200\"></i>\n    <i class=\"".concat(icon, " fa-stack-1x text-primary\" data-fa-transform=").concat(transform, "></i>\n  </span>\n");
+};
+
+var getTemplate = function getTemplate(event) {
+  return "\n<div class=\"modal-header bg-light ps-card pe-5 border-bottom-0\">\n  <div>\n    <h5 class=\"modal-title mb-0\">".concat(event.title, "</h5>\n    ").concat(event.extendedProps.organizer ? "<p class=\"mb-0 fs--1 mt-1\">\n        by <a href=\"#!\">".concat(event.extendedProps.organizer, "</a>\n      </p>") : '', "\n  </div>\n  <button type=\"button\" class=\"btn-close position-absolute end-0 top-0 mt-3 me-3\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n</div>\n<div class=\"modal-body px-card pb-card pt-1 fs--1\">\n  ").concat(event.extendedProps.description ? "\n      <div class=\"d-flex mt-3\">\n        ".concat(getStackIcon('fas fa-align-left'), "\n        <div class=\"flex-1\">\n          <h6>Description</h6>\n          <p class=\"mb-0\">\n            \n          ").concat(event.extendedProps.description.split(' ').slice(0, 30).join(' '), "\n          </p>\n        </div>\n      </div>\n    ") : '', " \n  <div class=\"d-flex mt-3\">\n    ").concat(getStackIcon('fas fa-calendar-check'), "\n    <div class=\"flex-1\">\n        <h6>Date and Time</h6>\n        <p class=\"mb-1\">\n          ").concat(window.dayjs && window.dayjs(event.start).format('dddd, MMMM D, YYYY, h:mm A'), " \n          ").concat(event.end ? "\u2013 <br/>".concat(window.dayjs && window.dayjs(event.end).subtract(1, 'day').format('dddd, MMMM D, YYYY, h:mm A')) : '', "\n        </p>\n    </div>\n  </div>\n  ").concat(event.extendedProps.location ? "\n        <div class=\"d-flex mt-3\">\n          ".concat(getStackIcon('fas fa-map-marker-alt'), "\n          <div class=\"flex-1\">\n              <h6>Location</h6>\n              <p class=\"mb-0\">").concat(event.extendedProps.location, "</p>\n          </div>\n        </div>\n      ") : '', "\n  ").concat(event.schedules ? "\n        <div class=\"d-flex mt-3\">\n        ".concat(getStackIcon('fas fa-clock'), "\n        <div class=\"flex-1\">\n            <h6>Schedule</h6>\n            \n            <ul class=\"list-unstyled timeline mb-0\">\n              ").concat(event.schedules.map(function (schedule) {
+    return "<li>".concat(schedule.title, "</li>");
+  }).join(''), "\n            </ul>\n        </div>\n      ") : '', "\n  </div>\n</div>\n<div class=\"modal-footer d-flex justify-content-end bg-light px-card border-top-0\">\n  <a href=\"").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/create-an-event.html\" class=\"btn btn-falcon-default btn-sm\">\n    <span class=\"fas fa-pencil-alt fs--2 mr-2\"></span> Edit\n  </a>\n  <a href='").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/event-detail.html' class=\"btn btn-falcon-primary btn-sm\">\n    See more details\n    <span class=\"fas fa-angle-right fs--2 ml-1\"></span>\n  </a>\n</div>\n");
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                  bar-chart                                 */
+
+/* -------------------------------------------------------------------------- */
+
+
+var barChartInit = function barChartInit() {
+  var barChartElement = document.getElementById('chartjs-bar-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'bar',
       data: {
-        labels: labels.map(function (label) {
-          return label.substring(0, label.length - 3);
-        }),
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
-          borderWidth: 2,
-          data: chartData.map(function (d) {
-            return (d * 3.14).toFixed(2);
-          }),
-          borderColor: localStorage.getItem('theme') === 'dark' ? utils.getColors().primary : utils.settings.chart.borderColor,
-          backgroundColor: getChartBackground(chartLine)
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 6, 3],
+          backgroundColor: [utils.rgbaColor(utils.getColor('secondary'), 0.2), utils.rgbaColor(utils.getColor('warning'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('success'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('primary'), 0.2)],
+          borderColor: [utils.getColor('secondary'), utils.getColor('warning'), utils.getColor('info'), utils.getColor('success'), utils.getColor('info'), utils.getColor('primary')],
+          borderWidth: 1
         }]
       },
       options: {
-        legend: {
-          display: false
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
         },
-        tooltips: {
-          mode: 'x-axis',
-          xPadding: 20,
-          yPadding: 10,
-          displayColors: false,
-          callbacks: {
-            label: function label(tooltipItem) {
-              return "".concat(labels[tooltipItem.index], " - ").concat(tooltipItem.yLabel, " USD");
-            },
-            title: function title() {
-              return null;
+        scales: {
+          x: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          },
+          y: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1),
+              drawBorder: true
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(barChartElement, getOptions);
+};
+/* eslint-disable */
+
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Bubble                                    */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartBubble = function chartBubble() {
+  var pie = document.getElementById('chartjs-bubble-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'bubble',
+      data: {
+        datasets: [{
+          label: 'Dataset 1',
+          data: getBubbleDataset(5, 5, 15, 0, 100),
+          backgroundColor: utils.getSoftColors()['primary'],
+          hoverBackgroundColor: utils.getColors()['primary']
+        }, {
+          label: 'Dataset 2',
+          data: getBubbleDataset(5, 5, 15, 0, 100),
+          backgroundColor: utils.getSoftColors()['success'],
+          hoverBackgroundColor: utils.getColors()['success']
+        }, {
+          label: 'Dataset 3',
+          data: getBubbleDataset(5, 5, 15, 0, 100),
+          backgroundColor: utils.getSoftColors()['danger'],
+          hoverBackgroundColor: utils.getColors()['danger']
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          tooltip: chartJsDefaultTooltip()
+        },
+        scales: {
+          x: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays()['black'], 0.1)
+            }
+          },
+          y: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays()['black'], 0.1)
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(pie, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Combo                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartCombo = function chartCombo() {
+  var combo = document.getElementById('chartjs-combo-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          type: 'line',
+          label: 'Dataset 1',
+          borderColor: utils.getColor('primary'),
+          borderWidth: 2,
+          fill: false,
+          data: [55, 80, -60, -22, -50, 40, 90]
+        }, {
+          type: 'bar',
+          label: 'Dataset 2',
+          backgroundColor: utils.getSoftColors().danger,
+          data: [4, -80, 90, -22, 70, 35, -50],
+          borderWidth: 1
+        }, {
+          type: 'bar',
+          label: 'Dataset 3',
+          backgroundColor: utils.getSoftColors().primary,
+          data: [-30, 30, -18, 100, -45, -25, -50],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        scales: {
+          x: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          },
+          y: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(combo, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Doughnut                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartDoughnut = function chartDoughnut() {
+  var doughnut = document.getElementById('chartjs-doughnut-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [5, 3, 2, 1, 1],
+          backgroundColor: [utils.rgbaColor(utils.getColor('facebook'), 0.2), utils.rgbaColor(utils.getColor('youtube'), 0.2), utils.rgbaColor(utils.getColor('twitter'), 0.2), utils.rgbaColor(utils.getColor('linkedin'), 0.2), utils.rgbaColor(utils.getColor('github'), 0.2)],
+          borderWidth: 1,
+          borderColor: [utils.getColor('facebook'), utils.getColor('youtube'), utils.getColor('twitter'), utils.getColor('linkedin'), utils.getColor('github')]
+        }],
+        labels: ['Facebook', 'Youtube', 'Twitter', 'Linkedin', 'GitHub']
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        maintainAspectRatio: false
+      }
+    };
+  };
+
+  chartJsInit(doughnut, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Line                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartLine = function chartLine() {
+  var line = document.getElementById('chartjs-line-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          type: 'line',
+          label: 'Dataset 1',
+          borderColor: utils.getColor('primary'),
+          borderWidth: 2,
+          fill: false,
+          data: [55, 80, 60, 22, 50, 40, 90],
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        scales: {
+          x: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          },
+          y: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(line, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Pie                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartPie = function chartPie() {
+  var pie = document.getElementById('chartjs-pie-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [5, 3, 2, 1, 1],
+          backgroundColor: [utils.rgbaColor(utils.getColor('facebook'), 0.75), utils.rgbaColor(utils.getColor('youtube'), 0.75), utils.rgbaColor(utils.getColor('twitter'), 0.75), utils.rgbaColor(utils.getColor('linkedin'), 0.75), utils.rgbaColor(utils.getColor('github'), 0.75)],
+          borderWidth: 1,
+          borderColor: utils.getGrays()['100']
+        }],
+        labels: ['Facebook', 'Youtube', 'Twitter', 'Linkedin', 'GitHub']
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        maintainAspectRatio: false
+      }
+    };
+  };
+
+  chartJsInit(pie, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Polar                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartPolar = function chartPolar() {
+  var polar = document.getElementById('chartjs-polar-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'polarArea',
+      data: {
+        datasets: [{
+          data: [10, 20, 50, 40, 30],
+          backgroundColor: [utils.rgbaColor(utils.getColor('facebook'), 0.5), utils.rgbaColor(utils.getColor('youtube'), 0.5), utils.rgbaColor(utils.getColor('twitter'), 0.5), utils.rgbaColor(utils.getColor('linkedin'), 0.5), utils.rgbaColor(utils.getColor('success'), 0.5)],
+          borderWidth: 1,
+          borderColor: utils.getGrays()['400']
+        }],
+        labels: ['Facebook', 'Youtube', 'Twitter', 'Linkedin', 'Medium']
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(polar, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Radar                                  */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartRadar = function chartRadar() {
+  var radar = document.getElementById('chartjs-radar-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'radar',
+      data: {
+        labels: ['English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'History'],
+        datasets: [{
+          label: 'Student A',
+          backgroundColor: utils.rgbaColor(utils.getColor('success'), 0.5),
+          data: [65, 75, 70, 80, 60, 80],
+          borderWidth: 1
+        }, {
+          label: 'Student B',
+          backgroundColor: utils.rgbaColor(utils.getColor('primary'), 0.5),
+          data: [54, 65, 60, 70, 70, 75],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          }
+        }
+      }
+    };
+  };
+
+  chartJsInit(radar, getOptions);
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Scatter                                   */
+
+/* -------------------------------------------------------------------------- */
+
+
+var chartScatter = function chartScatter() {
+  var scatter = document.getElementById('chartjs-scatter-chart');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'scatter',
+      data: {
+        datasets: [{
+          label: 'Dataset one',
+          data: [{
+            x: -98,
+            y: 42
+          }, {
+            x: -85,
+            y: -29
+          }, {
+            x: -87,
+            y: -70
+          }, {
+            x: -53,
+            y: 28
+          }, {
+            x: -29,
+            y: 4
+          }, {
+            x: -2,
+            y: -42
+          }, {
+            x: 5,
+            y: 3
+          }, {
+            x: 39,
+            y: 19
+          }, {
+            x: 49,
+            y: 79
+          }, {
+            x: 83,
+            y: -9
+          }, {
+            x: 93,
+            y: 12
+          }],
+          pointBackgroundColor: utils.getColor('primary'),
+          borderColor: utils.getColor('primary'),
+          borderWidth: 1
+        }, {
+          label: 'Dataset Two',
+          data: [{
+            x: 53,
+            y: 12
+          }, {
+            x: -78,
+            y: 42
+          }, {
+            x: -65,
+            y: -39
+          }, {
+            x: -57,
+            y: -20
+          }, {
+            x: 57,
+            y: 28
+          }, {
+            x: -35,
+            y: 75
+          }, {
+            x: -29,
+            y: -43
+          }, {
+            x: 15,
+            y: 31
+          }, {
+            x: 97,
+            y: 19
+          }, {
+            x: 49,
+            y: 69
+          }, {
+            x: 33,
+            y: -57
+          }],
+          pointBackgroundColor: utils.getColor('warning'),
+          borderColor: utils.getColor('warning'),
+          borderWidth: 1,
+          borderRadius: '50%'
+        }]
+      },
+      options: {
+        plugins: {
+          tooltip: chartJsDefaultTooltip()
+        },
+        scales: {
+          x: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
+            }
+          },
+          y: {
+            grid: {
+              color: utils.rgbaColor(utils.getGrays().black, 0.1)
             }
           }
         },
-        hover: {
-          mode: 'label'
-        },
-        scales: {
-          xAxes: [{
-            scaleLabel: {
-              show: true,
-              labelString: 'Month'
-            },
-            ticks: {
-              fontColor: utils.rgbaColor('#fff', 0.7),
-              fontStyle: 600
-            },
-            gridLines: {
-              color: utils.rgbaColor('#fff', 0.1),
-              zeroLineColor: utils.rgbaColor('#fff', 0.1),
-              lineWidth: 1
-            }
-          }],
-          yAxes: [{
-            display: false
-          }]
+        animation: {
+          duration: 2000
         }
       }
-    });
-    document.querySelector('#dashboard-chart-select').addEventListener('change', function (e) {
-      var LineDB = {
-        all: [4, 1, 6, 2, 7, 12, 4, 6, 5, 4, 5, 10].map(function (d) {
-          return (d * 3.14).toFixed(2);
-        }),
-        successful: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8].map(function (d) {
-          return (d * 3.14).toFixed(2);
-        }),
-        failed: [1, 0, 2, 1, 2, 1, 1, 0, 0, 1, 0, 2].map(function (d) {
-          return (d * 3.14).toFixed(2);
-        })
-      };
-      dashboardLineChart.data.datasets[0].data = LineDB[e.target.value];
-      dashboardLineChart.update();
-    }); // change chart color on theme change
+    };
+  };
 
-    var changeChartThemeColor = function changeChartThemeColor(borderColor) {
-      dashboardLineChart.data.datasets[0].borderColor = borderColor;
-      dashboardLineChart.data.datasets[0].backgroundColor = getChartBackground(chartLine);
-      dashboardLineChart.update();
-    }; // event trigger
-
-
-    var themeController = document.body;
-    themeController.addEventListener('clickControl', function (_ref13) {
-      var _ref13$detail = _ref13.detail,
-          control = _ref13$detail.control,
-          value = _ref13$detail.value;
-
-      if (control === 'theme') {
-        if (value === 'dark') {
-          changeChartThemeColor(utils.getColors().primary);
-        } else {
-          changeChartThemeColor(utils.settings.chart.borderColor);
-        }
-      }
-    });
-  }
+  chartJsInit(scatter, getOptions);
 };
 /* -------------------------------------------------------------------------- */
 
-/*                            Chart Real Timer user                           */
+/*                            ChartJs Initialization                          */
 
 /* -------------------------------------------------------------------------- */
 
 
-var chartRealTimeUserInit = function chartRealTimeUserInit() {
-  var realTimeUser = document.getElementById('real-time-user');
+var chartJsInit = function chartJsInit(chartEl, config) {
+  if (!chartEl) return;
+  var ctx = chartEl.getContext('2d');
+  var chart = new window.Chart(ctx, config());
+  var themeController = document.body;
+  themeController.addEventListener('clickControl', function (_ref15) {
+    var control = _ref15.detail.control;
 
-  if (realTimeUser) {
-    var realTimeUserChart = utils.newChart(realTimeUser, {
-      type: 'bar',
+    if (control === 'theme') {
+      chart.destroy();
+      chart = new window.Chart(ctx, config());
+    }
+
+    return null;
+  });
+};
+
+var chartJsDefaultTooltip = function chartJsDefaultTooltip() {
+  return {
+    backgroundColor: utils.getGrays()['100'],
+    borderColor: utils.getGrays()['300'],
+    borderWidth: 1,
+    titleColor: utils.getGrays().black,
+    callbacks: {
+      labelTextColor: function labelTextColor() {
+        return utils.getGrays().black;
+      }
+    }
+  };
+};
+
+var getBubbleDataset = function getBubbleDataset(count, rmin, rmax, min, max) {
+  var arr = Array.from(Array(count).keys());
+  return arr.map(function () {
+    return {
+      x: utils.getRandomNumber(min, max),
+      y: utils.getRandomNumber(min, max),
+      r: utils.getRandomNumber(rmin, rmax)
+    };
+  });
+};
+/* eslint-disable */
+
+/* -------------------------------------------------------------------------- */
+
+/*                            Chart Scatter                                   */
+
+/* -------------------------------------------------------------------------- */
+
+
+var productShareDoughnutInit = function productShareDoughnutInit() {
+  var marketShareDoughnutElement = document.getElementById('marketShareDoughnut');
+
+  var getOptions = function getOptions() {
+    return {
+      type: 'doughnut',
       data: {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+        labels: ['Flacon', 'Sparrow'],
         datasets: [{
-          label: 'Users',
-          backgroundColor: utils.rgbaColor('#fff', 0.3),
-          data: [183, 163, 176, 172, 166, 161, 164, 159, 172, 173, 184, 163, 99, 173, 183, 167, 160, 183, 163, 176, 172, 166, 173, 188, 175],
-          barPercentage: 0.9,
-          categoryPercentage: 1.0
+          data: [50, 88],
+          backgroundColor: [utils.getColor('primary'), utils.getColor('300')],
+          borderColor: [utils.getColor('primary'), utils.getColor('300')]
         }]
       },
       options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          yAxes: [{
-            display: false,
-            stacked: true
-          }],
-          xAxes: [{
-            stacked: false,
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              color: utils.rgbaColor('#fff', 0.1),
-              display: false
-            }
-          }]
+        tooltips: chartJsDefaultTooltip(),
+        rotation: -90,
+        circumference: '180',
+        cutout: '80%',
+        plugins: {
+          legend: {
+            display: false
+          }
         }
       }
-    });
-    var userCounterDom = document.querySelector('.real-time-user');
-    setInterval(function () {
-      var userCounter = Math.floor(Math.random() * (120 - 60) + 60);
-      /*-----------------------------------------------
-      |   Remove data
-      -----------------------------------------------*/
+    };
+  };
 
-      realTimeUserChart.data.datasets.forEach(function (dataset) {
-        dataset.data.shift();
-      });
-      realTimeUserChart.update();
-      /*-----------------------------------------------
-      |   Add data
-      -----------------------------------------------*/
+  chartJsInit(marketShareDoughnutElement, getOptions);
+};
+/* -------------------------------------------------------------------------- */
 
-      setTimeout(function () {
-        realTimeUserChart.data.datasets.forEach(function (dataset) {
-          dataset.data.push(userCounter);
-        });
-        realTimeUserChart.update();
-        userCounterDom.innerHTML = userCounter;
-      }, 500);
-    }, 2000);
+/*                             Echarts Active Users                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var activeUsersChartReportInit = function activeUsersChartReportInit() {
+  var $echartsActiveUsersChart = document.querySelector('.echart-active-users-report');
+
+  if ($echartsActiveUsersChart) {
+    var userOptions = utils.getData($echartsActiveUsersChart, 'options');
+    var chart = window.echarts.init($echartsActiveUsersChart);
+
+    var _tooltipFormatter = function _tooltipFormatter(params) {
+      return "\n      <div>\n        <p class='mb-2 text-600'>".concat(window.dayjs(params[0].axisValue).format('MMM DD, YYYY'), "</p>\n        <div class='ms-1'>\n          <h6 class=\"fs--1 text-700\"><span class=\"fas fa-circle text-primary me-2\"></span>").concat(params[0].value, "</h6>\n          <h6 class=\"fs--1 text-700\"><span class=\"fas fa-circle text-success me-2\"></span>").concat(params[1].value, "</h6>\n          <h6 class=\"fs--1 text-700\"><span class=\"fas fa-circle text-info me-2\"></span>").concat(params[2].value, "</h6>\n        </div>\n      </div>\n      ");
+    };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColor('primary'), utils.getColor('success'), utils.getColor('info')],
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: _tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: utils.getPastDates(30).map(function (date) {
+            return window.dayjs(date).format('DD MMM, YYYY');
+          }),
+          boundaryGap: false,
+          silent: true,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getGrays()['300']
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['300']
+            }
+          },
+          axisTick: {
+            show: true,
+            length: 20,
+            lineStyle: {
+              color: utils.getGrays()['200']
+            },
+            interval: 5
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return window.dayjs(value).format('MMM DD');
+            },
+            align: 'left',
+            fontSize: 11,
+            padding: [0, 0, 0, 5],
+            interval: 5
+          }
+        },
+        yAxis: {
+          type: 'value',
+          position: 'right',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return "".concat(Math.round(value / 1000 * 10) / 10, "k");
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'line',
+          data: [4164, 4652, 4817, 4841, 4920, 5439, 5486, 5498, 5512, 5538, 5841, 5877, 6086, 6146, 6199, 6431, 6704, 7939, 8127, 8296, 8322, 8389, 8411, 8502, 8868, 8977, 9273, 9325, 9345, 9430],
+          showSymbol: false,
+          symbol: 'circle',
+          itemStyle: {
+            borderColor: utils.getColors().primary,
+            borderWidth: 2
+          },
+          lineStyle: {
+            color: utils.getColor('primary')
+          },
+          symbolSize: 2
+        }, {
+          type: 'line',
+          data: [2164, 2292, 2386, 2430, 2528, 3045, 3255, 3295, 3481, 3604, 3688, 3840, 3932, 3949, 4003, 4298, 4424, 4869, 4922, 4973, 5155, 5267, 5566, 5689, 5692, 5758, 5773, 5799, 5960, 6000],
+          showSymbol: false,
+          symbol: 'circle',
+          itemStyle: {
+            borderColor: utils.getColors().success,
+            borderWidth: 2
+          },
+          lineStyle: {
+            color: utils.getColor('success')
+          },
+          symbolSize: 2
+        }, {
+          type: 'line',
+          data: [1069, 1089, 1125, 1141, 1162, 1179, 1185, 1216, 1274, 1322, 1346, 1395, 1439, 1564, 1581, 1590, 1656, 1815, 1868, 2010, 2133, 2179, 2264, 2265, 2278, 2343, 2354, 2456, 2472, 2480],
+          showSymbol: false,
+          symbol: 'circle',
+          itemStyle: {
+            borderColor: utils.getColors().info,
+            borderWidth: 2
+          },
+          lineStyle: {
+            color: utils.getColor('info')
+          },
+          symbolSize: 2
+        }],
+        grid: {
+          right: '30px',
+          left: '5px',
+          bottom: '20px',
+          top: '20px'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
   }
 };
+/* -------------------------------------------------------------------------- */
 
-var resizeEcharts = function resizeEcharts() {
-  var $echarts = document.querySelectorAll('[data-echart-responsive]');
+/*                                Audience Chart                              */
 
-  if ($echarts.length) {
-    $echarts.forEach(function (item) {
-      if (utils.getData(item, 'echart-responsive')) {
-        window.echarts.init(item).resize();
+/* -------------------------------------------------------------------------- */
+
+
+var audienceChartInit = function audienceChartInit() {
+  var data = {
+    dates: utils.getPastDates(7),
+    dataset: {
+      users: [[504, 333, 400, 606, 451, 685, 404], [237, 229, 707, 575, 420, 536, 258]],
+      sessions: [[322, 694, 235, 537, 791, 292, 806], [584, 661, 214, 286, 526, 707, 627]],
+      rate: [[789, 749, 412, 697, 633, 254, 472], [276, 739, 525, 394, 643, 653, 719]],
+      duration: [[625, 269, 479, 654, 549, 305, 671], [499, 670, 550, 222, 696, 695, 469]]
+    }
+  };
+
+  var tooltipFormatter = function tooltipFormatter(params) {
+    var percentage = (params[0].value - params[1].value) / params[1].value * 100;
+    var perTemp = "\n      <div class=\"d-flex align-items-center ms-2\">\n        <span class=\"fas fa-caret-".concat(percentage < 0 ? 'down' : 'up', " text-").concat(percentage < 0 ? 'danger' : 'success', "\"></span>\n        <h6 class=\"fs--2 mb-0 ms-1 fw-semi-bold\">").concat(Math.abs(percentage).toFixed(2), " %</h6>\n      </div>\n    ");
+    var currentDate = new Date(params[0].axisValue);
+    var prevDate = new Date(new Date().setDate(currentDate.getDate() - 7));
+    return "<div>\n          <p class='mb-0 fs--2 text-600'>".concat(window.dayjs(params[0].axisValue).format('MMM DD'), " vs ").concat(window.dayjs(prevDate).format('MMM DD'), "</p>\n          <div class=\"d-flex align-items-center\">\n            <p class='mb-0 text-600 fs--1'>\n              Users: <span class='text-800 fw-semi-bold fs--1'>").concat(params[0].data, "</span>\n            </p>\n            ").concat(perTemp, "\n          </div>\n        </div>");
+  };
+
+  var getDefaultOptions = function getDefaultOptions(data1, data2) {
+    return function () {
+      return {
+        color: utils.getGrays().white,
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          axisPointer: {
+            type: 'none'
+          },
+          formatter: tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: data.dates,
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return window.dayjs(value).format('MMM DD');
+            },
+            align: 'left',
+            fontSize: 11,
+            padding: [0, 0, 0, 5],
+            showMaxLabel: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisTick: {
+            show: true,
+            length: 20,
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          boundaryGap: false
+        },
+        yAxis: {
+          position: 'right',
+          axisPointer: {
+            type: 'none'
+          },
+          axisTick: 'none',
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600']
+          }
+        },
+        series: [{
+          type: 'line',
+          data: data1,
+          showSymbol: false,
+          symbol: 'circle',
+          itemStyle: {
+            borderColor: utils.getColors().primary,
+            borderWidth: 2
+          },
+          lineStyle: {
+            color: utils.getColor('primary')
+          },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: utils.rgbaColor(utils.getColors().primary, 0.2)
+              }, {
+                offset: 1,
+                color: utils.rgbaColor(utils.getColors().primary, 0)
+              }]
+            }
+          }
+        }, {
+          type: 'line',
+          data: data2,
+          symbol: 'none',
+          lineStyle: {
+            type: 'dashed',
+            width: 1,
+            color: utils.getColor('info')
+          }
+        }],
+        grid: {
+          right: '40px',
+          left: '5px',
+          bottom: '10%',
+          top: '3%'
+        }
+      };
+    };
+  };
+
+  var initChart = function initChart(el, options) {
+    var userOptions = utils.getData(el, 'options');
+    var chart = window.echarts.init(el);
+    echartSetOption(chart, userOptions, options);
+  };
+
+  var tab = document.querySelector('#audience-chart-tab');
+
+  if (tab) {
+    initChart(document.querySelector('.echart-audience'), getDefaultOptions(data.dataset.users[0], data.dataset.users[1]));
+    var triggerTabList = Array.from(tab.querySelectorAll('[data-bs-toggle="tab"]'));
+    triggerTabList.forEach(function (triggerEl) {
+      triggerEl.addEventListener('shown.bs.tab', function () {
+        var key = triggerEl.href.split('#').pop();
+        var $echartAudience = document.getElementById(key).querySelector('.echart-audience');
+        initChart($echartAudience, getDefaultOptions(data.dataset[key][0], data.dataset[key][1]));
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                     Echart Bar Member info                                 */
+
+/* -------------------------------------------------------------------------- */
+
+
+var basicEchartsInit = function basicEchartsInit() {
+  var $echartBasicCharts = document.querySelectorAll('[data-echarts]');
+  $echartBasicCharts.forEach(function ($echartBasicChart) {
+    var userOptions = utils.getData($echartBasicChart, 'echarts');
+    var chart = window.echarts.init($echartBasicChart);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: utils.getColors().primary,
+        tooltip: {
+          trigger: 'item',
+          axisPointer: {
+            type: 'none'
+          },
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        xAxis: {
+          type: 'category',
+          show: false,
+          boundaryGap: false
+        },
+        yAxis: {
+          show: false,
+          type: 'value',
+          boundaryGap: false
+        },
+        series: [{
+          type: 'bar',
+          symbol: 'none',
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: utils.rgbaColor(utils.getColor('primary'), 0.25)
+              }, {
+                offset: 1,
+                color: utils.rgbaColor(utils.getColor('primary'), 0)
+              }]
+            }
+          }
+        }],
+        grid: {
+          right: '0',
+          left: '0',
+          bottom: '0',
+          top: '0'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  });
+};
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Bounce Rate                            */
+
+/* -------------------------------------------------------------------------- */
+
+
+var bounceRateChartInit = function bounceRateChartInit() {
+  var $echartsBounceRateChart = document.querySelector('.echart-bounce-rate');
+
+  var tooltipFormatter = function tooltipFormatter(params) {
+    return "<div>\n          <p class='mb-0 text-600'>".concat(window.dayjs(params[0].axisValue).format('DD, MMMM'), "</p>\n          <div class=\"d-flex align-items-center\">\n            <p class=\"mb-0 text-600\">\n              Rate : <span class='text-800'>").concat(params[0].value, "%</span>\n            </p>\n          </div>\n        </div>");
+  };
+
+  var dataset = {
+    week: [41, 45, 37, 44, 35, 39, 43],
+    month: [40, 37, 42, 44, 36, 39, 37, 43, 38, 35, 43, 39, 42, 36, 37, 36, 42, 44, 34, 41, 37, 41, 40, 40, 43, 34, 41, 35, 44, 41, 40]
+  };
+
+  if ($echartsBounceRateChart) {
+    var userOptions = utils.getData($echartsBounceRateChart, 'options');
+    var chart = window.echarts.init($echartsBounceRateChart);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: utils.getGrays().white,
+        title: {
+          text: 'Bounce Rate',
+          padding: [5, 0, 0, 0],
+          textStyle: {
+            color: utils.getGrays()['900'],
+            fontSize: 13,
+            fontWeight: 600
+          }
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'none'
+          },
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: utils.getPastDates(30).map(function (date) {
+            return window.dayjs(date).format('DD MMM, YYYY');
+          }),
+          axisPointer: {
+            lineStyle: {
+              color: utils.getGrays()['300']
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['400']
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return window.dayjs(value).format('MMM DD');
+            },
+            fontSize: 11
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return "".concat(value, "%");
+            },
+            margin: 15
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'line',
+          data: [40, 37, 42, 44, 36, 39, 37, 43, 38, 35, 43, 39, 42, 36, 37, 36, 42, 44, 34, 41, 37, 41, 40, 40, 43, 34, 41, 35, 44, 41, 40],
+          showSymbol: false,
+          symbol: 'circle',
+          itemStyle: {
+            borderColor: utils.getColors().primary,
+            borderWidth: 2
+          },
+          lineStyle: {
+            color: utils.getColor('primary')
+          },
+          symbolSize: 2
+        }],
+        grid: {
+          right: '10px',
+          left: '40px',
+          bottom: '10%',
+          top: '13%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    var selectMenu = document.querySelector("[data-target='.echart-bounce-rate']");
+
+    if (selectMenu) {
+      selectMenu.addEventListener('change', function (e) {
+        var value = e.currentTarget.value;
+        chart.setOption({
+          xAxis: {
+            data: utils.getPastDates(value).map(function (date) {
+              return window.dayjs(date).format('DD MMM, YYYY');
+            })
+          },
+          series: [{
+            data: dataset[value]
+          }]
+        });
+      });
+    }
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Candle Chart                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var candleChartInit = function candleChartInit() {
+  var ECHART_CANDLE_CHART = '.echart-candle-chart';
+  var ECHART_ZOOM_IN = "[data-zoom='in']";
+  var ECHART_ZOOM_OUT = "[data-zoom='out']";
+  var $echartsCandleChart = document.querySelector(ECHART_CANDLE_CHART);
+
+  if ($echartsCandleChart) {
+    var userOptions = utils.getData($echartsCandleChart, 'options');
+    var chart = window.echarts.init($echartsCandleChart);
+    var $echartsZoomIn = document.getElementById($echartsCandleChart.dataset.actionTarget).querySelector(ECHART_ZOOM_IN);
+    var $echartsZoomOut = document.getElementById($echartsCandleChart.dataset.actionTarget).querySelector(ECHART_ZOOM_OUT);
+
+    var _utils$getColors = utils.getColors(),
+        warning = _utils$getColors.warning;
+
+    var _utils$getColors2 = utils.getColors(),
+        primary = _utils$getColors2.primary;
+
+    var splitData = function splitData(rawData) {
+      var categoryData = [];
+      var values = [];
+      rawData.forEach(function (item) {
+        categoryData.push(item.splice(0, 1)[0]);
+        values.push(item);
+      });
+      return {
+        categoryData: categoryData,
+        values: values
+      };
+    };
+
+    var data = splitData([['2013/1/24', 2320.26, 2320.26, 2287.3, 2362.94], ['2013/1/25', 2300, 2291.3, 2288.26, 2308.38], ['2013/1/28', 2295.35, 2346.5, 2295.35, 2346.92], ['2013/1/29', 2347.22, 2358.98, 2337.35, 2363.8], ['2013/1/30', 2360.75, 2382.48, 2347.89, 2383.76], ['2013/1/31', 2383.43, 2385.42, 2371.23, 2391.82], ['2013/2/1', 2377.41, 2419.02, 2369.57, 2421.15], ['2013/2/4', 2425.92, 2428.15, 2417.58, 2440.38], ['2013/2/5', 2411, 2433.13, 2403.3, 2437.42], ['2013/2/6', 2432.68, 2434.48, 2427.7, 2441.73], ['2013/2/7', 2430.69, 2418.53, 2394.22, 2433.89], ['2013/2/8', 2416.62, 2432.4, 2414.4, 2443.03], ['2013/2/18', 2441.91, 2421.56, 2415.43, 2444.8], ['2013/2/19', 2420.26, 2382.91, 2373.53, 2427.07], ['2013/2/20', 2383.49, 2397.18, 2370.61, 2397.94], ['2013/2/21', 2378.82, 2325.95, 2309.17, 2378.82], ['2013/2/22', 2322.94, 2314.16, 2308.76, 2330.88], ['2013/2/25', 2320.62, 2325.82, 2315.01, 2338.78], ['2013/2/26', 2313.74, 2293.34, 2289.89, 2340.71], ['2013/2/27', 2297.77, 2313.22, 2292.03, 2324.63], ['2013/2/28', 2322.32, 2365.59, 2308.92, 2366.16], ['2013/3/1', 2364.54, 2359.51, 2330.86, 2369.65], ['2013/3/4', 2332.08, 2273.4, 2259.25, 2333.54], ['2013/3/5', 2274.81, 2326.31, 2270.1, 2328.14], ['2013/3/6', 2333.61, 2347.18, 2321.6, 2351.44], ['2013/3/7', 2340.44, 2324.29, 2304.27, 2352.02], ['2013/3/8', 2326.42, 2318.61, 2314.59, 2333.67], ['2013/3/11', 2314.68, 2310.59, 2296.58, 2320.96], ['2013/3/12', 2309.16, 2286.6, 2264.83, 2333.29], ['2013/3/13', 2282.17, 2263.97, 2253.25, 2286.33], ['2013/3/14', 2255.77, 2270.28, 2253.31, 2276.22], ['2013/3/15', 2269.31, 2278.4, 2250, 2312.08], ['2013/3/18', 2267.29, 2240.02, 2239.21, 2276.05], ['2013/3/19', 2244.26, 2257.43, 2232.02, 2261.31], ['2013/3/20', 2257.74, 2317.37, 2257.42, 2317.86], ['2013/3/21', 2318.21, 2324.24, 2311.6, 2330.81], ['2013/3/22', 2321.4, 2328.28, 2314.97, 2332], ['2013/3/25', 2334.74, 2326.72, 2319.91, 2344.89], ['2013/3/26', 2318.58, 2297.67, 2281.12, 2319.99], ['2013/3/27', 2299.38, 2301.26, 2289, 2323.48], ['2013/3/28', 2273.55, 2236.3, 2232.91, 2273.55], ['2013/3/29', 2238.49, 2236.62, 2228.81, 2246.87], ['2013/4/1', 2229.46, 2234.4, 2227.31, 2243.95], ['2013/4/2', 2234.9, 2227.74, 2220.44, 2253.42], ['2013/4/3', 2232.69, 2225.29, 2217.25, 2241.34], ['2013/4/8', 2196.24, 2211.59, 2180.67, 2212.59], ['2013/4/9', 2215.47, 2225.77, 2215.47, 2234.73], ['2013/4/10', 2224.93, 2226.13, 2212.56, 2233.04], ['2013/4/11', 2236.98, 2219.55, 2217.26, 2242.48], ['2013/4/12', 2218.09, 2206.78, 2204.44, 2226.26]]);
+    var zoomStart = 0;
+    var zoomEnd = 70;
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'axis',
+          // axisPointer: {
+          //   type: "cross",
+          // },
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: data.categoryData,
+          scale: true,
+          splitLine: {
+            show: false
+          },
+          splitNumber: 10,
+          min: 'dataMin',
+          max: 'dataMax',
+          boundaryGap: true,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'solid'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return new Date(value).toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric'
+              });
+            },
+            margin: 15,
+            fontWeight: 500
+          }
+        },
+        yAxis: {
+          scale: true,
+          position: 'right',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200'],
+              type: 'dashed'
+            }
+          },
+          boundaryGap: false,
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['600'],
+            margin: 15,
+            fontWeight: 500
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        dataZoom: [{
+          type: 'inside',
+          start: zoomStart,
+          end: zoomEnd
+        }],
+        series: [{
+          name: 'candlestick',
+          type: 'candlestick',
+          data: data.values,
+          itemStyle: {
+            color: warning,
+            color0: primary,
+            borderColor: warning,
+            borderColor0: primary
+          }
+        }],
+        grid: {
+          right: '70px',
+          left: '20px',
+          bottom: '15%',
+          top: '20px'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+
+    var dispatchZoomAction = function dispatchZoomAction() {
+      chart.dispatchAction({
+        type: 'dataZoom',
+        start: zoomStart,
+        end: zoomEnd
+      });
+    };
+
+    $echartsZoomIn.addEventListener('click', function () {
+      if (zoomEnd > 10) {
+        zoomEnd -= 10;
+      }
+
+      if (zoomEnd <= 10) {
+        $echartsZoomIn.disabled = true;
+      }
+
+      if (zoomEnd > 0) {
+        $echartsZoomOut.disabled = false;
+        dispatchZoomAction();
+      }
+    });
+    $echartsZoomOut.addEventListener('click', function () {
+      if (zoomEnd < 100) {
+        zoomEnd += 10;
+      }
+
+      if (zoomEnd >= 100) {
+        $echartsZoomOut.disabled = true;
+      }
+
+      if (zoomEnd > 0) {
+        $echartsZoomIn.disabled = false;
+        dispatchZoomAction();
+      }
+    });
+    chart.on('dataZoom', function (params) {
+      if (params.batch) {
+        zoomStart = params.batch[0].start;
+        zoomEnd = params.batch[0].end;
       }
     });
   }
 };
+/* -------------------------------------------------------------------------- */
 
-utils.resize(function () {
-  return resizeEcharts();
-});
-var navbarVerticalToggle = document.querySelector('.navbar-vertical-toggle');
-navbarVerticalToggle && navbarVerticalToggle.addEventListener('navbar.vertical.toggle', function () {
-  return resizeEcharts();
-});
+/*                             Echarts Total Sales                            */
+
+/* -------------------------------------------------------------------------- */
+
+
+var closedVsGoalInit = function closedVsGoalInit() {
+  var ECHART_LINE_TOTAL_SALES = '.echart-closed-vs-goal';
+  var $echartsLineTotalSales = document.querySelector(ECHART_LINE_TOTAL_SALES);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  if ($echartsLineTotalSales) {
+    // Get options from data attribute
+    var userOptions = utils.getData($echartsLineTotalSales, 'options');
+    var chart = window.echarts.init($echartsLineTotalSales);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.getColors().warning],
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          formatter: tooltipFormatter,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        legend: {
+          left: 'left',
+          data: ['Closed Amount', 'Revenue Date'],
+          itemWidth: 10,
+          itemHeight: 10,
+          borderRadius: 0,
+          icon: 'circle',
+          inactiveColor: utils.getGrays()['400'],
+          textStyle: {
+            color: utils.getGrays()['700']
+          },
+          itemGap: 20
+        },
+        xAxis: {
+          type: 'category',
+          name: 'Closed Date',
+          nameGap: 50,
+          nameLocation: 'center',
+          offset: 0,
+          nameTextStyle: {
+            color: utils.getGrays()['700']
+          },
+          data: ['2019-06-15', '2019-06-22', '2019-06-29', '2019-07-06', '2019-07-13', '2019-07-20', '2019-07-27', '2019-07-12', '2019-07-03'],
+          boundaryGap: false,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.rgbaColor('#000', 0.01),
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['400'],
+            formatter: function formatter(value) {
+              var date = new Date(value);
+              return "".concat(date.getDate(), " ").concat(months[date.getMonth()], " , 21");
+            },
+            margin: 20
+          }
+        },
+        yAxis: {
+          type: 'value',
+          name: 'Closed Amount',
+          nameGap: 85,
+          nameLocation: 'middle',
+          nameTextStyle: {
+            color: utils.getGrays()['700']
+          },
+          splitNumber: 3,
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          boundaryGap: false,
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['400'],
+            formatter: function formatter(value) {
+              return "$".concat(value);
+            },
+            margin: 15
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'line',
+          name: 'Closed Amount',
+          data: [0, 5000, 18000, 40000, 58000, 65000, 90000, 110000, 140000],
+          symbolSize: 5,
+          symbol: 'circle',
+          smooth: false,
+          hoverAnimation: true,
+          lineStyle: {
+            color: utils.rgbaColor(utils.getColor('primary'))
+          },
+          itemStyle: {
+            borderColor: utils.rgbaColor(utils.getColor('primary'), 0.6),
+            borderWidth: 2
+          }
+        }, {
+          type: 'line',
+          name: 'Revenue Date',
+          data: [0, 10000, 24000, 35000, 45000, 53000, 57000, 68000, 79000],
+          symbolSize: 5,
+          symbol: 'circle',
+          smooth: false,
+          hoverAnimation: true,
+          lineStyle: {
+            color: utils.rgbaColor(utils.getColor('warning'))
+          },
+          itemStyle: {
+            borderColor: utils.rgbaColor(utils.getColor('warning'), 0.6),
+            borderWidth: 2
+          }
+        }],
+        grid: {
+          right: '25px',
+          left: '100px',
+          bottom: '60px',
+          top: '35px'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Audience Chart                              */
+
+/* -------------------------------------------------------------------------- */
+
+
+var revenueChartInit = function revenueChartInit() {
+  var data = {
+    dates: utils.getDates(new Date('5-6-2019'), new Date('5-6-2021'), 1000 * 60 * 60 * 24 * 30),
+    dataset: {
+      revenue: [[645, 500, 550, 550, 473, 405, 286, 601, 743, 450, 604, 815, 855, 722, 700, 896, 866, 952, 719, 558, 737, 885, 972, 650, 600], [440, 250, 270, 400, 175, 180, 200, 400, 600, 380, 340, 550, 650, 450, 400, 688, 650, 721, 500, 300, 445, 680, 568, 400, 371]],
+      users: [[545, 500, 650, 727, 773, 705, 686, 501, 643, 580, 604, 615, 755, 722, 727, 816, 836, 952, 719, 758, 937, 785, 872, 850, 800], [340, 360, 230, 250, 410, 430, 450, 200, 220, 540, 500, 250, 355, 320, 500, 630, 680, 500, 520, 550, 750, 720, 700, 780, 750]],
+      deals: [[545, 400, 450, 627, 473, 450, 460, 780, 770, 800, 504, 550, 500, 530, 727, 716, 736, 820, 719, 758, 737, 885, 872, 850, 800], [245, 300, 450, 427, 273, 250, 260, 580, 570, 500, 402, 450, 400, 330, 527, 516, 536, 620, 519, 558, 537, 483, 472, 250, 300]],
+      profit: [[545, 400, 450, 627, 673, 605, 686, 501, 843, 518, 504, 715, 955, 622, 627, 716, 736, 952, 619, 558, 937, 785, 872, 550, 400], [340, 360, 330, 300, 410, 380, 450, 400, 420, 240, 200, 250, 355, 320, 500, 630, 680, 400, 420, 450, 650, 620, 700, 450, 340]]
+    }
+  };
+
+  var tooltipFormatter = function tooltipFormatter(params) {
+    return "<div class=\"card\">\n                <div class=\"card-header bg-light py-2\">\n                  <h6 class=\"text-600 mb-0\">".concat(params[0].axisValue, "</h6>\n                </div>\n              <div class=\"card-body py-2\">\n                <h6 class=\"text-600 fw-normal\">\n                  <span class=\"fas fa-circle text-primary me-2\"></span>Revenue: \n                  <span class=\"fw-medium\">$").concat(params[0].data, "</span></h6>\n                <h6 class=\"text-600 mb-0 fw-normal\"> \n                  <span class=\"fas fa-circle text-warning me-2\"></span>Revenue Goal: \n                  <span class=\"fw-medium\">$").concat(params[1].data, "</span></h6>\n              </div>\n            </div>");
+  };
+
+  var getDefaultOptions = function getDefaultOptions(data1, data2) {
+    return function () {
+      return {
+        color: utils.getGrays().white,
+        tooltip: {
+          trigger: 'axis',
+          padding: 0,
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          axisPointer: {
+            type: 'none'
+          },
+          formatter: tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: utils.getPastDates(25).map(function (date) {
+            return window.dayjs(date).format('DD MMM, YYYY');
+          }),
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return window.dayjs(value).format('MMM DD');
+            },
+            align: 'left',
+            fontSize: 11,
+            padding: [0, 0, 0, 5],
+            showMaxLabel: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          boundaryGap: true
+        },
+        yAxis: {
+          position: 'right',
+          axisPointer: {
+            type: 'none'
+          },
+          axisTick: 'none',
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'bar',
+          name: 'Revenue',
+          data: data1,
+          lineStyle: {
+            color: utils.getColor('primary')
+          },
+          itemStyle: {
+            barBorderRadius: [4, 4, 0, 0],
+            color: utils.getGrays()['100'],
+            borderColor: utils.getGrays()['300'],
+            borderWidth: 1
+          },
+          emphasis: {
+            itemStyle: {
+              color: utils.getColor('primary')
+            }
+          }
+        }, {
+          type: 'line',
+          name: 'Revenue Goal',
+          data: data2,
+          symbol: 'circle',
+          symbolSize: 6,
+          animation: false,
+          itemStyle: {
+            color: utils.getColor('warning')
+          },
+          lineStyle: {
+            type: 'dashed',
+            width: 2,
+            color: utils.getColor('warning')
+          }
+        }],
+        grid: {
+          right: 5,
+          left: 5,
+          bottom: '8%',
+          top: '5%'
+        }
+      };
+    };
+  };
+
+  var initChart = function initChart(el, options) {
+    var userOptions = utils.getData(el, 'options');
+    var chart = window.echarts.init(el);
+    echartSetOption(chart, userOptions, options);
+  };
+
+  var chartKeys = ['revenue', 'users', 'deals', 'profit'];
+  chartKeys.forEach(function (key) {
+    var el = document.querySelector(".echart-crm-".concat(key));
+    el && initChart(el, getDefaultOptions(data.dataset[key][0], data.dataset[key][1]));
+  });
+};
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Bounce Rate                            */
+
+/* -------------------------------------------------------------------------- */
+
+
+var dealStorageFunnelInit = function dealStorageFunnelInit() {
+  var $echartDealStorageFunnel = document.querySelector('.echart-deal-storage-funnel');
+
+  if ($echartDealStorageFunnel) {
+    var userOptions = utils.getData($echartDealStorageFunnel, 'options');
+    var data = userOptions.data,
+        dataAxis1 = userOptions.dataAxis1,
+        dataAxis2 = userOptions.dataAxis2;
+    var chart = window.echarts.init($echartDealStorageFunnel);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        yAxis: [{
+          data: dataAxis1,
+          axisLabel: {
+            inside: true,
+            textStyle: {
+              color: utils.getGrays()['700'],
+              fontWeight: 500,
+              fontSize: 11,
+              fontFamily: 'poppins'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          z: 10
+        }, {
+          data: dataAxis2,
+          axisLabel: {
+            inside: false,
+            textStyle: {
+              color: utils.getColors().primary,
+              fontWeight: 500,
+              fontSize: 11,
+              fontFamily: 'poppins'
+            },
+            borderRadius: 5,
+            backgroundColor: utils.getSoftColors().primary,
+            padding: [6, 16, 6, 16],
+            width: 115
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          z: 10
+        }],
+        xAxis: {
+          type: 'value',
+          min: 0,
+          max: 35,
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          inverse: true,
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'bar',
+          showBackground: true,
+          barWidth: 25,
+          label: {
+            show: true,
+            formatter: '{c} ',
+            position: 'insideLeft'
+          },
+          backgroundStyle: {
+            color: utils.getGrays()['200'],
+            borderRadius: 5
+          },
+          itemStyle: {
+            color: utils.getColors().primary,
+            borderRadius: 5
+          },
+          data: data
+        }],
+        grid: {
+          right: '65px',
+          left: '0',
+          bottom: '0',
+          top: '0'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* eslint-disable */
+
 
 var getPosition = function getPosition(pos, params, dom, rect, size) {
   return {
@@ -4290,13 +6607,1269 @@ var echartSetOption = function echartSetOption(chart, userOptions, getDefaultOpt
   var themeController = document.body; // Merge user options with lodash
 
   chart.setOption(window._.merge(getDefaultOptions(), userOptions));
-  themeController.addEventListener('clickControl', function (_ref14) {
-    var control = _ref14.detail.control;
+  themeController.addEventListener('clickControl', function (_ref16) {
+    var control = _ref16.detail.control;
 
     if (control === 'theme') {
       chart.setOption(window._.merge(getDefaultOptions(), userOptions));
     }
   });
+};
+
+var tooltipFormatter = function tooltipFormatter(params) {
+  var tooltipItem = "";
+  params.forEach(function (el) {
+    tooltipItem = tooltipItem + "<div class='ms-1'> \n        <h6 class=\"text-700\"><span class=\"fas fa-circle me-1 fs--2\" style=\"color:".concat(el.borderColor ? el.borderColor : el.color, "\"></span>\n          ").concat(el.seriesName, " : ").concat(_typeof(el.value) === 'object' ? el.value[1] : el.value, "\n        </h6>\n      </div>");
+  });
+  return "<div>\n            <p class='mb-2 text-600'>\n              ".concat(window.dayjs(params[0].axisValue).isValid() ? window.dayjs(params[0].axisValue).format('MMMM DD') : params[0].axisValue, "\n            </p>\n            ").concat(tooltipItem, "\n          </div>");
+};
+
+var resizeEcharts = function resizeEcharts() {
+  var $echarts = document.querySelectorAll('[data-echart-responsive]');
+
+  if ($echarts.length) {
+    $echarts.forEach(function (item) {
+      if (utils.getData(item, 'echart-responsive')) {
+        if (!(item.closest('.tab-pane') && window.getComputedStyle(item.closest('.tab-pane')).display === 'none')) {
+          window.echarts.init(item).resize();
+        }
+      }
+    });
+  }
+};
+
+utils.resize(function () {
+  return resizeEcharts();
+});
+var navbarVerticalToggle = document.querySelector('.navbar-vertical-toggle');
+navbarVerticalToggle && navbarVerticalToggle.addEventListener('navbar.vertical.toggle', function () {
+  return resizeEcharts();
+});
+var echartTabs = document.querySelectorAll('[data-tab-has-echarts]');
+echartTabs && echartTabs.forEach(function (tab) {
+  tab.addEventListener('shown.bs.tab', function (e) {
+    var el = e.target;
+    var hash = el.hash;
+    var id = hash || el.dataset.bsTarget;
+    var content = document.getElementById(id.substring(1));
+    var chart = content === null || content === void 0 ? void 0 : content.querySelector('[data-echart-tab]');
+    chart && window.echarts.init(chart).resize();
+  });
+});
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Gross Revenue                          */
+
+/* -------------------------------------------------------------------------- */
+
+var grossRevenueChartInit = function grossRevenueChartInit() {
+  var ECHART_GROSS_REVENUE = '.echart-gross-revenue-chart';
+  var $echartsGrossRevenue = document.querySelector(ECHART_GROSS_REVENUE);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  if ($echartsGrossRevenue) {
+    // Get options from data attribute
+    var userOptions = utils.getData($echartsGrossRevenue, 'options');
+    var chart = window.echarts.init($echartsGrossRevenue);
+    var SELECT_MONTH = "#".concat(userOptions.monthSelect);
+    var LEGEND_MONTH_TARGET = userOptions.target;
+    var LEGEND_CURRENT_MONTH = "#".concat(userOptions.optionOne);
+    var LEGEND_PREV_MONTH = "#".concat(userOptions.optionTwo);
+    var $legendCurrentMonth = document.getElementById(LEGEND_MONTH_TARGET).querySelector(LEGEND_CURRENT_MONTH);
+    var $legendPrevMonth = document.getElementById(LEGEND_MONTH_TARGET).querySelector(LEGEND_PREV_MONTH);
+
+    var dates = function dates(month) {
+      return utils.getDates(window.dayjs().month(month).date(1), window.dayjs().month(Number(month) + 1).date(0), 1000 * 60 * 60 * 24 * 3);
+    };
+
+    var monthsnumber = [[20, 40, 20, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 80, 60, 80, 65, 130, 120, 100, 30, 40, 30, 70], [100, 70, 80, 50, 120, 100, 130, 140, 90, 100, 40, 50], [80, 50, 60, 40, 60, 120, 100, 130, 60, 80, 50, 60], [70, 80, 100, 70, 90, 60, 80, 130, 40, 60, 50, 80], [90, 40, 80, 80, 100, 140, 100, 130, 90, 60, 70, 50], [80, 60, 80, 60, 40, 100, 120, 100, 30, 40, 30, 70], [20, 40, 20, 50, 70, 60, 110, 80, 90, 30, 50, 50], [60, 70, 30, 40, 80, 140, 80, 140, 120, 130, 100, 110], [90, 90, 40, 60, 40, 110, 90, 110, 60, 80, 60, 70], [50, 80, 50, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 90, 60, 70, 40, 70, 100, 140, 30, 40, 30, 70], [20, 40, 20, 50, 30, 80, 120, 100, 30, 40, 30, 70]];
+
+    var _tooltipFormatter2 = function _tooltipFormatter2(params) {
+      var currentDate = window.dayjs(params[0].axisValue);
+      var tooltipItem = '';
+      params.forEach(function (el) {
+        tooltipItem += "<h6 class=\"fs--1 text-700\"><span class=\"fas fa-circle me-2\" style=\"color:".concat(el.borderColor, "\"></span>\n        ").concat(currentDate.format('MMM DD'), " : ").concat(el.value, "\n      </h6>");
+      });
+      return "<div class='ms-1'>\n                ".concat(tooltipItem, "\n              </div>");
+    };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        title: {
+          text: 'Sales over time',
+          textStyle: {
+            fontWeight: 500,
+            fontSize: 13,
+            fontFamily: 'poppins'
+          }
+        },
+        legend: {
+          show: false,
+          data: ['currentMonth', 'prevMonth']
+        },
+        color: utils.getGrays().white,
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          formatter: _tooltipFormatter2,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: dates(0),
+          boundaryGap: false,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'solid'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['400'],
+            formatter: function formatter(value) {
+              var date = new Date(value);
+              return "".concat(months[date.getMonth()].substring(0, 3), " ").concat(date.getDate());
+            },
+            margin: 15
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['300']
+            }
+          },
+          boundaryGap: false,
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['400'],
+            margin: 15
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          name: 'prevMonth',
+          type: 'line',
+          data: monthsnumber[0],
+          lineStyle: {
+            color: utils.getGrays()['300']
+          },
+          itemStyle: {
+            borderColor: utils.getGrays()['300'],
+            borderWidth: 2
+          },
+          symbol: 'none',
+          smooth: false,
+          hoverAnimation: true
+        }, {
+          name: 'currentMonth',
+          type: 'line',
+          data: monthsnumber[1],
+          lineStyle: {
+            color: utils.getColors().primary
+          },
+          itemStyle: {
+            borderColor: utils.getColors().primary,
+            borderWidth: 2
+          },
+          symbol: 'none',
+          smooth: false,
+          hoverAnimation: true
+        }],
+        grid: {
+          right: '8px',
+          left: '40px',
+          bottom: '15%',
+          top: '20%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions); // Change chart options accordiong to the selected month
+
+    var monthSelect = document.querySelector(SELECT_MONTH);
+    var month = 0;
+    var currentMonthData = monthsnumber[Number(month) + 1];
+    var prevMonthData = monthsnumber[monthSelect.selectedIndex];
+    monthSelect.addEventListener('change', function (e) {
+      month = e.currentTarget.value;
+      currentMonthData = monthsnumber[Number(month) + 1];
+      prevMonthData = monthsnumber[month];
+      $legendCurrentMonth.querySelector('.text').innerText = months[month];
+      $legendPrevMonth.querySelector('.text').innerText = months[month - 1] ? months[month - 1] : 'Dec';
+      chart.setOption({
+        xAxis: {
+          data: dates(month)
+        },
+        series: [{
+          data: currentMonthData
+        }, {
+          data: prevMonthData
+        }]
+      });
+    });
+    $legendCurrentMonth.addEventListener('click', function () {
+      $legendCurrentMonth.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'currentMonth'
+      });
+    });
+    $legendPrevMonth.addEventListener('click', function () {
+      $legendPrevMonth.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'prevMonth'
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Traffic Channels                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var leadConversionInit = function leadConversionInit() {
+  var $leadConversion = document.querySelector('.echart-lead-conversion');
+
+  if ($leadConversion) {
+    var userOptions = utils.getData($leadConversion, 'options');
+    var chart = window.echarts.init($leadConversion);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.rgbaColor(utils.getColors().primary, 0.7), utils.rgbaColor(utils.getColors().info, 0.6), utils.rgbaColor(utils.getColors().secondary, 0.2), utils.rgbaColor(utils.getColors().warning, 0.6)],
+        legend: {
+          data: ['Campaigns', 'Lead', 'Opportunity', 'Deal'],
+          left: '0%',
+          icon: 'circle',
+          inactiveColor: utils.getGrays()['400'],
+          textStyle: {
+            color: utils.getGrays()['700']
+          },
+          itemGap: 10
+        },
+        yAxis: {
+          type: 'category',
+          data: ['kerry Ingram', 'Bradie Pitter', 'Harrington', 'Ashley Shaw', 'Jenny Horas', 'Chris Pratt'],
+          axisLine: {
+            show: false
+          },
+          boundaryGap: false,
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600']
+          }
+        },
+        xAxis: {
+          type: 'value',
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          axisPointer: {
+            type: 'none'
+          },
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: tooltipFormatter
+        },
+        series: [{
+          name: 'Campaigns',
+          type: 'bar',
+          stack: 'total',
+          data: [1405, 1300, 1620, 1430, 1500, 1520],
+          barWidth: '20%'
+        }, {
+          name: 'Lead',
+          type: 'bar',
+          stack: 'total',
+          data: [320, 302, 301, 334, 340, 390],
+          barWidth: '20%'
+        }, {
+          name: 'Opportunity',
+          type: 'bar',
+          stack: 'total',
+          data: [220, 182, 351, 234, 290, 300],
+          barWidth: '20%'
+        }, {
+          name: 'Deal',
+          type: 'bar',
+          stack: 'total',
+          data: [120, 182, 191, 134, 190, 170],
+          barWidth: '20%'
+        }],
+        grid: {
+          right: 5,
+          left: 5,
+          bottom: 8,
+          top: 60,
+          containLabel: true
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Line Payment                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var linePaymentChartInit = function linePaymentChartInit() {
+  var $echartsLinePaymentChart = document.querySelector('.echart-line-payment');
+  var dataset = {
+    all: [4, 1, 6, 2, 7, 12, 4, 6, 5, 4, 5, 10],
+    successful: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8],
+    failed: [1, 0, 2, 1, 2, 1, 1, 0, 0, 1, 0, 2]
+  };
+  var labels = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+
+  if ($echartsLinePaymentChart) {
+    var userOptions = utils.getData($echartsLinePaymentChart, 'options');
+    var chart = window.echarts.init($echartsLinePaymentChart);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'none'
+          },
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            return "".concat(params[0].axisValue, " - ").concat(params[0].value, " USD");
+          },
+          textStyle: {
+            fontWeight: 500,
+            fontSize: 12,
+            color: utils.getColors().dark
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: labels,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: utils.rgbaColor('#fff', 0.1)
+            },
+            interval: 0
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.rgbaColor('#fff', 0.1)
+            }
+          },
+          axisTick: {
+            show: true,
+            length: 10,
+            lineStyle: {
+              color: utils.rgbaColor('#fff', 0.1)
+            }
+          },
+          axisLabel: {
+            color: utils.getGrays()['400'],
+            fontWeight: 600,
+            formatter: function formatter(value) {
+              return value.substring(0, value.length - 3);
+            },
+            fontSize: 12,
+            interval: window.innerWidth < 768 ? 'auto' : 0,
+            margin: 15
+          },
+          boundaryGap: false
+        },
+        yAxis: {
+          type: 'value',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'line',
+          smooth: true,
+          data: dataset.successful.map(function (d) {
+            return (d * 3.14).toFixed(2);
+          }),
+          symbol: 'emptyCircle',
+          itemStyle: {
+            color: localStorage.getItem('theme') === 'light' ? utils.getGrays().white : utils.getColors().primary
+          },
+          lineStyle: {
+            color: localStorage.getItem('theme') === 'light' ? utils.rgbaColor(utils.getGrays().white, 0.8) : utils.getColors().primary
+          },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: localStorage.getItem('theme') === 'light' ? 'rgba(255, 255, 255, 0.5)' : utils.rgbaColor(utils.getColors().primary, 0.5)
+              }, {
+                offset: 1,
+                color: localStorage.getItem('theme') === 'light' ? 'rgba(255, 255, 255, 0)' : utils.rgbaColor(utils.getColors().primary, 0)
+              }]
+            }
+          },
+          emphasis: {
+            lineStyle: {
+              width: 2
+            }
+          }
+        }],
+        grid: {
+          right: 15,
+          left: 15,
+          bottom: '15%',
+          top: 0
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    utils.resize(function () {
+      if (window.innerWidth < 768) {
+        chart.setOption({
+          xAxis: {
+            axisLabel: {
+              interval: 'auto'
+            }
+          }
+        });
+      }
+    });
+    var selectMenu = document.querySelector('#dashboard-chart-select');
+
+    if (selectMenu) {
+      selectMenu.addEventListener('change', function (e) {
+        var value = e.currentTarget.value;
+        chart.setOption({
+          series: [{
+            data: dataset[value].map(function (d) {
+              return (d * 3.14).toFixed(2);
+            })
+          }]
+        });
+      });
+    }
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Session By Country Map                      */
+
+/* -------------------------------------------------------------------------- */
+
+
+var locationBySessionInit = function locationBySessionInit() {
+  var $locationBySessionMap = document.querySelector('.echart-location-by-session-map');
+  var data = [{
+    name: 'Afghanistan',
+    value: 28397.812
+  }, {
+    name: 'Angola',
+    value: 19549.124
+  }, {
+    name: 'Albania',
+    value: 3150.143
+  }, {
+    name: 'United Arab Emirates',
+    value: 8441.537
+  }, {
+    name: 'Argentina',
+    value: 40374.224
+  }, {
+    name: 'Armenia',
+    value: 2963.496
+  }, {
+    name: 'French Southern and Antarctic Lands',
+    value: 268.065
+  }, {
+    name: 'Australia',
+    value: 22404.488
+  }, {
+    name: 'Austria',
+    value: 8401.924
+  }, {
+    name: 'Azerbaijan',
+    value: 9094.718
+  }, {
+    name: 'Burundi',
+    value: 9232.753
+  }, {
+    name: 'Belgium',
+    value: 10941.288
+  }, {
+    name: 'Benin',
+    value: 9509.798
+  }, {
+    name: 'Burkina Faso',
+    value: 15540.284
+  }, {
+    name: 'Bangladesh',
+    value: 151125.475
+  }, {
+    name: 'Bulgaria',
+    value: 7389.175
+  }, {
+    name: 'The Bahamas',
+    value: 66402.316
+  }, {
+    name: 'Bosnia and Herzegovina',
+    value: 3845.929
+  }, {
+    name: 'Belarus',
+    value: 9491.07
+  }, {
+    name: 'Belize',
+    value: 308.595
+  }, {
+    name: 'Bermuda',
+    value: 64.951
+  }, {
+    name: 'Bolivia',
+    value: 716.939
+  }, {
+    name: 'Brazil',
+    value: 195210.154
+  }, {
+    name: 'Brunei',
+    value: 27.223
+  }, {
+    name: 'Bhutan',
+    value: 716.939
+  }, {
+    name: 'Botswana',
+    value: 1969.341
+  }, {
+    name: 'Central African Rep.',
+    value: 4349.921
+  }, {
+    name: 'Canada',
+    value: 34126.24
+  }, {
+    name: 'Switzerland',
+    value: 7830.534
+  }, {
+    name: 'Chile',
+    value: 17150.76
+  }, {
+    name: 'China',
+    value: 1359821.465
+  }, {
+    name: "Côte d'Ivoire",
+    value: 60508.978
+  }, {
+    name: 'Cameroon',
+    value: 20624.343
+  }, {
+    name: 'Dem. Rep. Congo',
+    value: 62191.161
+  }, {
+    name: 'Congo',
+    value: 3573.024
+  }, {
+    name: 'Colombia',
+    value: 46444.798
+  }, {
+    name: 'Costa Rica',
+    value: 4669.685
+  }, {
+    name: 'Cuba',
+    value: 11281.768
+  }, {
+    name: 'Northern Cyprus',
+    value: 1.468
+  }, {
+    name: 'Cyprus',
+    value: 1103.685
+  }, {
+    name: 'Czech Republic',
+    value: 10553.701
+  }, {
+    name: 'Germany',
+    value: 83017.404
+  }, {
+    name: 'Djibouti',
+    value: 834.036
+  }, {
+    name: 'Denmark',
+    value: 5550.959
+  }, {
+    name: 'Dominican Republic',
+    value: 10016.797
+  }, {
+    name: 'Algeria',
+    value: 37062.82
+  }, {
+    name: 'Ecuador',
+    value: 15001.072
+  }, {
+    name: 'Egypt',
+    value: 78075.705
+  }, {
+    name: 'Eritrea',
+    value: 5741.159
+  }, {
+    name: 'Spain',
+    value: 46182.038
+  }, {
+    name: 'Estonia',
+    value: 1298.533
+  }, {
+    name: 'Ethiopia',
+    value: 87095.281
+  }, {
+    name: 'Finland',
+    value: 5367.693
+  }, {
+    name: 'Fiji',
+    value: 860.559
+  }, {
+    name: 'Falkland Islands',
+    value: 49.581
+  }, {
+    name: 'France',
+    value: 63230.866
+  }, {
+    name: 'Gabon',
+    value: 1556.222
+  }, {
+    name: 'United Kingdom',
+    value: 62066.35
+  }, {
+    name: 'Georgia',
+    value: 4388.674
+  }, {
+    name: 'Ghana',
+    value: 24262.901
+  }, {
+    name: 'Eq. Guinea',
+    value: 10876.033
+  }, {
+    name: 'Guinea',
+    value: 10876.033
+  }, {
+    name: 'Gambia',
+    value: 1680.64
+  }, {
+    name: 'Guinea Bissau',
+    value: 10876.033
+  }, {
+    name: 'Equatorial Guinea',
+    value: 696.167
+  }, {
+    name: 'Greece',
+    value: 11109.999
+  }, {
+    name: 'Greenland',
+    value: 56.546
+  }, {
+    name: 'Guatemala',
+    value: 14341.576
+  }, {
+    name: 'French Guiana',
+    value: 231.169
+  }, {
+    name: 'Guyana',
+    value: 786.126
+  }, {
+    name: 'Honduras',
+    value: 7621.204
+  }, {
+    name: 'Croatia',
+    value: 4338.027
+  }, {
+    name: 'Haiti',
+    value: 9896.4
+  }, {
+    name: 'Hungary',
+    value: 10014.633
+  }, {
+    name: 'Indonesia',
+    value: 240676.485
+  }, {
+    name: 'India',
+    value: 1205624.648
+  }, {
+    name: 'Ireland',
+    value: 4467.561
+  }, {
+    name: 'Iran',
+    value: 240676.485
+  }, {
+    name: 'Iraq',
+    value: 30962.38
+  }, {
+    name: 'Iceland',
+    value: 318.042
+  }, {
+    name: 'Israel',
+    value: 7420.368
+  }, {
+    name: 'Italy',
+    value: 60508.978
+  }, {
+    name: 'Jamaica',
+    value: 2741.485
+  }, {
+    name: 'Jordan',
+    value: 6454.554
+  }, {
+    name: 'Japan',
+    value: 127352.833
+  }, {
+    name: 'Kazakhstan',
+    value: 15921.127
+  }, {
+    name: 'Kenya',
+    value: 40909.194
+  }, {
+    name: 'Kyrgyzstan',
+    value: 5334.223
+  }, {
+    name: 'Cambodia',
+    value: 14364.931
+  }, {
+    name: 'South Korea',
+    value: 51452.352
+  }, {
+    name: 'Kosovo',
+    value: 97.743
+  }, {
+    name: 'Kuwait',
+    value: 2991.58
+  }, {
+    name: 'Laos',
+    value: 6395.713
+  }, {
+    name: 'Lebanon',
+    value: 4341.092
+  }, {
+    name: 'Liberia',
+    value: 3957.99
+  }, {
+    name: 'Libya',
+    value: 6040.612
+  }, {
+    name: 'Sri Lanka',
+    value: 20758.779
+  }, {
+    name: 'Lesotho',
+    value: 2008.921
+  }, {
+    name: 'Lithuania',
+    value: 3068.457
+  }, {
+    name: 'Luxembourg',
+    value: 507.885
+  }, {
+    name: 'Latvia',
+    value: 2090.519
+  }, {
+    name: 'Morocco',
+    value: 31642.36
+  }, {
+    name: 'Moldova',
+    value: 103.619
+  }, {
+    name: 'Madagascar',
+    value: 21079.532
+  }, {
+    name: 'Mexico',
+    value: 117886.404
+  }, {
+    name: 'Macedonia',
+    value: 507.885
+  }, {
+    name: 'Mali',
+    value: 13985.961
+  }, {
+    name: 'Myanmar',
+    value: 51931.231
+  }, {
+    name: 'Montenegro',
+    value: 620.078
+  }, {
+    name: 'Mongolia',
+    value: 2712.738
+  }, {
+    name: 'Mozambique',
+    value: 23967.265
+  }, {
+    name: 'Mauritania',
+    value: 3609.42
+  }, {
+    name: 'Malawi',
+    value: 15013.694
+  }, {
+    name: 'Malaysia',
+    value: 28275.835
+  }, {
+    name: 'Namibia',
+    value: 2178.967
+  }, {
+    name: 'New Caledonia',
+    value: 246.379
+  }, {
+    name: 'Niger',
+    value: 15893.746
+  }, {
+    name: 'Nigeria',
+    value: 159707.78
+  }, {
+    name: 'Nicaragua',
+    value: 5822.209
+  }, {
+    name: 'Netherlands',
+    value: 16615.243
+  }, {
+    name: 'Norway',
+    value: 4891.251
+  }, {
+    name: 'Nepal',
+    value: 26846.016
+  }, {
+    name: 'New Zealand',
+    value: 4368.136
+  }, {
+    name: 'Oman',
+    value: 2802.768
+  }, {
+    name: 'Pakistan',
+    value: 173149.306
+  }, {
+    name: 'Panama',
+    value: 3678.128
+  }, {
+    name: 'Peru',
+    value: 29262.83
+  }, {
+    name: 'Philippines',
+    value: 93444.322
+  }, {
+    name: 'Papua New Guinea',
+    value: 6858.945
+  }, {
+    name: 'Poland',
+    value: 38198.754
+  }, {
+    name: 'Puerto Rico',
+    value: 3709.671
+  }, {
+    name: 'North Korea',
+    value: 1.468
+  }, {
+    name: 'Portugal',
+    value: 10589.792
+  }, {
+    name: 'Paraguay',
+    value: 6459.721
+  }, {
+    name: 'Qatar',
+    value: 1749.713
+  }, {
+    name: 'Romania',
+    value: 21861.476
+  }, {
+    name: 'Russia',
+    value: 21861.476
+  }, {
+    name: 'Rwanda',
+    value: 10836.732
+  }, {
+    name: 'Western Sahara',
+    value: 514.648
+  }, {
+    name: 'Saudi Arabia',
+    value: 27258.387
+  }, {
+    name: 'Sudan',
+    value: 35652.002
+  }, {
+    name: 'S. Sudan',
+    value: 9940.929
+  }, {
+    name: 'Senegal',
+    value: 12950.564
+  }, {
+    name: 'Solomon Islands',
+    value: 526.447
+  }, {
+    name: 'Sierra Leone',
+    value: 5751.976
+  }, {
+    name: 'El Salvador',
+    value: 6218.195
+  }, {
+    name: 'Somaliland',
+    value: 9636.173
+  }, {
+    name: 'Somalia',
+    value: 9636.173
+  }, {
+    name: 'Republic of Serbia',
+    value: 3573.024
+  }, {
+    name: 'Suriname',
+    value: 524.96
+  }, {
+    name: 'Slovakia',
+    value: 5433.437
+  }, {
+    name: 'Slovenia',
+    value: 2054.232
+  }, {
+    name: 'Sweden',
+    value: 9382.297
+  }, {
+    name: 'Swaziland',
+    value: 1193.148
+  }, {
+    name: 'Syria',
+    value: 7830.534
+  }, {
+    name: 'Chad',
+    value: 11720.781
+  }, {
+    name: 'Togo',
+    value: 6306.014
+  }, {
+    name: 'Thailand',
+    value: 66402.316
+  }, {
+    name: 'Tajikistan',
+    value: 7627.326
+  }, {
+    name: 'Turkmenistan',
+    value: 5041.995
+  }, {
+    name: 'East Timor',
+    value: 10016.797
+  }, {
+    name: 'Trinidad and Tobago',
+    value: 1328.095
+  }, {
+    name: 'Tunisia',
+    value: 10631.83
+  }, {
+    name: 'Turkey',
+    value: 72137.546
+  }, {
+    name: 'Tanzania',
+    value: 44973.33
+  }, {
+    name: 'Uganda',
+    value: 33987.213
+  }, {
+    name: 'Ukraine',
+    value: 46050.22
+  }, {
+    name: 'Uruguay',
+    value: 3371.982
+  }, {
+    name: 'United States',
+    value: 312247.116
+  }, {
+    name: 'Uzbekistan',
+    value: 27769.27
+  }, {
+    name: 'Venezuela',
+    value: 236.299
+  }, {
+    name: 'Vietnam',
+    value: 89047.397
+  }, {
+    name: 'Vanuatu',
+    value: 236.299
+  }, {
+    name: 'West Bank',
+    value: 13.565
+  }, {
+    name: 'Yemen',
+    value: 22763.008
+  }, {
+    name: 'South Africa',
+    value: 51452.352
+  }, {
+    name: 'Zambia',
+    value: 13216.985
+  }, {
+    name: 'Zimbabwe',
+    value: 13076.978
+  }];
+  var total = 6961500;
+  var maxZoomLevel = 5;
+  var minZoomLevel = 1;
+
+  if ($locationBySessionMap) {
+    var _document$querySelect2, _document$querySelect3, _document$querySelect4;
+
+    var userOptions = utils.getData($locationBySessionMap, 'options');
+    var chart = window.echarts.init($locationBySessionMap);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            var _params$data, _params$data2;
+
+            return "<strong>".concat((_params$data = params.data) === null || _params$data === void 0 ? void 0 : _params$data.name, " :</strong> ").concat((((_params$data2 = params.data) === null || _params$data2 === void 0 ? void 0 : _params$data2.value) / total * 100).toFixed(2), "%");
+          }
+        },
+        visualMap: {
+          show: false,
+          min: 800,
+          max: 50000,
+          inRange: {
+            color: [utils.getColors().primary, utils.rgbaColor(utils.getColors().primary, 0.8), utils.rgbaColor(utils.getColors().primary, 0.6), utils.rgbaColor(utils.getColors().primary, 0.4), utils.rgbaColor(utils.getColors().primary, 0.2)].reverse()
+          }
+        },
+        series: [{
+          type: 'map',
+          map: 'world',
+          data: data,
+          roam: 'move',
+          scaleLimit: {
+            min: minZoomLevel,
+            max: maxZoomLevel
+          },
+          left: 0,
+          right: 0,
+          label: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: utils.getGrays()['300']
+          },
+          emphasis: {
+            label: {
+              show: false
+            },
+            itemStyle: {
+              areaColor: utils.getColor('warning')
+            }
+          }
+        }]
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    var zoomLevel = 1;
+    (_document$querySelect2 = document.querySelector('.location-by-session-map-reset')) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.addEventListener('click', function () {
+      zoomLevel = 1;
+      chart.dispatchAction({
+        type: 'restore'
+      });
+      chart.setOption({
+        series: {
+          zoom: 1
+        }
+      });
+    });
+    (_document$querySelect3 = document.querySelector('.location-by-session-map-zoom')) === null || _document$querySelect3 === void 0 ? void 0 : _document$querySelect3.addEventListener('click', function () {
+      if (zoomLevel < maxZoomLevel) {
+        zoomLevel += 1;
+      }
+
+      chart.setOption({
+        series: {
+          zoom: zoomLevel
+        }
+      });
+    });
+    (_document$querySelect4 = document.querySelector('.location-by-session-map-zoomOut')) === null || _document$querySelect4 === void 0 ? void 0 : _document$querySelect4.addEventListener('click', function () {
+      if (zoomLevel > minZoomLevel) {
+        zoomLevel -= 1;
+      }
+
+      chart.setOption({
+        series: {
+          zoom: zoomLevel
+        }
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Product Share                               */
+
+/* -------------------------------------------------------------------------- */
+
+
+var marketShareEcommerceInit = function marketShareEcommerceInit() {
+  var ECHART_PRODUCT_SHARE = '.echart-product-share';
+  var $echartProductShare = document.querySelector(ECHART_PRODUCT_SHARE);
+
+  if ($echartProductShare) {
+    var userOptions = utils.getData($echartProductShare, 'options');
+    var chart = window.echarts.init($echartProductShare);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.getColors().info, utils.getColors().warning],
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            return "<strong>".concat(params.data.name, ":</strong> ").concat(params.percent, "%");
+          }
+        },
+        position: function position(pos, params, dom, rect, size) {
+          return getPosition(pos, params, dom, rect, size);
+        },
+        legend: {
+          show: false
+        },
+        series: [{
+          type: 'pie',
+          radius: ['100%', '80%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: utils.getColor('card-bg')
+          },
+          label: {
+            normal: {
+              show: false,
+              position: 'center',
+              textStyle: {
+                fontSize: '20',
+                fontWeight: '500',
+                color: utils.getGrays()['700']
+              }
+            },
+            emphasis: {
+              show: false
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: [{
+            value: 5300000,
+            name: 'Falcon'
+          }, {
+            value: 1900000,
+            name: 'Sparrow'
+          }, {
+            value: 2000000,
+            name: 'Phoenix'
+          }]
+        }]
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
 };
 /* -------------------------------------------------------------------------- */
 
@@ -4305,7 +7878,7 @@ var echartSetOption = function echartSetOption(chart, userOptions, getDefaultOpt
 /* -------------------------------------------------------------------------- */
 
 
-var marketShare = function marketShare() {
+var marketShareInit = function marketShareInit() {
   var ECHART_MARKET_SHARE = '.echart-market-share';
   var $echartMarketShare = document.querySelector(ECHART_MARKET_SHARE);
 
@@ -4383,19 +7956,1538 @@ var marketShare = function marketShare() {
 };
 /* -------------------------------------------------------------------------- */
 
+/*                                Market Share                                */
+
+/* -------------------------------------------------------------------------- */
+
+
+var mostLeadsInit = function mostLeadsInit() {
+  var ECHART_MOST_LEADS = '.echart-most-leads';
+  var $echartMostLeads = document.querySelector(ECHART_MOST_LEADS);
+
+  if ($echartMostLeads) {
+    var userOptions = utils.getData($echartMostLeads, 'options');
+    var chart = window.echarts.init($echartMostLeads);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.getColors().info, utils.getColors().warning, utils.getColors().info // utils.getGrays()[300],
+        ],
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            return "<strong>".concat(params.data.name, ":</strong> ").concat(params.percent, "%");
+          }
+        },
+        position: function position(pos, params, dom, rect, size) {
+          return getPosition(pos, params, dom, rect, size);
+        },
+        legend: {
+          show: false
+        },
+        series: [{
+          type: 'pie',
+          radius: ['100%', '67%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: utils.getColor('card-bg')
+          },
+          label: {
+            normal: {
+              show: false,
+              position: 'center',
+              textStyle: {
+                fontSize: '20',
+                fontWeight: '500',
+                color: utils.getGrays()['700']
+              }
+            },
+            emphasis: {
+              show: false
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: [{
+            value: 60,
+            name: 'Email'
+          }, {
+            value: 30,
+            name: 'Social'
+          }, {
+            value: 10,
+            name: 'Call'
+          }, {
+            value: 120,
+            name: 'Other'
+          }]
+        }]
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Real Time Users                        */
+
+/* -------------------------------------------------------------------------- */
+
+
+var realTimeUsersChartInit = function realTimeUsersChartInit() {
+  var $echartsRealTimeUsers = document.querySelector('.echart-real-time-users');
+
+  if ($echartsRealTimeUsers) {
+    var userOptions = utils.getData($echartsRealTimeUsers, 'options');
+    var chart = window.echarts.init($echartsRealTimeUsers);
+    var data = [921, 950, 916, 913, 909, 962, 926, 936, 977, 976, 999, 981, 998, 1000, 900, 906, 973, 911, 994, 982, 917, 972, 952, 963, 991];
+    var axisData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
+
+    var _tooltipFormatter3 = function _tooltipFormatter3(params) {
+      return "\n      <div>\n          <h6 class=\"fs--1 text-700 mb-0\"><span class=\"fas fa-circle me-1 text-info\"></span>\n            Users : ".concat(params[0].value, "\n          </h6>\n      </div>\n      ");
+    };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          axisPointer: {
+            type: 'none'
+          },
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: _tooltipFormatter3
+        },
+        xAxis: {
+          type: 'category',
+          axisLabel: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          boundaryGap: [0.2, 0.2],
+          data: axisData
+        },
+        yAxis: {
+          type: 'value',
+          scale: true,
+          boundaryGap: false,
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          min: 500,
+          max: 1100
+        },
+        series: [{
+          type: 'bar',
+          barCategoryGap: '12%',
+          data: data,
+          itemStyle: {
+            color: utils.rgbaColor('#fff', 0.3)
+          }
+        }],
+        grid: {
+          right: '0px',
+          left: '0px',
+          bottom: 0,
+          top: 0
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    var userCounterDom = document.querySelector('.real-time-user');
+    setInterval(function () {
+      var rndData = utils.getRandomNumber(900, 1000);
+      data.shift();
+      data.push(rndData);
+      axisData.shift();
+      axisData.push(utils.getRandomNumber(100, 500));
+      userCounterDom.innerHTML = rndData;
+      chart.setOption({
+        xAxis: {
+          data: axisData
+        },
+        series: [{
+          data: data
+        }]
+      });
+    }, 2000);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                     Echart Bar Report For This Week                        */
+
+/* -------------------------------------------------------------------------- */
+
+
+var reportForThisWeekInit = function reportForThisWeekInit() {
+  var ECHART_BAR_REPORT_FOR_THIS_WEEK = '.echart-bar-report-for-this-week';
+  var $echartBarReportForThisWeek = document.querySelector(ECHART_BAR_REPORT_FOR_THIS_WEEK);
+
+  if ($echartBarReportForThisWeek) {
+    var selectChart = utils.getData($echartBarReportForThisWeek, 'chart');
+    var legendLastWeek = document.getElementById(selectChart === null || selectChart === void 0 ? void 0 : selectChart.option1);
+    var legendThisWeek = document.getElementById(selectChart === null || selectChart === void 0 ? void 0 : selectChart.option2);
+    var data = [['product', 'This Week', 'Last Week'], ['Sun', 43, 85], ['Mon', 83, 73], ['Tue', 86, 62], ['Wed', 72, 53], ['Thu', 80, 50], ['Fri', 50, 70], ['Sat', 80, 90]];
+    var userOptions = utils.getData($echartBarReportForThisWeek, 'options');
+    var chart = window.echarts.init($echartBarReportForThisWeek);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.getGrays()['300']],
+        dataset: {
+          source: data
+        },
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: function formatter(params) {
+            return "<div class=\"font-weight-semi-bold\">".concat(params.seriesName, "</div><div class=\"fs--1 text-600\"><strong>").concat(params.name, ":</strong> ").concat(params.value[params.componentIndex + 1], "</div>");
+          }
+        },
+        legend: {
+          show: false
+        },
+        xAxis: {
+          type: 'category',
+          axisLabel: {
+            color: utils.getGrays()['400']
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          axisTick: false,
+          boundaryGap: true
+        },
+        yAxis: {
+          axisPointer: {
+            type: 'none'
+          },
+          axisTick: 'none',
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['400'],
+            formatter: function formatter(value) {
+              return "".concat(value, " hr");
+            }
+          }
+        },
+        series: [{
+          type: 'bar',
+          name: '',
+          barWidth: '12%',
+          barGap: '30%',
+          label: {
+            normal: {
+              show: false
+            }
+          },
+          z: 10,
+          itemStyle: {
+            normal: {
+              barBorderRadius: [10, 10, 0, 0],
+              color: utils.getColors().primary
+            }
+          }
+        }, {
+          type: 'bar',
+          barWidth: '12%',
+          barGap: '30%',
+          label: {
+            normal: {
+              show: false
+            }
+          },
+          itemStyle: {
+            normal: {
+              barBorderRadius: [4, 4, 0, 0],
+              color: utils.getGrays()[300]
+            }
+          }
+        }],
+        grid: {
+          right: '0',
+          left: '40px',
+          bottom: '10%',
+          top: '15%'
+        }
+      };
+    };
+
+    legendLastWeek && legendLastWeek.addEventListener('click', function () {
+      legendLastWeek.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'Last Week'
+      });
+    });
+    legendThisWeek && legendThisWeek.addEventListener('click', function () {
+      legendThisWeek.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'This Week'
+      });
+    });
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                     Echarts Line Returing Customer Rate                    */
+
+/* -------------------------------------------------------------------------- */
+
+
+var returningCustomerRateInit = function returningCustomerRateInit() {
+  var ECHART_LINE_RETURNING_CUSTOMER_RATE = '.echart-line-returning-customer-rate';
+  var $echartsLineReturningCustomerRate = document.querySelector(ECHART_LINE_RETURNING_CUSTOMER_RATE);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  if ($echartsLineReturningCustomerRate) {
+    // Get options from data attribute
+    var userOptions = utils.getData($echartsLineReturningCustomerRate, 'options');
+    var LEGEND_MONTH_TARGET = userOptions.target;
+    var SELECT_MONTH = "#".concat(userOptions.monthSelect);
+    var LEGEND_NEW_MONTH = "#".concat(userOptions.optionOne);
+    var LEGEND_RETURNING_MONTH = "#".concat(userOptions.optionTwo);
+    var $legendNewMonth = document.getElementById(LEGEND_MONTH_TARGET).querySelector(LEGEND_NEW_MONTH);
+    var $legendReturningMonth = document.getElementById(LEGEND_MONTH_TARGET).querySelector(LEGEND_RETURNING_MONTH);
+    var chart = window.echarts.init($echartsLineReturningCustomerRate);
+    var monthNumbers = [[20, 40, 20, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 80, 60, 80, 65, 130, 120, 100, 30, 40, 30, 70], [100, 70, 80, 50, 120, 100, 130, 140, 90, 100, 40, 50], [80, 50, 60, 40, 60, 120, 100, 130, 60, 80, 50, 60], [70, 80, 100, 70, 90, 60, 80, 130, 40, 60, 50, 80], [90, 40, 80, 80, 100, 140, 100, 130, 90, 60, 70, 50], [80, 60, 80, 60, 40, 100, 120, 100, 30, 40, 30, 70], [20, 40, 20, 50, 70, 60, 110, 80, 90, 30, 50, 50], [60, 70, 30, 40, 80, 140, 80, 140, 120, 130, 100, 110], [90, 90, 40, 60, 40, 110, 90, 110, 60, 80, 60, 70], [50, 80, 50, 80, 50, 80, 120, 80, 50, 120, 110, 110], [60, 90, 60, 70, 40, 70, 100, 140, 30, 40, 30, 70], [20, 40, 20, 50, 30, 80, 120, 100, 30, 40, 30, 70]];
+
+    var dates = function dates(month) {
+      return utils.getDates(window.dayjs().month(month).date(1), window.dayjs().month(Number(month) + 1).date(0), 1000 * 60 * 60 * 24 * 3);
+    };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        title: {
+          text: 'Customers',
+          textStyle: {
+            fontWeight: 500,
+            fontSize: 13,
+            fontFamily: 'poppins',
+            color: utils.getColor('900')
+          }
+        },
+        legend: {
+          show: false,
+          data: ['newMonth', 'returningMonth']
+        },
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: dates(0),
+          boundaryGap: false,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getColor('300'),
+              type: 'dashed'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getColor('300'),
+              type: 'solid'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getColor('400'),
+            formatter: function formatter(value) {
+              var date = new Date(value);
+
+              if (date.getDate() === 1) {
+                return "".concat(months[date.getMonth()].substring(0, 3), " ").concat(date.getDate());
+              }
+
+              return "".concat(date.getDate());
+            },
+            margin: 15
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['300']
+            }
+          },
+          boundaryGap: false,
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['400'],
+            margin: 15
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          name: 'New',
+          type: 'line',
+          data: monthNumbers[1],
+          lineStyle: {
+            color: utils.getColors().primary
+          },
+          itemStyle: {
+            borderColor: utils.getColors().primary,
+            borderWidth: 2
+          },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: utils.rgbaColor(utils.getColor('primary'), 0.2)
+              }, {
+                offset: 1,
+                color: utils.rgbaColor(utils.getColor('primary'), 0.01)
+              }]
+            }
+          },
+          symbol: 'none',
+          smooth: false,
+          hoverAnimation: true
+        }, {
+          name: 'Returning',
+          type: 'line',
+          data: monthNumbers[0],
+          lineStyle: {
+            color: utils.getColor('warning')
+          },
+          itemStyle: {
+            borderColor: utils.getColor('warning'),
+            borderWidth: 2
+          },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: utils.rgbaColor(utils.getColor('warning'), 0.2)
+              }, {
+                offset: 1,
+                color: utils.rgbaColor(utils.getColor('warning'), 0.01)
+              }]
+            }
+          },
+          symbol: 'none',
+          smooth: false,
+          hoverAnimation: true
+        }],
+        grid: {
+          right: '7px',
+          left: '35px',
+          bottom: '8%',
+          top: '15%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions); // Change chart options accordiong to the selected month
+
+    var monthSelect = document.querySelector(SELECT_MONTH);
+    monthSelect.addEventListener('change', function (e) {
+      var month = e.currentTarget.value;
+      var dataNewMonth = monthNumbers[Number(month) + 1];
+      var dataReturningMonth = monthNumbers[month];
+      chart.setOption({
+        xAxis: {
+          data: dates(month)
+        },
+        series: [{
+          data: dataNewMonth
+        }, {
+          data: dataReturningMonth
+        }]
+      });
+    });
+    $legendNewMonth.addEventListener('click', function () {
+      $legendNewMonth.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'newMonth'
+      });
+    });
+    $legendReturningMonth.addEventListener('click', function () {
+      $legendReturningMonth.classList.toggle('opacity-50');
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'returningMonth'
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                          Echarts Sales Pos Location                        */
+
+/* -------------------------------------------------------------------------- */
+
+
+var salesByPosLocationInit = function salesByPosLocationInit() {
+  var ECHART_RADAR_SALES_BY_POS_LOCATION = '.echart-radar-sales-by-pos-location';
+  var $echartsRadarSalesByPosLocation = document.querySelector(ECHART_RADAR_SALES_BY_POS_LOCATION);
+
+  function getformatter(params) {
+    //const indicators = ['Marketing','Sales', 'Dev', 'Support', 'Tech', 'Admin']
+    return "<strong > ".concat(params.name, " </strong>\n    <div class=\"fs--1 text-600\">\n      <strong >Marketing</strong>: ").concat(params.value[0], "  <br>\n      <strong>Sales</strong>: ").concat(params.value[1], "  <br>\n      <strong>Dev</strong>: ").concat(params.value[2], "  <br>\n      <strong>Support</strong>: ").concat(params.value[3], "  <br>\n      <strong>Tech</strong>: ").concat(params.value[4], "  <br>\n      <strong>Admin</strong>: ").concat(params.value[5], "  <br>\n    </div>");
+  }
+
+  if ($echartsRadarSalesByPosLocation) {
+    // Get options from data attribute
+    var userOptions = utils.getData($echartsRadarSalesByPosLocation, 'options');
+    var chart = window.echarts.init($echartsRadarSalesByPosLocation);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getColor('100'),
+          borderColor: utils.getColor('300'),
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: getformatter
+        },
+        radar: {
+          splitNumber: 7,
+          radius: '75%',
+          axisLine: {
+            show: true,
+            symbol: 'circle',
+            symbolSize: [13, 13],
+            lineStyle: {
+              color: {
+                type: 'radial',
+                x: 0.5,
+                y: 0.5,
+                r: 0.5,
+                colorStops: [{
+                  offset: 0.7,
+                  color: utils.getColor('100')
+                }, {
+                  offset: 1,
+                  color: utils.getColor('400')
+                }]
+              }
+            }
+          },
+          splitArea: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getColor('300')
+            }
+          },
+          name: {
+            textStyle: {
+              color: utils.getColor('600'),
+              fontWeight: 500
+            }
+          },
+          indicator: [{
+            name: 'Marketing',
+            max: 70
+          }, {
+            name: 'Admin',
+            max: 70
+          }, {
+            name: 'Tech',
+            max: 70
+          }, {
+            name: 'Support',
+            max: 70
+          }, {
+            name: 'Dev',
+            max: 70
+          }, {
+            name: 'Sales',
+            max: 70
+          }]
+        },
+        series: [{
+          name: 'Budget vs spending',
+          type: 'radar',
+          symbol: 'pin',
+          data: [{
+            value: [20, 50, 60, 50, 60, 60],
+            name: 'Budget',
+            itemStyle: {
+              color: utils.rgbaColor(utils.getColors().warning, 0.5)
+            },
+            areaStyle: {
+              color: [utils.rgbaColor(utils.getColors().warning, 0.24)]
+            },
+            symbol: 'circle',
+            symbolSize: 8
+          }, {
+            value: [40, 60, 30, 15, 60, 35],
+            name: 'Spending',
+            areaStyle: {
+              color: [utils.rgbaColor(utils.getColors().primary, 0.24)]
+            },
+            symbol: 'circle',
+            symbolSize: 8,
+            itemStyle: {
+              color: utils.rgbaColor(utils.getColors().primary)
+            }
+          }]
+        }],
+        grid: {
+          top: 0,
+          bottom: '100px'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Session By Device                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var sessionByBrowserChartInit = function sessionByBrowserChartInit() {
+  var $sessionByBroswser = document.querySelector('.echart-session-by-browser');
+
+  if ($sessionByBroswser) {
+    var userOptions = utils.getData($sessionByBroswser, 'options');
+    var chart = window.echarts.init($sessionByBroswser);
+    var dataset = {
+      week: [{
+        value: 50.3,
+        name: 'Chrome'
+      }, {
+        value: 20.6,
+        name: 'Safari'
+      }, {
+        value: 30.1,
+        name: 'Mozilla'
+      }],
+      month: [{
+        value: 35.1,
+        name: 'Chrome'
+      }, {
+        value: 25.6,
+        name: 'Safari'
+      }, {
+        value: 40.3,
+        name: 'Mozilla'
+      }],
+      year: [{
+        value: 26.1,
+        name: 'Chrome'
+      }, {
+        value: 10.6,
+        name: 'Safari'
+      }, {
+        value: 64.3,
+        name: 'Mozilla'
+      }]
+    };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.getColors().success, utils.getColors().info],
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            return "<strong>".concat(params.data.name, ":</strong> ").concat(params.data.value, "%");
+          },
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        legend: {
+          show: false
+        },
+        series: [{
+          type: 'pie',
+          radius: ['100%', '65%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: utils.getColor('card-bg')
+          },
+          label: {
+            normal: {
+              show: false
+            },
+            emphasis: {
+              show: false
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: dataset.week
+        }]
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    var selectMenu = document.querySelector("[data-target='.echart-session-by-browser']");
+
+    if (selectMenu) {
+      selectMenu.addEventListener('change', function (e) {
+        var value = e.currentTarget.value;
+        chart.setOption({
+          series: [{
+            data: dataset[value]
+          }]
+        });
+      });
+    }
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Session By Country Map                      */
+
+/* -------------------------------------------------------------------------- */
+
+
+var sessionByCountryMapInit = function sessionByCountryMapInit() {
+  var $sessionByCountryMap = document.querySelector('.echart-session-by-country-map');
+  var data = [{
+    name: 'Afghanistan',
+    value: 28397.812
+  }, {
+    name: 'Angola',
+    value: 19549.124
+  }, {
+    name: 'Albania',
+    value: 3150.143
+  }, {
+    name: 'United Arab Emirates',
+    value: 8441.537
+  }, {
+    name: 'Argentina',
+    value: 40374.224
+  }, {
+    name: 'Armenia',
+    value: 2963.496
+  }, {
+    name: 'French Southern and Antarctic Lands',
+    value: 268.065
+  }, {
+    name: 'Australia',
+    value: 22404.488
+  }, {
+    name: 'Austria',
+    value: 8401.924
+  }, {
+    name: 'Azerbaijan',
+    value: 9094.718
+  }, {
+    name: 'Burundi',
+    value: 9232.753
+  }, {
+    name: 'Belgium',
+    value: 10941.288
+  }, {
+    name: 'Benin',
+    value: 9509.798
+  }, {
+    name: 'Burkina Faso',
+    value: 15540.284
+  }, {
+    name: 'Bangladesh',
+    value: 151125.475
+  }, {
+    name: 'Bulgaria',
+    value: 7389.175
+  }, {
+    name: 'The Bahamas',
+    value: 66402.316
+  }, {
+    name: 'Bosnia and Herzegovina',
+    value: 3845.929
+  }, {
+    name: 'Belarus',
+    value: 9491.07
+  }, {
+    name: 'Belize',
+    value: 308.595
+  }, {
+    name: 'Bermuda',
+    value: 64.951
+  }, {
+    name: 'Bolivia',
+    value: 716.939
+  }, {
+    name: 'Brazil',
+    value: 195210.154
+  }, {
+    name: 'Brunei',
+    value: 27.223
+  }, {
+    name: 'Bhutan',
+    value: 716.939
+  }, {
+    name: 'Botswana',
+    value: 1969.341
+  }, {
+    name: 'Central African Rep.',
+    value: 4349.921
+  }, {
+    name: 'Canada',
+    value: 34126.24
+  }, {
+    name: 'Switzerland',
+    value: 7830.534
+  }, {
+    name: 'Chile',
+    value: 17150.76
+  }, {
+    name: 'China',
+    value: 1359821.465
+  }, {
+    name: "Côte d'Ivoire",
+    value: 60508.978
+  }, {
+    name: 'Cameroon',
+    value: 20624.343
+  }, {
+    name: 'Dem. Rep. Congo',
+    value: 62191.161
+  }, {
+    name: 'Congo',
+    value: 3573.024
+  }, {
+    name: 'Colombia',
+    value: 46444.798
+  }, {
+    name: 'Costa Rica',
+    value: 4669.685
+  }, {
+    name: 'Cuba',
+    value: 11281.768
+  }, {
+    name: 'Northern Cyprus',
+    value: 1.468
+  }, {
+    name: 'Cyprus',
+    value: 1103.685
+  }, {
+    name: 'Czech Republic',
+    value: 10553.701
+  }, {
+    name: 'Germany',
+    value: 83017.404
+  }, {
+    name: 'Djibouti',
+    value: 834.036
+  }, {
+    name: 'Denmark',
+    value: 5550.959
+  }, {
+    name: 'Dominican Republic',
+    value: 10016.797
+  }, {
+    name: 'Algeria',
+    value: 37062.82
+  }, {
+    name: 'Ecuador',
+    value: 15001.072
+  }, {
+    name: 'Egypt',
+    value: 78075.705
+  }, {
+    name: 'Eritrea',
+    value: 5741.159
+  }, {
+    name: 'Spain',
+    value: 46182.038
+  }, {
+    name: 'Estonia',
+    value: 1298.533
+  }, {
+    name: 'Ethiopia',
+    value: 87095.281
+  }, {
+    name: 'Finland',
+    value: 5367.693
+  }, {
+    name: 'Fiji',
+    value: 860.559
+  }, {
+    name: 'Falkland Islands',
+    value: 49.581
+  }, {
+    name: 'France',
+    value: 63230.866
+  }, {
+    name: 'Gabon',
+    value: 1556.222
+  }, {
+    name: 'United Kingdom',
+    value: 62066.35
+  }, {
+    name: 'Georgia',
+    value: 4388.674
+  }, {
+    name: 'Ghana',
+    value: 24262.901
+  }, {
+    name: 'Eq. Guinea',
+    value: 10876.033
+  }, {
+    name: 'Guinea',
+    value: 10876.033
+  }, {
+    name: 'Gambia',
+    value: 1680.64
+  }, {
+    name: 'Guinea Bissau',
+    value: 10876.033
+  }, {
+    name: 'Equatorial Guinea',
+    value: 696.167
+  }, {
+    name: 'Greece',
+    value: 11109.999
+  }, {
+    name: 'Greenland',
+    value: 56.546
+  }, {
+    name: 'Guatemala',
+    value: 14341.576
+  }, {
+    name: 'French Guiana',
+    value: 231.169
+  }, {
+    name: 'Guyana',
+    value: 786.126
+  }, {
+    name: 'Honduras',
+    value: 7621.204
+  }, {
+    name: 'Croatia',
+    value: 4338.027
+  }, {
+    name: 'Haiti',
+    value: 9896.4
+  }, {
+    name: 'Hungary',
+    value: 10014.633
+  }, {
+    name: 'Indonesia',
+    value: 240676.485
+  }, {
+    name: 'India',
+    value: 1205624.648
+  }, {
+    name: 'Ireland',
+    value: 4467.561
+  }, {
+    name: 'Iran',
+    value: 240676.485
+  }, {
+    name: 'Iraq',
+    value: 30962.38
+  }, {
+    name: 'Iceland',
+    value: 318.042
+  }, {
+    name: 'Israel',
+    value: 7420.368
+  }, {
+    name: 'Italy',
+    value: 60508.978
+  }, {
+    name: 'Jamaica',
+    value: 2741.485
+  }, {
+    name: 'Jordan',
+    value: 6454.554
+  }, {
+    name: 'Japan',
+    value: 127352.833
+  }, {
+    name: 'Kazakhstan',
+    value: 15921.127
+  }, {
+    name: 'Kenya',
+    value: 40909.194
+  }, {
+    name: 'Kyrgyzstan',
+    value: 5334.223
+  }, {
+    name: 'Cambodia',
+    value: 14364.931
+  }, {
+    name: 'South Korea',
+    value: 51452.352
+  }, {
+    name: 'Kosovo',
+    value: 97.743
+  }, {
+    name: 'Kuwait',
+    value: 2991.58
+  }, {
+    name: 'Laos',
+    value: 6395.713
+  }, {
+    name: 'Lebanon',
+    value: 4341.092
+  }, {
+    name: 'Liberia',
+    value: 3957.99
+  }, {
+    name: 'Libya',
+    value: 6040.612
+  }, {
+    name: 'Sri Lanka',
+    value: 20758.779
+  }, {
+    name: 'Lesotho',
+    value: 2008.921
+  }, {
+    name: 'Lithuania',
+    value: 3068.457
+  }, {
+    name: 'Luxembourg',
+    value: 507.885
+  }, {
+    name: 'Latvia',
+    value: 2090.519
+  }, {
+    name: 'Morocco',
+    value: 31642.36
+  }, {
+    name: 'Moldova',
+    value: 103.619
+  }, {
+    name: 'Madagascar',
+    value: 21079.532
+  }, {
+    name: 'Mexico',
+    value: 117886.404
+  }, {
+    name: 'Macedonia',
+    value: 507.885
+  }, {
+    name: 'Mali',
+    value: 13985.961
+  }, {
+    name: 'Myanmar',
+    value: 51931.231
+  }, {
+    name: 'Montenegro',
+    value: 620.078
+  }, {
+    name: 'Mongolia',
+    value: 2712.738
+  }, {
+    name: 'Mozambique',
+    value: 23967.265
+  }, {
+    name: 'Mauritania',
+    value: 3609.42
+  }, {
+    name: 'Malawi',
+    value: 15013.694
+  }, {
+    name: 'Malaysia',
+    value: 28275.835
+  }, {
+    name: 'Namibia',
+    value: 2178.967
+  }, {
+    name: 'New Caledonia',
+    value: 246.379
+  }, {
+    name: 'Niger',
+    value: 15893.746
+  }, {
+    name: 'Nigeria',
+    value: 159707.78
+  }, {
+    name: 'Nicaragua',
+    value: 5822.209
+  }, {
+    name: 'Netherlands',
+    value: 16615.243
+  }, {
+    name: 'Norway',
+    value: 4891.251
+  }, {
+    name: 'Nepal',
+    value: 26846.016
+  }, {
+    name: 'New Zealand',
+    value: 4368.136
+  }, {
+    name: 'Oman',
+    value: 2802.768
+  }, {
+    name: 'Pakistan',
+    value: 173149.306
+  }, {
+    name: 'Panama',
+    value: 3678.128
+  }, {
+    name: 'Peru',
+    value: 29262.83
+  }, {
+    name: 'Philippines',
+    value: 93444.322
+  }, {
+    name: 'Papua New Guinea',
+    value: 6858.945
+  }, {
+    name: 'Poland',
+    value: 38198.754
+  }, {
+    name: 'Puerto Rico',
+    value: 3709.671
+  }, {
+    name: 'North Korea',
+    value: 1.468
+  }, {
+    name: 'Portugal',
+    value: 10589.792
+  }, {
+    name: 'Paraguay',
+    value: 6459.721
+  }, {
+    name: 'Qatar',
+    value: 1749.713
+  }, {
+    name: 'Romania',
+    value: 21861.476
+  }, {
+    name: 'Russia',
+    value: 21861.476
+  }, {
+    name: 'Rwanda',
+    value: 10836.732
+  }, {
+    name: 'Western Sahara',
+    value: 514.648
+  }, {
+    name: 'Saudi Arabia',
+    value: 27258.387
+  }, {
+    name: 'Sudan',
+    value: 35652.002
+  }, {
+    name: 'S. Sudan',
+    value: 9940.929
+  }, {
+    name: 'Senegal',
+    value: 12950.564
+  }, {
+    name: 'Solomon Islands',
+    value: 526.447
+  }, {
+    name: 'Sierra Leone',
+    value: 5751.976
+  }, {
+    name: 'El Salvador',
+    value: 6218.195
+  }, {
+    name: 'Somaliland',
+    value: 9636.173
+  }, {
+    name: 'Somalia',
+    value: 9636.173
+  }, {
+    name: 'Republic of Serbia',
+    value: 3573.024
+  }, {
+    name: 'Suriname',
+    value: 524.96
+  }, {
+    name: 'Slovakia',
+    value: 5433.437
+  }, {
+    name: 'Slovenia',
+    value: 2054.232
+  }, {
+    name: 'Sweden',
+    value: 9382.297
+  }, {
+    name: 'Swaziland',
+    value: 1193.148
+  }, {
+    name: 'Syria',
+    value: 7830.534
+  }, {
+    name: 'Chad',
+    value: 11720.781
+  }, {
+    name: 'Togo',
+    value: 6306.014
+  }, {
+    name: 'Thailand',
+    value: 66402.316
+  }, {
+    name: 'Tajikistan',
+    value: 7627.326
+  }, {
+    name: 'Turkmenistan',
+    value: 5041.995
+  }, {
+    name: 'East Timor',
+    value: 10016.797
+  }, {
+    name: 'Trinidad and Tobago',
+    value: 1328.095
+  }, {
+    name: 'Tunisia',
+    value: 10631.83
+  }, {
+    name: 'Turkey',
+    value: 72137.546
+  }, {
+    name: 'Tanzania',
+    value: 44973.33
+  }, {
+    name: 'Uganda',
+    value: 33987.213
+  }, {
+    name: 'Ukraine',
+    value: 46050.22
+  }, {
+    name: 'Uruguay',
+    value: 3371.982
+  }, {
+    name: 'United States',
+    value: 312247.116
+  }, {
+    name: 'Uzbekistan',
+    value: 27769.27
+  }, {
+    name: 'Venezuela',
+    value: 236.299
+  }, {
+    name: 'Vietnam',
+    value: 89047.397
+  }, {
+    name: 'Vanuatu',
+    value: 236.299
+  }, {
+    name: 'West Bank',
+    value: 13.565
+  }, {
+    name: 'Yemen',
+    value: 22763.008
+  }, {
+    name: 'South Africa',
+    value: 51452.352
+  }, {
+    name: 'Zambia',
+    value: 13216.985
+  }, {
+    name: 'Zimbabwe',
+    value: 13076.978
+  }];
+  var total = 6961500;
+
+  if ($sessionByCountryMap) {
+    var _document$querySelect5;
+
+    var userOptions = utils.getData($sessionByCountryMap, 'options');
+    var chart = window.echarts.init($sessionByCountryMap);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'item',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          formatter: function formatter(params) {
+            var _params$data3, _params$data4;
+
+            return "<strong>".concat((_params$data3 = params.data) === null || _params$data3 === void 0 ? void 0 : _params$data3.name, " :</strong> ").concat((((_params$data4 = params.data) === null || _params$data4 === void 0 ? void 0 : _params$data4.value) / total * 100).toFixed(2), "%");
+          }
+        },
+        toolbox: {
+          show: false,
+          feature: {
+            restore: {}
+          }
+        },
+        visualMap: {
+          show: false,
+          min: 800,
+          max: 50000,
+          inRange: {
+            color: [utils.getColors().primary, utils.rgbaColor(utils.getColors().primary, 0.8), utils.rgbaColor(utils.getColors().primary, 0.6), utils.rgbaColor(utils.getColors().primary, 0.4), utils.rgbaColor(utils.getColors().primary, 0.2)].reverse()
+          }
+        },
+        series: [{
+          type: 'map',
+          map: 'world',
+          data: data,
+          roam: true,
+          scaleLimit: {
+            min: 1,
+            max: 5
+          },
+          left: 0,
+          right: 0,
+          label: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: utils.getGrays()['300']
+          },
+          emphasis: {
+            label: {
+              show: false
+            },
+            itemStyle: {
+              areaColor: utils.getColor('warning')
+            }
+          }
+        }]
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    (_document$querySelect5 = document.querySelector('.session-by-country-map-reset')) === null || _document$querySelect5 === void 0 ? void 0 : _document$querySelect5.addEventListener('click', function () {
+      chart.dispatchAction({
+        type: 'restore'
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Session By Country                          */
+
+/* -------------------------------------------------------------------------- */
+
+
+var sessionByCountryChartInit = function sessionByCountryChartInit() {
+  var $sessionByCountry = document.querySelector('.echart-session-by-country');
+  var data = [['CHINA', 'INDIA', 'USA', 'IRAN', 'BRAZIL', 'PAKISTAN'], [19.53, 17.32, 4.49, 3.46, 2.8, 1.7]];
+
+  if ($sessionByCountry) {
+    var userOptions = utils.getData($sessionByCountry, 'options');
+    var chart = window.echarts.init($sessionByCountry);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          axisPointer: {
+            type: 'none'
+          },
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          } // formatter: tooltipFormatter
+
+        },
+        xAxis: {
+          type: 'category',
+          data: data[0],
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return value.substring(0, 3);
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['400']
+            }
+          },
+          axisTick: {
+            show: true,
+            // length: 8,
+            alignWithLabel: true,
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          }
+        },
+        yAxis: {
+          type: 'value',
+          // inverse: true,
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['300'],
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return "".concat(value, "%");
+            },
+            fontWeight: 500,
+            padding: [3, 0, 0, 0],
+            margin: 12
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          type: 'bar',
+          data: data[1],
+          itemStyle: {
+            barBorderRadius: [3, 3, 0, 0],
+            color: utils.getColors().primary
+          },
+          barWidth: 15
+        }],
+        grid: {
+          right: '12px',
+          left: '40px',
+          bottom: '10%',
+          top: '16px'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* -------------------------------------------------------------------------- */
+
 /*                                Top Products                                */
 
 /* -------------------------------------------------------------------------- */
 
 
-var topProducts = function topProducts() {
+var topProductsInit = function topProductsInit() {
   var ECHART_BAR_TOP_PRODUCTS = '.echart-bar-top-products';
   var $echartBarTopProducts = document.querySelector(ECHART_BAR_TOP_PRODUCTS);
 
   if ($echartBarTopProducts) {
-    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90] // ['Raven Pro', 60, 70],
-    // ['Posh', 80, 70],
-    ];
+    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
     var userOptions = utils.getData($echartBarTopProducts, 'options');
     var chart = window.echarts.init($echartBarTopProducts);
 
@@ -4468,7 +9560,7 @@ var topProducts = function topProducts() {
         },
         series: [{
           type: 'bar',
-          barWidth: '12%',
+          barWidth: '10px',
           barGap: '30%',
           label: {
             normal: {
@@ -4484,7 +9576,7 @@ var topProducts = function topProducts() {
           }
         }, {
           type: 'bar',
-          barWidth: '12%',
+          barWidth: '10px',
           barGap: '30%',
           label: {
             normal: {
@@ -4517,7 +9609,7 @@ var topProducts = function topProducts() {
 /* -------------------------------------------------------------------------- */
 
 
-var totalOrder = function totalOrder() {
+var totalOrderInit = function totalOrderInit() {
   var ECHART_LINE_TOTAL_ORDER = '.echart-line-total-order'; //
   // ─── TOTAL ORDER CHART ──────────────────────────────────────────────────────────
   //
@@ -4549,7 +9641,7 @@ var totalOrder = function totalOrder() {
         },
         xAxis: {
           type: 'category',
-          data: ['Week 4', 'Week 5'],
+          data: ['Week 4', 'Week 5', 'week 6', 'week 7'],
           boundaryGap: false,
           splitLine: {
             show: false
@@ -4601,10 +9693,11 @@ var totalOrder = function totalOrder() {
             borderWidth: 2
           },
           hoverAnimation: true,
-          data: [20, 130],
-          connectNulls: true,
+          data: [20, 40, 100, 120],
+          // connectNulls: true,
           smooth: 0.6,
           smoothMonotone: 'x',
+          showSymbol: false,
           symbol: 'circle',
           symbolSize: 8,
           areaStyle: {
@@ -4638,12 +9731,191 @@ var totalOrder = function totalOrder() {
 };
 /* -------------------------------------------------------------------------- */
 
+/*                      Echarts Total Sales E-commerce                        */
+
+/* -------------------------------------------------------------------------- */
+
+
+var totalSalesEcommerce = function totalSalesEcommerce() {
+  var ECHART_LINE_TOTAL_SALES_ECOMM = '.echart-line-total-sales-ecommerce';
+  var $echartsLineTotalSalesEcomm = document.querySelector(ECHART_LINE_TOTAL_SALES_ECOMM);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function getFormatter(params) {
+    return params.map(function (_ref17, index) {
+      var value = _ref17.value,
+          borderColor = _ref17.borderColor;
+      return "<span class= \"fas fa-circle\" style=\"color: ".concat(borderColor, "\"></span>\n    <span class='text-600'>").concat(index === 0 ? 'Last Month' : 'Previous Year', ": ").concat(value, "</span>");
+    }).join('<br/>');
+  }
+
+  if ($echartsLineTotalSalesEcomm) {
+    // Get options from data attribute
+    var userOptions = utils.getData($echartsLineTotalSalesEcomm, 'options');
+    var TOTAL_SALES_LAST_MONTH = "#".concat(userOptions.optionOne);
+    var TOTAL_SALES_PREVIOUS_YEAR = "#".concat(userOptions.optionTwo);
+    var totalSalesLastMonth = document.querySelector(TOTAL_SALES_LAST_MONTH);
+    var totalSalesPreviousYear = document.querySelector(TOTAL_SALES_PREVIOUS_YEAR);
+    var chart = window.echarts.init($echartsLineTotalSalesEcomm);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: utils.getGrays()['100'],
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          formatter: function formatter(params) {
+            return getFormatter(params);
+          },
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          }
+        },
+        legend: {
+          data: ['lastMonth', 'previousYear'],
+          show: false
+        },
+        xAxis: {
+          type: 'category',
+          data: ['2019-01-05', '2019-01-06', '2019-01-07', '2019-01-08', '2019-01-09', '2019-01-10', '2019-01-11', '2019-01-12', '2019-01-13', '2019-01-14', '2019-01-15', '2019-01-16'],
+          boundaryGap: false,
+          axisPointer: {
+            lineStyle: {
+              color: utils.getColor('300'),
+              type: 'dashed'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              // color: utils.getGrays()['300'],
+              color: utils.rgbaColor('#000', 0.01),
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getColor('400'),
+            formatter: function formatter(value) {
+              var date = new Date(value);
+              return "".concat(months[date.getMonth()], " ").concat(date.getDate());
+            },
+            margin: 15 // showMaxLabel: false
+
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisPointer: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getColor('300'),
+              type: 'dashed'
+            }
+          },
+          boundaryGap: false,
+          axisLabel: {
+            show: true,
+            color: utils.getColor('400'),
+            margin: 15
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        series: [{
+          name: 'lastMonth',
+          type: 'line',
+          data: [50, 80, 60, 80, 65, 90, 130, 90, 30, 40, 30, 70],
+          lineStyle: {
+            color: utils.getColor('primary')
+          },
+          itemStyle: {
+            borderColor: utils.getColor('primary'),
+            borderWidth: 2
+          },
+          symbol: 'circle',
+          symbolSize: 10,
+          hoverAnimation: true,
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0,
+                color: utils.rgbaColor(utils.getColor('primary'), 0.2)
+              }, {
+                offset: 1,
+                color: utils.rgbaColor(utils.getColor('primary'), 0)
+              }]
+            }
+          }
+        }, {
+          name: 'previousYear',
+          type: 'line',
+          data: [110, 30, 40, 50, 80, 70, 50, 40, 110, 90, 60, 60],
+          lineStyle: {
+            color: utils.rgbaColor(utils.getColor('warning'), 0.3)
+          },
+          itemStyle: {
+            borderColor: utils.rgbaColor(utils.getColor('warning'), 0.6),
+            borderWidth: 2
+          },
+          symbol: 'circle',
+          symbolSize: 10,
+          hoverAnimation: true
+        }],
+        grid: {
+          right: '18px',
+          left: '40px',
+          bottom: '15%',
+          top: '5%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+    totalSalesLastMonth.addEventListener('click', function () {
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'lastMonth'
+      });
+    });
+    totalSalesPreviousYear.addEventListener('click', function () {
+      chart.dispatchAction({
+        type: 'legendToggleSelect',
+        name: 'previousYear'
+      });
+    });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
 /*                             Echarts Total Sales                            */
 
 /* -------------------------------------------------------------------------- */
 
 
-var totalSales = function totalSales() {
+var totalSalesInit = function totalSalesInit() {
   var ECHART_LINE_TOTAL_SALES = '.echart-line-total-sales';
   var SELECT_MONTH = '.select-month';
   var $echartsLineTotalSales = document.querySelector(ECHART_LINE_TOTAL_SALES);
@@ -4665,7 +9937,7 @@ var totalSales = function totalSales() {
 
     var getDefaultOptions = function getDefaultOptions() {
       return {
-        color: utils.getGrays().white,
+        color: utils.getGrays()['100'],
         tooltip: {
           trigger: 'axis',
           padding: [7, 10],
@@ -4782,35 +10054,319 @@ var totalSales = function totalSales() {
     echartSetOption(chart, userOptions, getDefaultOptions); // Change chart options accordiong to the selected month
 
     var monthSelect = document.querySelector(SELECT_MONTH);
-    monthSelect.addEventListener('change', function (e) {
-      var month = e.currentTarget.value;
-      var data = monthsnumber[month];
-      chart.setOption({
-        tooltip: {
-          formatter: function formatter(params) {
-            var _params$2 = params[0],
-                name = _params$2.name,
-                value = _params$2.value;
-            var date = new Date(name);
-            return "".concat(months[month], " ").concat(date.getDate(), ", ").concat(value);
-          }
+
+    if (monthSelect) {
+      monthSelect.addEventListener('change', function (e) {
+        var month = e.currentTarget.value;
+        var data = monthsnumber[month];
+        chart.setOption({
+          tooltip: {
+            formatter: function formatter(params) {
+              var _params$2 = params[0],
+                  name = _params$2.name,
+                  value = _params$2.value;
+              var date = new Date(name);
+              return "".concat(months[month], " ").concat(date.getDate(), ", ").concat(value);
+            }
+          },
+          xAxis: {
+            axisLabel: {
+              formatter: function formatter(value) {
+                var date = new Date(value);
+                return "".concat(months[month], " ").concat(date.getDate());
+              },
+              margin: 15
+            }
+          },
+          series: [{
+            data: data
+          }]
+        });
+      });
+    }
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                                Traffic Channels                           */
+
+/* -------------------------------------------------------------------------- */
+
+
+var trafficChannelChartInit = function trafficChannelChartInit() {
+  var $trafficChannels = document.querySelector('.echart-traffic-channels');
+
+  if ($trafficChannels) {
+    var userOptions = utils.getData($trafficChannels, 'options');
+    var chart = window.echarts.init($trafficChannels); // const tooltipFormatter = params => {
+    //   let tooltipItem = ``
+    //   params.forEach(el => {
+    //     tooltipItem = tooltipItem +`<div class='ms-1'>
+    //       <h6 class="fs--1 text-700"><span class="fas fa-circle me-2" style="color:${
+    //         el.color}"></span>
+    //         ${el.seriesName} : ${el.value}
+    //       </h6>
+    //     </div>`
+    //   });
+    //   return `<div>
+    //             <p class='mb-2 text-600'>${window
+    //               .dayjs(params[0].axisValue)
+    //               .format('MMM DD, YYYY')}</p>
+    //             ${tooltipItem}
+    //           </div>`;
+    // };
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        color: [utils.getColors().primary, utils.rgbaColor(utils.getColors().primary, 0.8), utils.rgbaColor(utils.getColors().primary, 0.6), utils.rgbaColor(utils.getColors().primary, 0.4), utils.rgbaColor(utils.getColors().primary, 0.2)],
+        legend: {
+          data: ['Display', 'Direct', 'Organic Search', 'Paid Search', 'Other'],
+          left: 5,
+          // bottom: 10,
+          itemWidth: 10,
+          itemHeight: 10,
+          borderRadius: 0,
+          icon: 'circle',
+          inactiveColor: utils.getGrays()['400'],
+          textStyle: {
+            color: utils.getGrays()['700']
+          },
+          itemGap: 20
         },
         xAxis: {
+          type: 'category',
+          data: utils.getPastDates(7).map(function (date) {
+            return window.dayjs(date).format('DD MMM, YYYY');
+          }),
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisTick: {
+            show: false
+          },
           axisLabel: {
+            color: utils.getGrays()['600'],
             formatter: function formatter(value) {
-              var date = new Date(value);
-              return "".concat(months[month], " ").concat(date.getDate());
-            },
+              return window.dayjs(value).format('ddd');
+            }
+          }
+        },
+        yAxis: {
+          type: 'value',
+          position: 'right',
+          splitLine: {
+            lineStyle: {
+              color: utils.getGrays()['200']
+            }
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: true,
+            color: utils.getGrays()['600'],
             margin: 15
           }
         },
+        tooltip: {
+          trigger: 'axis',
+          padding: [7, 10],
+          axisPointer: {
+            type: 'none'
+          },
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          transitionDuration: 0,
+          position: function position(pos, params, dom, rect, size) {
+            return getPosition(pos, params, dom, rect, size);
+          },
+          formatter: tooltipFormatter
+        },
         series: [{
-          data: data
-        }]
-      });
-    });
+          name: 'Display',
+          type: 'bar',
+          stack: 'total',
+          data: [320, 302, 301, 334, 390, 330, 320]
+        }, {
+          name: 'Direct',
+          type: 'bar',
+          stack: 'total',
+          data: [120, 132, 101, 134, 90, 230, 210]
+        }, {
+          name: 'Organic Search',
+          type: 'bar',
+          stack: 'total',
+          data: [220, 182, 191, 234, 290, 330, 310]
+        }, {
+          name: 'Paid Search',
+          type: 'bar',
+          stack: 'total',
+          data: [150, 212, 201, 154, 190, 330, 410]
+        }, {
+          name: 'Other',
+          type: 'bar',
+          stack: 'total',
+          data: [820, 832, 901, 934, 1290, 1330, 1320],
+          itemStyle: {
+            barBorderRadius: [5, 5, 0, 0]
+          }
+        }],
+        grid: {
+          right: '50px',
+          left: '0px',
+          bottom: '10%',
+          top: '15%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
   }
 };
+/* -------------------------------------------------------------------------- */
+
+/*                             Echarts Users By Time                          */
+
+/* -------------------------------------------------------------------------- */
+
+
+var usersByTimeChartInit = function usersByTimeChartInit() {
+  var $echartUsersByTimeChart = document.querySelector('.echart-users-by-time');
+  var hours = ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'];
+  var data = [];
+
+  for (var i = 0; i < 24; i += 1) {
+    for (var j = 0; j < 7; j += 1) {
+      data.push([j, i, utils.getRandomNumber(20, 300)]);
+    }
+  }
+
+  var tooltipFormatter = function tooltipFormatter(params) {
+    return "<div>\n          <p class='mb-0 text-600'>".concat(window.dayjs(params.name).format('MMM DD, YYYY'), "</p>\n          <div class=\"d-flex align-items-center\">\n            <p class=\"mb-0 text-600\">\n              ").concat(window.dayjs().hour(params.data[1]).format('hA'), " : <span class='text-800 fw-semi-bold'>").concat(params.data[2], "</span>\n            </p>\n          </div>\n        </div>");
+  };
+
+  if ($echartUsersByTimeChart) {
+    var userOptions = utils.getData($echartUsersByTimeChart, 'options');
+    var chart = window.echarts.init($echartUsersByTimeChart);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        gradientColor: [utils.getColor('info'), utils.getColor('primary')],
+        tooltip: {
+          position: 'top',
+          padding: [7, 10],
+          backgroundColor: utils.getGrays()['100'],
+          borderColor: utils.getGrays()['300'],
+          textStyle: {
+            color: utils.getColors().dark
+          },
+          borderWidth: 1,
+          formatter: tooltipFormatter
+        },
+        xAxis: {
+          type: 'category',
+          data: utils.getPastDates(7),
+          splitArea: {
+            show: true
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            formatter: function formatter(value) {
+              return window.dayjs(value).format('ddd');
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['400']
+            }
+          }
+        },
+        yAxis: {
+          position: 'right',
+          type: 'category',
+          inverse: true,
+          data: hours,
+          splitArea: {
+            show: true
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: utils.getGrays()['600'],
+            margin: 20,
+            padding: [10, 0, 0, 0]
+          },
+          axisLine: {
+            lineStyle: {
+              color: utils.getGrays()['400']
+            }
+          }
+        },
+        visualMap: {
+          type: 'piecewise',
+          orient: 'horizontal',
+          left: 'left',
+          bottom: '3%',
+          itemSymbol: 'diamond',
+          itemWidth: '10px',
+          itemHeight: '10px',
+          min: 20,
+          max: 300,
+          splitNumber: 4,
+          textGap: 5,
+          textStyle: {
+            color: utils.getGrays()['600'],
+            fontWeight: 500
+          }
+        },
+        series: [{
+          name: 'Users By Time',
+          type: 'heatmap',
+          data: data,
+          label: {
+            show: false
+          },
+          itemStyle: {
+            borderColor: utils.getColor('white'),
+            borderWidth: 3
+          },
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 3,
+              shadowColor: utils.rgbaColor(utils.getGrays().black, 0.5)
+            }
+          }
+        }],
+        grid: {
+          right: '60px',
+          left: '0px',
+          bottom: '20%',
+          top: '0%'
+        }
+      };
+    };
+
+    echartSetOption(chart, userOptions, getDefaultOptions);
+  }
+};
+/* eslint-disable */
+
 /* -------------------------------------------------------------------------- */
 
 /*                                Weekly Sales                                */
@@ -4818,7 +10374,7 @@ var totalSales = function totalSales() {
 /* -------------------------------------------------------------------------- */
 
 
-var weeklySales = function weeklySales() {
+var weeklySalesInit = function weeklySalesInit() {
   var ECHART_BAR_WEEKLY_SALES = '.echart-bar-weekly-sales';
   var $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
 
@@ -4838,7 +10394,7 @@ var weeklySales = function weeklySales() {
         tooltip: {
           trigger: 'axis',
           padding: [7, 10],
-          formatter: '{b1}: {c1}',
+          formatter: '{b0} : {c0}',
           transitionDuration: 0,
           backgroundColor: utils.getGrays()['100'],
           borderColor: utils.getGrays()['300'],
@@ -4887,21 +10443,10 @@ var weeklySales = function weeklySales() {
         },
         series: [{
           type: 'bar',
-          barWidth: '5px',
-          barGap: '-100%',
-          itemStyle: {
-            barBorderRadius: 10,
-            color: utils.getGrays()['200']
+          showBackground: true,
+          backgroundStyle: {
+            borderRadius: 10
           },
-          data: dataBackground,
-          animation: false,
-          emphasis: {
-            itemStyle: {
-              color: utils.getGrays()['200']
-            }
-          }
-        }, {
-          type: 'bar',
           barWidth: '5px',
           itemStyle: {
             barBorderRadius: 10,
@@ -4936,11 +10481,11 @@ var weeklySales = function weeklySales() {
 
 docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
-docReady(totalOrder);
-docReady(weeklySales);
-docReady(marketShare);
-docReady(totalSales);
-docReady(topProducts);
+docReady(totalOrderInit);
+docReady(weeklySalesInit);
+docReady(marketShareInit);
+docReady(totalSalesInit);
+docReady(topProductsInit);
 docReady(progressBar);
 docReady(navbarTopDropShadow);
 docReady(tooltipInit);
@@ -4952,9 +10497,8 @@ docReady(plyrInit);
 docReady(initMap);
 docReady(dropzoneInit);
 docReady(choicesInit);
-docReady(settingsPanelInit);
-docReady(chartLinePaymentInit);
-docReady(chartRealTimeUserInit);
+docReady(formValidationInit);
+docReady(barChartInit);
 docReady(leafletActiveUserInit);
 docReady(countupInit);
 docReady(copyLink);
@@ -4971,10 +10515,49 @@ docReady(swiperInit);
 docReady(ratingInit);
 docReady(draggableInit);
 docReady(kanbanInit);
+docReady(fullCalendarInit);
+docReady(appCalendarInit);
+docReady(managementCalendarInit);
 docReady(lottieInit);
 docReady(wizardInit);
 docReady(searchInit);
 docReady(cookieNoticeInit);
 docReady(themeControl);
 docReady(dropdownOnHover);
+docReady(marketShareEcommerceInit);
+docReady(productShareDoughnutInit);
+docReady(totalSalesEcommerce);
+docReady(salesByPosLocationInit);
+docReady(returningCustomerRateInit);
+docReady(candleChartInit);
+docReady(grossRevenueChartInit);
+docReady(scrollbarInit);
+docReady(iconCopiedInit);
+docReady(reportForThisWeekInit);
+docReady(basicEchartsInit);
+docReady(chartScatter);
+docReady(chartDoughnut);
+docReady(chartPie);
+docReady(chartPolar);
+docReady(chartRadar);
+docReady(chartCombo);
+docReady(dropdownMenuInit);
+docReady(audienceChartInit);
+docReady(sessionByBrowserChartInit);
+docReady(sessionByCountryChartInit);
+docReady(activeUsersChartReportInit);
+docReady(trafficChannelChartInit);
+docReady(bounceRateChartInit);
+docReady(usersByTimeChartInit);
+docReady(sessionByCountryMapInit);
+docReady(mostLeadsInit);
+docReady(closedVsGoalInit);
+docReady(leadConversionInit);
+docReady(dealStorageFunnelInit);
+docReady(revenueChartInit);
+docReady(locationBySessionInit);
+docReady(realTimeUsersChartInit);
+docReady(linePaymentChartInit);
+docReady(chartBubble);
+docReady(chartLine);
 //# sourceMappingURL=theme.js.map
