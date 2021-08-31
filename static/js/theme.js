@@ -156,24 +156,14 @@ var getOffset = function getOffset(el) {
   };
 };
 
-var isScrolledIntoView = function isScrolledIntoView(el) {
-  var top = el.offsetTop;
-  var left = el.offsetLeft;
-  var width = el.offsetWidth;
-  var height = el.offsetHeight;
-
-  while (el.offsetParent) {
-    // eslint-disable-next-line no-param-reassign
-    el = el.offsetParent;
-    top += el.offsetTop;
-    left += el.offsetLeft;
-  }
-
-  return {
-    all: top >= window.pageYOffset && left >= window.pageXOffset && top + height <= window.pageYOffset + window.innerHeight && left + width <= window.pageXOffset + window.innerWidth,
-    partial: top < window.pageYOffset + window.innerHeight && left < window.pageXOffset + window.innerWidth && top + height > window.pageYOffset && left + width > window.pageXOffset
-  };
-};
+function isScrolledIntoView(el) {
+  var rect = el.getBoundingClientRect();
+  var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+  var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+  var vertInView = rect.top <= windowHeight && rect.top + rect.height >= 0;
+  var horInView = rect.left <= windowWidth && rect.left + rect.width >= 0;
+  return vertInView && horInView;
+}
 
 var breakpoints = {
   xs: 0,
@@ -3768,94 +3758,6 @@ var progressAnimationToggle = function progressAnimationToggle() {
     });
   });
 };
-/* -------------------------------------------------------------------------- */
-
-/*                               Progressbar JS                               */
-
-/* -------------------------------------------------------------------------- */
-
-/*
-  global ProgressBar
-*/
-
-
-var progressBar = function progressBar() {
-  var merge = window._.merge; // progressbar.js@1.0.0 version is used
-  // Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
-
-  /*-----------------------------------------------
-  |   Progress Circle
-  -----------------------------------------------*/
-
-  var progresCircle = document.querySelectorAll('.progress-circle');
-
-  if (progresCircle.length) {
-    progresCircle.forEach(function (item) {
-      var userOptions = utils.getData(item, 'options');
-
-      var getDefaultOptions = function getDefaultOptions() {
-        return {
-          strokeWidth: 2,
-          trailWidth: 2,
-          trailColor: utils.getGrays()['200'],
-          color: utils.getGrays()['400'],
-          easing: 'easeInOut',
-          duration: 3000,
-          svgStyle: {
-            'stroke-linecap': 'round',
-            display: 'block',
-            width: '100%'
-          },
-          text: {
-            autoStyleContainer: false
-          },
-          // Set default step function for all animate calls
-          step: function step(state, circle) {
-            // Change stroke color during progress
-            // circle.path.setAttribute('stroke', state.color);
-            // Change stroke width during progress
-            // circle.path.setAttribute('stroke-width', state.width);
-            var percentage = Math.round(circle.value() * 100);
-            circle.setText("<span class='value'>".concat(percentage, "<b>%</b></span> <span>").concat(userOptions.text || '', "</span>"));
-          }
-        };
-      };
-
-      var options = merge(getDefaultOptions(), userOptions);
-      var bar = new ProgressBar.Circle(item, options);
-      var linearGradient = "<defs>\n        <linearGradient id=\"gradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\" gradientUnits=\"userSpaceOnUse\">\n          <stop offset=\"0%\" stop-color='#1970e2' />\n          <stop offset=\"100%\" stop-color='#4695ff' />\n        </linearGradient>\n      </defs>";
-      bar.svg.insertAdjacentHTML('beforeEnd', linearGradient);
-      var playProgressTriggered = false;
-
-      var progressCircleAnimation = function progressCircleAnimation() {
-        if (!playProgressTriggered) {
-          if (utils.isScrolledIntoView(item).partial) {
-            bar.animate(options.progress / 100);
-            playProgressTriggered = true;
-          }
-        }
-
-        return playProgressTriggered;
-      };
-
-      progressCircleAnimation();
-      window.addEventListener('scroll', function () {
-        progressCircleAnimation();
-      });
-      document.body.addEventListener('clickControl', function (_ref11) {
-        var control = _ref11.detail.control;
-
-        if (control === 'theme') {
-          bar.trail.setAttribute('stroke', utils.getGrays()['200']);
-
-          if (!bar.path.getAttribute('stroke').includes('url')) {
-            bar.path.setAttribute('stroke', utils.getGrays()['400']);
-          }
-        }
-      });
-    });
-  }
-};
 /*-----------------------------------------------
 |  Quantity
 -----------------------------------------------*/
@@ -4012,8 +3914,8 @@ var searchInit = function searchInit() {
       });
     }
 
-    document.addEventListener(Events.CLICK, function (_ref12) {
-      var target = _ref12.target;
+    document.addEventListener(Events.CLICK, function (_ref11) {
+      var target = _ref11.target;
       !searchArea.contains(target) && hideSearchSuggestion(searchArea);
     });
     btnDropdownClose && btnDropdownClose.addEventListener(Events.CLICK, function (e) {
@@ -4026,52 +3928,6 @@ var searchInit = function searchInit() {
   document.querySelectorAll(Selectors.DROPDOWN_TOGGLE).forEach(function (dropdown) {
     dropdown.addEventListener(Events.SHOW_BS_DROPDOWN, function () {
       hideAllSearchAreas();
-    });
-  });
-};
-/* -------------------------------------------------------------------------- */
-
-/*                               Settings Panel                               */
-
-/* -------------------------------------------------------------------------- */
-
-
-var settingsPanelInit = function settingsPanelInit() {
-  var modals = document.querySelectorAll('.modal-theme');
-  var showModal = true;
-  modals.forEach(function (item) {
-    var modal = new window.bootstrap.Modal(item);
-
-    var options = _objectSpread({
-      autoShow: false,
-      autoShowDelay: 0,
-      showOnce: false
-    }, utils.getData(item, 'options'));
-
-    var showOnce = options.showOnce,
-        autoShow = options.autoShow,
-        autoShowDelay = options.autoShowDelay;
-
-    if (showOnce) {
-      var hasModal = utils.getCookie('modal');
-      showModal = hasModal === null;
-    }
-
-    if (autoShow && showModal) {
-      setTimeout(function () {
-        modal.show();
-      }, autoShowDelay);
-    }
-
-    item.addEventListener('hidden.bs.modal', function (e) {
-      var el = e.currentTarget;
-
-      var modalOptions = _objectSpread({
-        cookieExpireTime: 7200000,
-        showOnce: false
-      }, utils.getData(el, 'options'));
-
-      modalOptions.showOnce && utils.setCookie('modal', false, modalOptions.cookieExpireTime);
     });
   });
 };
@@ -4262,8 +4118,8 @@ var tinymceInit = function tinymceInit() {
     }
 
     var themeController = document.body;
-    themeController && themeController.addEventListener('clickControl', function (_ref13) {
-      var control = _ref13.detail.control;
+    themeController && themeController.addEventListener('clickControl', function (_ref12) {
+      var control = _ref12.detail.control;
 
       if (control === 'theme') {
         window.tinyMCE.editors.forEach(function (el) {
@@ -4665,8 +4521,8 @@ var appCalendarInit = function appCalendarInit() {
     });
   }
 
-  addEventModal && addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref14) {
-    var currentTarget = _ref14.currentTarget;
+  addEventModal && addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref13) {
+    var currentTarget = _ref13.currentTarget;
     currentTarget.querySelector(Selectors.INPUT_TITLE).focus();
   });
 };
@@ -5379,8 +5235,8 @@ var chartJsInit = function chartJsInit(chartEl, config) {
   var ctx = chartEl.getContext('2d');
   var chart = new window.Chart(ctx, config());
   var themeController = document.body;
-  themeController.addEventListener('clickControl', function (_ref15) {
-    var control = _ref15.detail.control;
+  themeController.addEventListener('clickControl', function (_ref14) {
+    var control = _ref14.detail.control;
 
     if (control === 'theme') {
       chart.destroy();
@@ -5765,6 +5621,98 @@ var audienceChartInit = function audienceChartInit() {
         initChart($echartAudience, getDefaultOptions(data.dataset[key][0], data.dataset[key][1]));
       });
     });
+  }
+};
+/* -------------------------------------------------------------------------- */
+
+/*                            Bandwidth Saved                                 */
+
+/* -------------------------------------------------------------------------- */
+
+
+var bandwidthSavedInit = function bandwidthSavedInit() {
+  var $echartsBandwidthSaved = document.querySelector('.echart-bandwidth-saved');
+
+  if ($echartsBandwidthSaved) {
+    var userOptions = utils.getData($echartsBandwidthSaved, 'options');
+    var chart = window.echarts.init($echartsBandwidthSaved);
+
+    var getDefaultOptions = function getDefaultOptions() {
+      return {
+        series: [{
+          type: 'gauge',
+          startAngle: 90,
+          endAngle: -270,
+          radius: '90%',
+          pointer: {
+            show: false
+          },
+          progress: {
+            show: true,
+            overlap: false,
+            roundCap: true,
+            clip: false,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 1,
+                y2: 0,
+                colorStops: [{
+                  offset: 0,
+                  color: '#1970e2'
+                }, {
+                  offset: 1,
+                  color: '#4695ff'
+                }]
+              }
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              width: 8,
+              color: [[1, utils.getColor('200')]]
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          data: [{
+            value: 93,
+            detail: {
+              offsetCenter: ['7%', '4%']
+            }
+          }],
+          detail: {
+            width: 50,
+            height: 14,
+            fontSize: 28,
+            fontWeight: 500,
+            fontFamily: 'poppins',
+            color: utils.getColor('500'),
+            formatter: '{value}%',
+            valueAnimation: true
+          },
+          animationDuration: 3000
+        }]
+      };
+    };
+
+    var initChart = function initChart() {
+      if (utils.isScrolledIntoView($echartsBandwidthSaved)) {
+        echartSetOption(chart, userOptions, getDefaultOptions);
+        window.removeEventListener('scroll', initChart);
+      }
+    };
+
+    window.addEventListener('scroll', initChart);
   }
 };
 /* -------------------------------------------------------------------------- */
@@ -6607,8 +6555,8 @@ var echartSetOption = function echartSetOption(chart, userOptions, getDefaultOpt
   var themeController = document.body; // Merge user options with lodash
 
   chart.setOption(window._.merge(getDefaultOptions(), userOptions));
-  themeController.addEventListener('clickControl', function (_ref16) {
-    var control = _ref16.detail.control;
+  themeController.addEventListener('clickControl', function (_ref15) {
+    var control = _ref15.detail.control;
 
     if (control === 'theme') {
       chart.setOption(window._.merge(getDefaultOptions(), userOptions));
@@ -9742,9 +9690,9 @@ var totalSalesEcommerce = function totalSalesEcommerce() {
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   function getFormatter(params) {
-    return params.map(function (_ref17, index) {
-      var value = _ref17.value,
-          borderColor = _ref17.borderColor;
+    return params.map(function (_ref16, index) {
+      var value = _ref16.value,
+          borderColor = _ref16.borderColor;
       return "<span class= \"fas fa-circle\" style=\"color: ".concat(borderColor, "\"></span>\n    <span class='text-600'>").concat(index === 0 ? 'Last Month' : 'Previous Year', ": ").concat(value, "</span>");
     }).join('<br/>');
   }
@@ -10486,7 +10434,6 @@ docReady(weeklySalesInit);
 docReady(marketShareInit);
 docReady(totalSalesInit);
 docReady(topProductsInit);
-docReady(progressBar);
 docReady(navbarTopDropShadow);
 docReady(tooltipInit);
 docReady(popoverInit);
@@ -10527,6 +10474,7 @@ docReady(dropdownOnHover);
 docReady(marketShareEcommerceInit);
 docReady(productShareDoughnutInit);
 docReady(totalSalesEcommerce);
+docReady(bandwidthSavedInit);
 docReady(salesByPosLocationInit);
 docReady(returningCustomerRateInit);
 docReady(candleChartInit);
