@@ -5,6 +5,102 @@
 {% load i18n %}
 {% block content %}
 
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row g-3">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card overflow-hidden" style="min-width: 12rem">
+                        <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-1.png' %});">
+                        </div>
+                            <!--/.bg-holder-->
+
+                        <div class="card-body position-relative">
+                            <!-- <h6>{% trans "Open Tasks" %}</h6> -->
+                            <h6>Open Work Orders</h6>
+                            <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ open_tasks }}</div> -->
+                            <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>1</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-2.png' %});">
+                    </div>
+                    <!--/.bg-holder-->
+
+                    <div class="card-body position-relative">
+                        <!-- <h6>{% trans "In Progress Tasks" %}</h6> -->
+                        <h6>In Progress Work Orders</h6>
+                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ in_process_tasks }}</div> -->
+                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>2</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-3.png' %});">
+                    </div>
+                    <!--/.bg-holder-->
+
+                    <div class="card-body position-relative">
+                        <!-- <h6>{% trans "Completed Tasks" %}</h6> -->
+                        <h6>Completed Work Orders</h6>
+                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>{{ completed_tasks }}</div> -->
+                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>3</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-header">
+            <div class="row g-3">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card overflow-hidden" style="min-width: 12rem">
+                        <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-1.png' %});">
+                        </div>
+                            <!--/.bg-holder-->
+
+                        <div class="card-body position-relative">
+                            <!-- <h6>{% trans "Open Tasks" %}</h6> -->
+                            <h6>Open Tasks</h6>
+                            <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ open_tasks }}</div> -->
+                            <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>4</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-2.png' %});">
+                    </div>
+                    <!--/.bg-holder-->
+
+                    <div class="card-body position-relative">
+                        <!-- <h6>{% trans "In Progress Tasks" %}</h6> -->
+                        <h6>In Progress Tasks</h6>
+                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ in_process_tasks }}</div> -->
+                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>5</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-3.png' %});">
+                    </div>
+                    <!--/.bg-holder-->
+
+                    <div class="card-body position-relative">
+                        <!-- <h6>{% trans "Completed Tasks" %}</h6> -->
+                        <h6>Completed Tasks</h6>
+                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>{{ completed_tasks }}</div> -->
+                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>6</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-0">
         <div class="col-lg-6 pe-lg-2 mb-3">
             <div class="card h-lg-100 overflow-hidden">
