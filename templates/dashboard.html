@@ -5,418 +5,429 @@
 {% load i18n %}
 {% block content %}
 
-    <div class="card mb-3">
-        <div class="card-header">
-            <div class="row g-3">
-                <div class="col-sm-6 col-md-4">
-                    <div class="card overflow-hidden" style="min-width: 12rem">
-                        <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-1.png' %});">
+<div class="row g-0">
+    <div class="col-12 col-md-6">
+        <div class="row g-0">
+            <div class="col-md-4 col-xxl-3 mb-3 pe-md-2">
+                <div class="card h-md-100 ecommerce-card-min-width">
+                    <div class="card-header pb-0">
+                        <h6 class="mb-0 mt-2 d-flex align-items-center">Customers<span class="ms-1 text-400"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Calculated according to last week's sales"><span
+                                    class="badge badge-soft-warning rounded-pill fs--2">-0.23%</span></span></h6>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-end">
+                        <div class="row">
+                            <div class="col">
+                                <p class="font-sans-serif lh-1 mb-1 fs-3 text-warning">58.39k</p>
+                            </div>
                         </div>
-                            <!--/.bg-holder-->
-
-                        <div class="card-body position-relative">
-                            <!-- <h6>{% trans "Open Tasks" %}</h6> -->
-                            <h6>Open Work Orders</h6>
-                            <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ open_tasks }}</div> -->
-                            <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>1</div>
-                        </div>
+                    </div>
+                    <div class="card-footer bg-light p-0">
+                        <a class="btn btn-sm btn-link d-flex w-100 py-2 justify-content-start align-items-center position-relative"
+                            href="#">See all<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card overflow-hidden" style="min-width: 12rem">
-                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-2.png' %});">
-                    </div>
-                    <!--/.bg-holder-->
+            </div>
 
-                    <div class="card-body position-relative">
-                        <!-- <h6>{% trans "In Progress Tasks" %}</h6> -->
-                        <h6>In Progress Work Orders</h6>
-                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ in_process_tasks }}</div> -->
-                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>2</div>
+            <div class="col-md-4 col-xxl-3 mb-3 pe-md-2">
+                <div class="card h-md-100 ecommerce-card-min-width">
+                    <div class="card-header pb-0">
+                        <h6 class="mb-0 mt-2 d-flex align-items-center">Orders<span class="ms-1 text-400"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Calculated according to last week's sales"><span
+                                    class="badge badge-soft-info rounded-pill fs--2">0.0%</span></span></h6>
                     </div>
+                    <div class="card-body d-flex flex-column justify-content-end">
+                        <div class="row">
+                            <div class="col">
+                                <p class="font-sans-serif lh-1 mb-1 fs-3 text-info">23.43k</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light p-0">
+                        <a class="btn btn-sm btn-link d-flex w-100 py-2 justify-content-start align-items-center position-relative"
+                            href="#">All orders<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
-                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-3.png' %});">
-                    </div>
-                    <!--/.bg-holder-->
+            </div>
 
-                    <div class="card-body position-relative">
-                        <!-- <h6>{% trans "Completed Tasks" %}</h6> -->
-                        <h6>Completed Work Orders</h6>
-                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>{{ completed_tasks }}</div> -->
-                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>3</div>
+            <div class="col-md-4 col-xxl-3 mb-3 pe-md-2">
+                <div class="card h-md-100 ecommerce-card-min-width">
+                    <div class="card-header pb-0">
+                        <h6 class="mb-0 mt-2 d-flex align-items-center">Revenue<span class="ms-1 text-400"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Calculated according to last week's sales"><span
+                                    class="badge badge-soft-success rounded-pill fs--2">0.0%</span></span></h6>
                     </div>
+                    <div class="card-body d-flex flex-column justify-content-end">
+                        <div class="row">
+                            <div class="col">
+                                <p class="font-sans-serif lh-1 mb-1 fs-3 text-secondary">$43,594</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light p-0">
+                        <a class="btn btn-sm btn-link d-flex w-100 py-2 justify-content-start align-items-center position-relative"
+                            href="#">Statistics<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="card-header">
-            <div class="row g-3">
-                <div class="col-sm-6 col-md-4">
-                    <div class="card overflow-hidden" style="min-width: 12rem">
-                        <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-1.png' %});">
-                        </div>
-                            <!--/.bg-holder-->
-
-                        <div class="card-body position-relative">
-                            <!-- <h6>{% trans "Open Tasks" %}</h6> -->
-                            <h6>Open Tasks</h6>
-                            <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ open_tasks }}</div> -->
-                            <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>4</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card overflow-hidden" style="min-width: 12rem">
-                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-2.png' %});">
-                    </div>
-                    <!--/.bg-holder-->
-
-                    <div class="card-body position-relative">
-                        <!-- <h6>{% trans "In Progress Tasks" %}</h6> -->
-                        <h6>In Progress Tasks</h6>
-                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ in_process_tasks }}</div> -->
-                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>5</div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
-                    <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-3.png' %});">
-                    </div>
-                    <!--/.bg-holder-->
-
-                    <div class="card-body position-relative">
-                        <!-- <h6>{% trans "Completed Tasks" %}</h6> -->
-                        <h6>Completed Tasks</h6>
-                        <!-- <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>{{ completed_tasks }}</div> -->
-                        <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>6</div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-0">
-        <div class="col-lg-6 pe-lg-2 mb-3">
-            <div class="card h-lg-100 overflow-hidden">
-                <div class="card-header bg-light">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="mb-0">{% trans "Overdue Work Orders" %} {{ default_location }}</h6>
+        <div class="row g-0">
+            <!-- Esquerda segunda linha -->
+            <div class="col-12 col-xxl-3 mb-3 pe-md-2">
+                <div class="card h-lg-100 overflow-hidden">
+                    <div class="card-header bg-light">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Running Projects</h6>
+                            </div>
+                            <div class="col-auto text-center pe-card">
+                                <select class="form-select form-select-sm">
+                                    <option>Working Time</option>
+                                    <option>Estimated Time</option>
+                                    <option>Billable Time</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body p-0">
-                    {% for work_order in overdue_work_orders %}
+                    <div class="card-body p-0">
                         <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
                             <div class="col ps-card py-1 position-static">
                                 <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3">
+                                        <div class="avatar-name rounded-circle bg-soft-primary text-dark"><span
+                                                class="fs-0 text-primary">F</span></div>
+                                    </div>
                                     <div class="flex-1">
-                                        <h6 class="mb-0 d-flex align-items-center"><a href="{% url 'work_order_detail' pk=work_order.id %}">{{ work_order.work_order_name }}</a></h6>
+                                        <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link"
+                                                href="#!">Falcon</a><span
+                                                class="badge rounded-pill ms-2 bg-200 text-primary">38%</span></h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="col py-1">
                                 <div class="row flex-end-center g-0">
                                     <div class="col-auto pe-2">
-                                        <div class="fs--1 fw-semi-bold">Overdue by: {{ work_order.end_date|timesince }}</div>
+                                        <div class="fs--1 fw-semi-bold">12:50:00</div>
+                                    </div>
+                                    <div class="col-5 pe-card ps-2">
+                                        <div class="progress bg-200 me-2" style="height: 5px;">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 38%"
+                                                aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5 pe-card ps-2">
-                                <div class="progress bg-200 me-2" style="height: 5px; width:30%;">
-                                    {% with numerator=work_order.tasks_completed denominator=work_order.total_tasks %}
-                                        {% if numerator == 0 %}
-                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        {% else %}
-                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: {{  numerator|div:denominator|mul:100  }}%" aria-valuenow="{{  numerator|div:denominator|mul:100  }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        {% endif %}
-                                    {% endwith %}
-                                </div>
-                            </div>
                         </div>
-                    {% endfor %}
-                    <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="{% url 'overdue_work_orders' %}">Show all ({{ overdue_work_orders_count }}) overdue work orders<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 pe-lg-2 mb-3">
-            <div class="card h-lg-100 overflow-hidden">
-                <div class="card-header bg-light">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="mb-0">{% trans "Overdue Tasks" %}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    {% for task in overdue_tasks %}
-                    <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
-                        <div class="col ps-card py-1 position-static">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-1">
-                                    <h6 class="mb-0 d-flex align-items-center"><a href="{% url 'task_detail' pk=task.id %}">{{ task.get_activity_name }} {{ task.task_plan.crop.name }} in {{ task.task_plan.location.name }}</a></h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col py-1">
-                            <div class="row flex-end-center g-0">
-                                <div class="col-auto pe-2">
-                                    {% with weather=task_weather|get_item:task.id %}
-                                        <div class="fs--1 fw-semi-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Current wind speed">{{ weather.wind_speed }} mph</div>
-                                    {% endwith %}
-                                </div>
-                                <div class="col-auto pe-2">
-                                    {% with weather=task_weather|get_item:task.id %}
-                                        <div class="fs--1 fw-semi-bold"><img class="rounded-circle" src="
-                                            {% if "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "torrential rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-torrential-rain-50.png" %}
-                                            {% elif "heavy rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-heavy-rain-50.png" %}
-                                            {% elif "moderate rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-moderate-rain-50.png" %}
-                                            {% elif "light rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-rain-50.png" %}
-                                            {% elif "rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-50.png" %}
-                                            {% elif "drizzle" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-cloud-50.png" %}
-                                            {% elif "light snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-snow-50.png" %}
-                                            {% elif "heavy snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-storm-50.png" %}
-                                            {% elif "snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-50.png" %}
-                                            {% elif "storm" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-storm-50.png" %}
-                                            {% elif "fog" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-fog-50.png" %}
-                                            {% elif "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "clear" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-sun-50.png" %}
-                                            {% elif "cloudy" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-clouds-50.png" %}
-                                            {% elif "overcast" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-onedrive-50.png" %}
-                                            {% elif "humid" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-humidity-50.png" %}
-                                            {% endif %}
-                                        " alt="{{ weather.summary }}" title="{{ weather.summary }}" style="width:50%;height:50%;" /></div>
-                                    {% endwith %}
-                                </div>
-                                <div class="col-auto pe-2">
-                                    {% with precip=task_weather|get_item:task.id %}
-                                        <div class="fs--1 fw-semi-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Yesterday's estimated precip amount">{{ precip.yesterday_precip }} in.</div>
-                                    {% endwith %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col py-1">
-                            <div class="row flex-end-center g-0">
-                                <div class="col-auto pe-2">
-                                    <div class="fs--1 fw-semi-bold">Overdue by: {{ task.task_end_date|timesince }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="{% url 'overdue_tasks' %}">Show all ({{ overdue_tasks_count }}) overdue tasks<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row g-0">
-        <div class="col-lg-6 pe-lg-2 mb-3">
-            <div class="card h-lg-100 overflow-hidden">
-                <div class="card-header bg-light">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="mb-0">{% trans "In Progress Work Orders" %}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    {% for work_order in in_progress_work_orders %}
                         <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
                             <div class="col ps-card py-1 position-static">
                                 <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3">
+                                        <div class="avatar-name rounded-circle bg-soft-success text-dark"><span
+                                                class="fs-0 text-success">R</span></div>
+                                    </div>
                                     <div class="flex-1">
-                                        <h6 class="mb-0 d-flex align-items-center"><a href="{% url 'work_order_detail' pk=work_order.id %}">{{ work_order.work_order_name }}</a></h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col py-1">
-                                <div class="row flex-end-center g-0">
-                                    <div class="col-auto pe-2">
-                                        {% with weather=task_weather|get_item:work_order.id %}
-                                            <div class="fs--1 fw-semi-bold">{{ weather.currently.summary }}</div>
-                                        {% endwith %}
+                                        <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link"
+                                                href="#!">Reign</a><span
+                                                class="badge rounded-pill ms-2 bg-200 text-primary">79%</span></h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="col py-1">
                                 <div class="row flex-end-center g-0">
                                     <div class="col-auto pe-2">
-                                        <div class="fs--1 fw-semi-bold">Due by: {{ work_order.end_date|timeuntil }}</div>
+                                        <div class="fs--1 fw-semi-bold">25:20:00</div>
+                                    </div>
+                                    <div class="col-5 pe-card ps-2">
+                                        <div class="progress bg-200 me-2" style="height: 5px;">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 79%"
+                                                aria-valuenow="79" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5 pe-card ps-2">
-                                <div class="progress bg-200 me-2" style="height: 5px; width:30%;">
-                                    {% with numerator=work_order.tasks_completed denominator=work_order.total_tasks %}
-                                        {% if numerator == 0 %}
-                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        {% else %}
-                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: {{  numerator|div:denominator|mul:100  }}%" aria-valuenow="{{  numerator|div:denominator|mul:100  }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        {% endif %}
-                                    {% endwith %}
-                                </div>
-                            </div>
                         </div>
-                    {% endfor %}
-                    <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="{% url 'in_progress_work_orders' %}">Show all ({{ in_progress_work_orders_count }}) in progress work orders<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 pe-lg-2 mb-3">
-            <div class="card h-lg-100 overflow-hidden">
-                <div class="card-header bg-light">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="mb-0">{% trans "In Progress Tasks" %}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    {% for task in in_progress_tasks %}
                         <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
                             <div class="col ps-card py-1 position-static">
                                 <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3">
+                                        <div class="avatar-name rounded-circle bg-soft-info text-dark"><span
+                                                class="fs-0 text-info">B</span></div>
+                                    </div>
                                     <div class="flex-1">
-                                        <h6 class="mb-0 d-flex align-items-center"><a href="{% url 'task_detail' pk=task.id %}">{{ task.get_activity_name }} {{ task.task_plan.crop.name }} in {{ task.task_plan.location.name }}</a></h6>
+                                        <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link"
+                                                href="#!">Boots4</a><span
+                                                class="badge rounded-pill ms-2 bg-200 text-primary">90%</span></h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="col py-1">
                                 <div class="row flex-end-center g-0">
                                     <div class="col-auto pe-2">
-                                        {% with weather=task_weather|get_item:task.id %}
-                                            <div class="fs--1 fw-semi-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Current wind speed">{{ weather.currently.wind_speed }} mph</div>
-                                        {% endwith %}
+                                        <div class="fs--1 fw-semi-bold">58:20:00</div>
                                     </div>
-                                    <div class="col-auto pe-2">
-                                        {% with weather=task_weather|get_item:task.id %}
-                                            <div class="fs--1 fw-semi-bold"><img class="rounded-circle" src="
-                                            {% if "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "torrential rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-torrential-rain-50.png" %}
-                                            {% elif "heavy rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-heavy-rain-50.png" %}
-                                            {% elif "moderate rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-moderate-rain-50.png" %}
-                                            {% elif "light rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-rain-50.png" %}
-                                            {% elif "rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-50.png" %}
-                                            {% elif "drizzle" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-cloud-50.png" %}
-                                            {% elif "light snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-snow-50.png" %}
-                                            {% elif "heavy snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-storm-50.png" %}
-                                            {% elif "snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-50.png" %}
-                                            {% elif "storm" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-storm-50.png" %}
-                                            {% elif "fog" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-fog-50.png" %}
-                                            {% elif "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "clear" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-sun-50.png" %}
-                                            {% elif "cloudy" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-clouds-50.png" %}
-                                            {% elif "overcast" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-onedrive-50.png" %}
-                                            {% elif "humid" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-humidity-50.png" %}
-                                            {% endif %}
-                                        " alt="{{ weather.summary }}" title="{{ weather.summary }}" style="width:50%;height:50%;" /></div>
-                                        {% endwith %}
-                                    </div>
-                                    <div class="col-auto pe-2">
-                                        {% with precip=task_weather|get_item:task.id %}
-                                            <div class="fs--1 fw-semi-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Yesterday's estimated precip amount">{{ precip.yesterday_precip }} in.</div>
-                                        {% endwith %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col py-1">
-                                <div class="row flex-end-center g-0">
-                                    <div class="col-auto pe-2">
-                                        <div class="fs--1 fw-semi-bold">Due by: {{ task.task_end_date|timeuntil }}</div>
+                                    <div class="col-5 pe-card ps-2">
+                                        <div class="progress bg-200 me-2" style="height: 5px;">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 90%"
+                                                aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                    <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="{% url 'in_progress_tasks' %}">Show all ({{ in_progress_tasks_count }}) in progress tasks<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
+                        <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
+                            <div class="col ps-card py-1 position-static">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3">
+                                        <div class="avatar-name rounded-circle bg-soft-warning text-dark"><span
+                                                class="fs-0 text-warning">R</span></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link"
+                                                href="#!">Raven</a><span
+                                                class="badge rounded-pill ms-2 bg-200 text-primary">40%</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col py-1">
+                                <div class="row flex-end-center g-0">
+                                    <div class="col-auto pe-2">
+                                        <div class="fs--1 fw-semi-bold">21:20:00</div>
+                                    </div>
+                                    <div class="col-5 pe-card ps-2">
+                                        <div class="progress bg-200 me-2" style="height: 5px;">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 40%"
+                                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-0 align-items-center py-2 position-relative">
+                            <div class="col ps-card py-1 position-static">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl me-3">
+                                        <div class="avatar-name rounded-circle bg-soft-danger text-dark"><span
+                                                class="fs-0 text-danger">S</span></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link"
+                                                href="#!">Slick</a><span
+                                                class="badge rounded-pill ms-2 bg-200 text-primary">70%</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col py-1">
+                                <div class="row flex-end-center g-0">
+                                    <div class="col-auto pe-2">
+                                        <div class="fs--1 fw-semi-bold">31:20:00</div>
+                                    </div>
+                                    <div class="col-5 pe-card ps-2">
+                                        <div class="progress bg-200 me-2" style="height: 5px;">
+                                            <div class="progress-bar rounded-pill" role="progressbar" style="width: 70%"
+                                                aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="#!"
+                            onClick="alert('Hello World!')">Show all projects<span
+                                class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
                 </div>
             </div>
         </div>
+        <div class="row g-0">
+            <!-- Esquerda terceira linha -->
+
+
+            <div class="col-12 col-xxl-3 mb-3 pe-md-2">
+                <div class="card h-100">
+                    <div class="card-header bg-light d-flex flex-between-center">
+                        <h5 class="mb-0">Project Locations</h5>
+                        <div class="dropdown font-sans-serif btn-reveal-trigger">
+                            <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button"
+                                data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                    class="fas fa-ellipsis-h fs--1"></span></button>
+                            <div class="dropdown-menu dropdown-menu-end border py-2"><a class="dropdown-item" href="#!">Edit</a><a
+                                    class="dropdown-item" href="#!">Move</a><a class="dropdown-item" href="#!">Resize</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-warning" href="#!">Archive</a><a
+                                    class="dropdown-item text-danger" href="#!">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body h-100 p-0">
+                        <div class="h-100 bg-white" id="map" style="min-height: 300px;"></div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <select class="form-select form-select-sm">
+                                    <option value="week" selected="selected">Last 7 days</option>
+                                    <option value="month">Last month</option>
+                                    <option value="year">Last year</option>
+                                </select>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-falcon-default btn-sm" href="#!"><span
+                                        class="d-none d-sm-inline-block me-1">Location</span>overview<span
+                                        class="fa fa-chevron-right ms-1 fs--1"></span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-    <div class="row g-0">
-        <div id="googleMap" style="width:100%;height:400px;"></div>
-
-        <script type="text/javascript">
-            function myMap() {
-                var mapProp= {
-                    center:new google.maps.LatLng({{ map_center_lat }}, {{ map_center_lng }}),
-                    zoom:8,
-                };
-                var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-                var locations = [
-                    {% for task in updated_tasks %}
-                        ["<h6>{{ task.task_id.get_activity_name }} {{ task.task_id.task_plan.crop.name }} at {{ task.task_id.task_plan.location.name }} </h6> <br/>{{ task.task_status.name }} by {{ task.update_user.first_name }} {{ task.update_user.last_name }}", {{ task.task_id.task_plan.location.geo_center|get_longitude }}, {{ task.task_id.task_plan.location.geo_center|get_latitude }}],
-                    {% endfor %}
-                ];
-
-                var infowindow = new google.maps.InfoWindow();
-                var marker, i;
-
-                for (i = 0; i < locations.length; i++){
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                        map:map
-                    });
-
-                    google.maps.event.addListener(marker, 'mouseover', (function(marker, i){
-                      return function(){
-                          infowindow.setContent(locations[i][0]);
-                          infowindow.open(map, marker);
-                      }
-                    })(marker, i));
-
-                    google.maps.event.addListener(marker, 'mouseout', (function(marker, i){
-                        return function(){
-                            infowindow.close(map, marker);
-                        }
-                    })(marker, i));
-                }
-            }
-        </script>
-
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&callback=myMap"></script>
+    <div class="col-12 col-md-6">
+        <!-- Lado direito -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Activity log</h5>
+            </div>
+            <div class="card-body fs--1 p-0">
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🔍</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> Followed <strong>Massachusetts Institute of
+                                Technology</strong></p>
+                        <span class="notification-time">Just Now</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📌</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> Save a <strong>Life Event</strong></p>
+                        <span class="notification-time">Yesterday</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🏷️</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Rowan Atkinson</strong> Tagged <strong>Anthony Hopkins</strong> in a live video
+                        </p>
+                        <span class="notification-time">December 1, 8:00 PM</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">💬</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Robert Downey</strong> mention <strong>Anthony Hopkins</strong> in a comment</p>
+                        <span class="notification-time">November 27, 12:00 AM</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">😂</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> reacted to a comment of <strong>Anna Karinina</strong>
+                        </p>
+                        <span class="notification-time">November 20, 8:00 Am</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🎁</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Jennifer Kent</strong> Congratulated <strong>Anthony Hopkins</strong></p>
+                        <span class="notification-time">November 13, 5:00 Am</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🏷️</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>California Institute of Technology</strong> tagged <strong>Anthony
+                                Hopkins</strong> in a post.</p>
+                        <span class="notification-time">November 8, 5:00 PM</span>
+        
+                    </div>
+                </a>
+        
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📋️</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> joined <strong>Victory day cultural Program</strong>
+                            with <strong>Tony Stark</strong></p>
+                        <span class="notification-time">November 01, 11:30 AM</span>
+        
+                    </div>
+                </a>
+        
+                <a class="notification border-x-0 border-bottom-0 border-300 rounded-top-0" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📅️</span></div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Massachusetts Institute of Technology</strong> invited <strong>Anthony
+                                Hopkin</strong> to an event</p>
+                        <span class="notification-time">October 28, 12:00 PM</span>
+        
+                    </div>
+                </a>
+        
+            </div>
+        </div>
     </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<!-- This is temporary until upload staticfiles to server on aws -->
+
+<script src="http://127.0.0.1:8000/staticfiles/vendors/leaflet/leaflet.js"></script>
+<script src="http://127.0.0.1:8000/staticfiles/vendors/leaflet.markercluster/leaflet.markercluster.js"></script>
+<script src="http://127.0.0.1:8000/staticfiles/vendors/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js"></script>
+<script src="http://127.0.0.1:8000/staticfiles/vendors/echarts/echarts.min.js"></script>
+<script src="http://127.0.0.1:8000/staticfiles/vendors/chart/chart.min.js"></script>
+<script src="http://127.0.0.1:8000/staticfiles/js/theme.js"></script>
+
 {% endblock %}
