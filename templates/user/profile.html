@@ -4,99 +4,165 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="card mb-3">
-        <div class="card-header position-relative min-vh-25 mb-7">
-            <div class="bg-holder rounded-3 rounded-bottom-0" style="background-image:url({% static "img/generic/4.jpg" %});">
-            </div>
-            <!--/.bg-holder-->
+  <div class="row g-0">
+    <div class="col-lg-8 pe-lg-2">
 
-            <div class="avatar avatar-5xl avatar-profile"><img class="rounded-circle img-thumbnail shadow-sm" src="
-                {% if user.profile_image == None %}
-                    {% static "img/team/avatar.png" %}
-                {% else %}
-                    {{ MEDIA_URL }}/profile_images/{{ user.profile_image }}
-                {% endif %}
-                " width="200" alt="" /></div>
+      <div class="card mb-3">
+        <div class="card-header position-relative min-vh-25 mb-7">
+          <div class="bg-holder rounded-3 rounded-bottom-0" style="background-image:url(/staticfiles/assets/img/generic/4.jpg);">
+          </div>
+          <!--/.bg-holder-->
+    
+          <div class="avatar avatar-5xl avatar-profile"><img class="rounded-circle img-thumbnail shadow-sm" src="/staticfiles/assets/img/team/2.jpg" width="200" alt="" /></div>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h4 class="mb-1">{{ user.first_name }} {{ user.last_name }}
-                        {% if validation.email_validated %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="right" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
-                        {% endif %}
-                    </h4>
+          <div class="row">
+            <div class="col-lg-8">
+              <h4 class="mb-1"> Anthony Hopkins<span data-bs-toggle="tooltip" data-bs-placement="right" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+              </h4>
+              <h5 class="fs-0 fw-normal">Senior Software Engineer at Technext Limited</h5>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    <div class="border-dashed-bottom my-4 d-lg-none"></div>
-                </div>
-            </div>
+      <div class="card mb-3">
+        <div class="card-header bg-light d-flex justify-content-between">
+          <h5 class="mb-0">Activity log</h5><a class="font-sans-serif" href="/staticfiles/app/social/activity-log.html">All logs</a>
         </div>
-    </div>
-    <div class="row g-0">
-        <div class="col-lg-8 pe-lg-2">
-            <div class="card mb-3">
-                <div class="card-header bg-light d-flex justify-content-between">
-                    <h5 class="mb-0">{% trans "Latest Activities" %}</h5>
-                </div>
-                <div class="card-body fs--1 p-0">
-                    {% for task in tasks %}
-                    <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="{% url 'task_detail' pk=task.task_id.id %}">
-                        <div class="notification-body">
-                            <p class="mb-1"><strong>{{ task.task_status.name|capfirst }}</strong> {{ task.task_id.task_activity.name }} {{ task.task_id.task_plan.crop.name }} at {{ task.task_id.task_plan.location.name }}</p>
-                            <span class="notification-time">{{ task.status_date_change|date:"M d, Y h:m:s A" }}</span>
+        <div class="card-body fs--1 p-0">
+          <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🎁</span></div>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>Jennifer Kent</strong> Congratulated <strong>Anthony Hopkins</strong></p>
+              <span class="notification-time">November 13, 5:00 Am</span>
 
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
             </div>
-        </div>
-        <div class="col-lg-4 ps-lg-2">
-            <div class="sticky-sidebar">
-                <div class="card mb-3">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">{% trans "Roles" %}</h5>
-                    </div>
-                    <div class="card-body fs--1">
-                        {% for role in roles %}
-                        <div class="d-flex">
-                            <div class="flex-1 position-relative ps-3">
-                                <h6 class="fs-0 mb-0">{{ role.role.name|capfirst }}
-                                </h6>
-                                <p class="mb-1"> <a href="{% url 'farm_profile' pk=role.farm.id %}">{{ role.farm.name }}</a></p>
-                                <p class="text-1000 mb-0">{{ role.created_at|date:"M d, Y" }} -
-                                    {% if role.deleted_at == None %}
-                                        Present &bull; {% with diff=role.created_at|get_time_diff_today %}{% if diff.years > 0 %}{{ diff.years }} years, {% endif %}{% if diff.months > 0 %}{{ diff.months }} months{% endif %}{% endwith %}
-                                    {% else %}
-                                        {{ role.deleted_at|date:"M d, Y" }} &bull; {% with diff=role.deleted_at|get_time_diff:role.created_at %}{% if diff.years > 0 %}{{ diff.years }} years, {% endif %}{% if diff.months > 0 %}{{ diff.months }} months{% endif %}{% endwith %}
-                                    {% endif %}
-                                </p>
-                                <p class="text-1000 mb-0">California, USA</p>
-                                <div class="border-dashed-bottom my-3"></div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">{% trans "Certifications" %}</h5>
-                    </div>
-                    <div class="card-body fs--1">
-                        {% for cert in certifications %}
-                        <div class="d-flex">
-                            <div class="flex-1 position-relative ps-3">
-                                <h6 class="fs-0 mb-0"> <a href="{{ cert.cert_body_site }}">{{ cert.cert_body }}</a></h6>
-                                <p class="mb-1">{{ cert.cert_name }}</p>
-                                <p class="text-1000 mb-0">Obtained {{ cert.cert_date }} &bull; Expires {{ cert.cert_expire_date }}</p>
-                                <div class="border-dashed-bottom my-3"></div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
+          </a>
+
+          <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🏷️</span></div>
+              </div>
             </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>California Institute of Technology</strong> tagged <strong>Anthony Hopkins</strong> in a post.</p>
+              <span class="notification-time">November 8, 5:00 PM</span>
+
+            </div>
+          </a>
+
+          <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📋️</span></div>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>Anthony Hopkins</strong> joined <strong>Victory day cultural Program</strong> with <strong>Tony Stark</strong></p>
+              <span class="notification-time">November 01, 11:30 AM</span>
+
+            </div>
+          </a>
+
+          <a class="notification border-x-0 border-bottom-0 border-300 rounded-top-0" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📅️</span></div>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>Massachusetts Institute of Technology</strong> invited <strong>Anthony Hopkin</strong> to an event</p>
+              <span class="notification-time">October 28, 12:00 PM</span>
+
+            </div>
+          </a>
+
         </div>
+      </div>
     </div>
 
+    <div class="col-lg-4 ps-lg-2">
+      <!-- <div class="sticky-sidebar"> -->
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Experience</h5>
+          </div>
+          <div class="card-body fs--1">
+            <div class="d-flex"><a href="#!"> <img class="img-fluid" src="/staticfiles/assets/img/logos/g.png" alt="" width="56" /></a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0">Big Data Engineer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+                </h6>
+                <p class="mb-1"> <a href="#!">Google</a></p>
+                <p class="text-1000 mb-0">Apr 2012 - Present &bull; 6 yrs 9 mos</p>
+                <p class="text-1000 mb-0">California, USA</p>
+                <div class="border-dashed-bottom my-3"></div>
+              </div>
+            </div>
+            <div class="d-flex"><a href="#!"> <img class="img-fluid" src="/staticfiles/assets/img/logos/apple.png" alt="" width="56" /></a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0">Software Engineer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+                </h6>
+                <p class="mb-1"> <a href="#!">Apple</a></p>
+                <p class="text-1000 mb-0">Jan 2012 - Apr 2012 &bull; 4 mos</p>
+                <p class="text-1000 mb-0">California, USA</p>
+                <div class="border-dashed-bottom my-3"></div>
+              </div>
+            </div>
+            <div class="d-flex"><a href="#!"> <img class="img-fluid" src="/staticfiles/assets/img/logos/nike.png" alt="" width="56" /></a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0">Mobile App Developer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+                </h6>
+                <p class="mb-1"> <a href="#!">Nike</a></p>
+                <p class="text-1000 mb-0">Jan 2011 - Apr 2012 &bull; 1 yr 4 mos</p>
+                <p class="text-1000 mb-0">Beaverton, USA</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Education</h5>
+          </div>
+          <div class="card-body fs--1">
+            <div class="d-flex"><a href="#!">
+                <div class="avatar avatar-3xl">
+                  <div class="avatar-name rounded-circle"><span>SU</span></div>
+                </div>
+              </a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0"> <a href="#!">Stanford University<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+                <p class="mb-1">Computer Science and Engineering</p>
+                <p class="text-1000 mb-0">2010 - 2014 • 4 yrs</p>
+                <p class="text-1000 mb-0">California, USA</p>
+                <div class="border-dashed-bottom my-3"></div>
+              </div>
+            </div>
+            <div class="d-flex"><a href="#!"> <img class="img-fluid" src="/staticfiles/assets/img/logos/staten.png" alt="" width="56" /></a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0"> <a href="#!">Staten Island Technical High School<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+                <p class="mb-1">Higher Secondary School Certificate, Science</p>
+                <p class="text-1000 mb-0">2008 - 2010 &bull; 2 yrs</p>
+                <p class="text-1000 mb-0">New York, USA</p>
+                <div class="border-dashed-bottom my-3"></div>
+              </div>
+            </div>
+            <div class="d-flex"><a href="#!"> <img class="img-fluid" src="/staticfiles/assets/img/logos/tj-heigh-school.png" alt="" width="56" /></a>
+              <div class="flex-1 position-relative ps-3">
+                <h6 class="fs-0 mb-0"> <a href="#!">Thomas Jefferson High School for Science and Technology<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+                <p class="mb-1">Secondary School Certificate, Science</p>
+                <p class="text-1000 mb-0">2003 - 2008 &bull; 5 yrs</p>
+                <p class="text-1000 mb-0">Alexandria, USA</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+    </div>
+  </div>
 {% endblock %}
