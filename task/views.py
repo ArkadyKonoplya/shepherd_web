@@ -252,19 +252,20 @@ def task_list(request):
 
 @login_required
 def calender_view(request):
-    tasks = generate_calendar_task_list(request.user.id)
-    form = TaskForm(request.POST or None, request=request)
+    # tasks = generate_calendar_task_list(request.user.id)
+    # form = TaskForm(request.POST or None, request=request)
 
-    if form.is_valid():
-        task = form.save(commit=False)
-        task.task_creator = request.user
-        task.task_status = TaskStatus.objects.get(name="assigned")
-        task.save()
-        form = TaskForm(request=request)
-    else:
-        messages.add_message(request, messages.ERROR, form.errors)
+    # if form.is_valid():
+    #     task = form.save(commit=False)
+    #     task.task_creator = request.user
+    #     task.task_status = TaskStatus.objects.get(name="assigned")
+    #     task.save()
+    #     form = TaskForm(request=request)
+    # else:
+    #     messages.add_message(request, messages.ERROR, form.errors)
 
-    return render(request, "tasks/calendar.html", {"tasks": tasks, "form": form})
+    # return render(request, "tasks/calendar.html", {"tasks": tasks, "form": form})
+    return render(request, "tasks/calendar.html")
 
 
 @login_required

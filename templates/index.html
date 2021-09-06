@@ -56,6 +56,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
     <link href="/staticfiles/vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
+    <link href="/staticfiles/vendors/fullcalendar/main.min.css" rel="stylesheet">
+    <link href="/staticfiles/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
     <link href="/staticfiles/assets/css/theme-rtl.min.css" rel="stylesheet" id="style-rtl">
     <link href="/staticfiles/assets/css/theme.min.css" rel="stylesheet" id="style-default">
     <link href="/staticfiles/assets/css/user-rtl.min.css" rel="stylesheet" id="user-style-rtl">
@@ -110,7 +112,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" role="button" aria-expanded="false">
+                  <a class="nav-link" href="{% url 'calendar' %}" role="button" aria-expanded="false">
                     <div class="d-flex align-items-center"><span class="nav-link-icon"></span><span class="nav-link-text ps-1">Calendar</span></div>
                   </a>
                 </li>
