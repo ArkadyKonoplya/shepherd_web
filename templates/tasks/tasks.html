@@ -2,200 +2,322 @@
 {% load static %}
 {% load app_filters %}
 {% load i18n %}
+
 {% block content %}
+<div class="row g-0">
 
-
-
-<div class="card mb-3" id="recentPurchaseTable" data-list='{"valueNames":["task", "weather", "wind", "precip", "start_date", "end_date", "is_draft", "assignee", "creator", "status", "plan", "activity", "location"]}, "page":25,"pagination":true}'>
-  <div class="card-header">
-    <div class="row g-3">
-            <div class="col-sm-6 col-md-4">
-              <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-1.png' %});">
-                </div>
-                <!--/.bg-holder-->
-
-                <div class="card-body position-relative">
-                  <h6>{% trans "Open Tasks" %}</h6>
-                  <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ open_tasks }}</div>
+  <div class="col-lg-12 col-xxl-9">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-4 border-lg-end border-bottom border-lg-0 pb-3 pb-lg-0">
+            <div class="d-flex flex-between-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-primary"><span class="fs--2 fas fa-phone text-primary"></span></div>
+                <h6 class="mb-0">New Contact</h6>
+              </div>
+              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-new-contact" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-new-contact"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="card overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-2.png' %});">
+            <div class="d-flex">
+              <div class="d-flex">
+                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">15%</p>
+                <div class="d-flex flex-column"> <span class="me-1 text-success fas fa-caret-up text-primary"></span>
+                  <p class="fs--2 mb-0 text-nowrap">2500 vs 2683 </p>
                 </div>
-                <!--/.bg-holder-->
-
-                <div class="card-body position-relative">
-                  <h6>{% trans "In Progress Tasks" %}</h6>
-                  <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ in_process_tasks }}</div>
+              </div>
+              <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true" data-echarts='{"series":[{"type":"line","data":[220,230,150,175,200,170,70,160],"color":"#2c7be5","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#2c7be53A"},{"offset":1,"color":"#2c7be50A"}]}}}],"grid":{"bottom":"-10px"}}'></div>
+            </div>
+          </div>
+          <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-0">
+            <div class="d-flex flex-between-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span class="fs--2 fas fa-user text-info"></span></div>
+                <h6 class="mb-0">New Users</h6>
+              </div>
+              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-new-users" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-new-users"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
-                <div class="bg-holder bg-card" style="background-image:url({% static 'img/illustrations/corner-3.png' %});">
+            <div class="d-flex">
+              <div class="d-flex">
+                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">13%</p>
+                <div class="d-flex flex-column"> <span class="me-1 text-success fas fa-caret-up text-success"></span>
+                  <p class="fs--2 mb-0 text-nowrap">1635 vs 863 </p>
                 </div>
-                <!--/.bg-holder-->
+              </div>
+              <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true" data-echarts='{"series":[{"type":"line","data":[90,160,150,120,230,155,220,240],"color":"#27bcfd","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#27bcfd3A"},{"offset":1,"color":"#27bcfd0A"}]}}}],"grid":{"bottom":"-10px"}}'></div>
+            </div>
+          </div>
+          <div class="col-lg-4 pt-3 pt-lg-0">
+            <div class="d-flex flex-between-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-success"><span class="fs--2 fas fa-bolt text-success"></span></div>
+                <h6 class="mb-0">New Leads</h6>
+              </div>
+              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-new-leads" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-new-leads"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="d-flex">
+                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">16%</p>
+                <div class="d-flex flex-column"> <span class="me-1 text-success fas fa-caret-down text-danger"></span>
+                  <p class="fs--2 mb-0 text-nowrap">1423 vs 256 </p>
+                </div>
+              </div>
+              <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true" data-echarts='{"series":[{"type":"line","data":[200,150,175,130,150,115,130,100],"color":"#00d27a","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#00d27a3A"},{"offset":1,"color":"#00d27a0A"}]}}}],"grid":{"bottom":"-10px"}}'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div class="card-body position-relative">
-                  <h6>{% trans "Completed Tasks" %}</h6>
-                  <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>{{ completed_tasks }}</div>
-                </div>
+  <div class="card mb-3">
+    <div class="card-header">
+      <div class="row flex-between-end">
+        <div class="col-auto align-self-center">
+          <h5 class="mb-0" data-anchor="data-anchor">Table Example</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body pt-0">
+      <div class="tab-content">
+        <div class="tab-pane preview-tab-pane active" role="tabpanel"
+          aria-labelledby="tab-dom-6fbb2aac-cb92-40cc-bf70-92352de350f0" id="dom-6fbb2aac-cb92-40cc-bf70-92352de350f0">
+          <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+            <div class="table-responsive scrollbar">
+              <table class="table table-bordered table-striped fs--1 mb-0">
+                <thead class="bg-200 text-900">
+                  <tr>
+                    <th class="sort" data-sort="name">Name</th>
+                    <th class="sort" data-sort="email">Email</th>
+                    <th class="sort" data-sort="age">Age</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr>
+                    <td class="name">Anna</td>
+                    <td class="email">anna@example.com</td>
+                    <td class="age">18</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Homer</td>
+                    <td class="email">homer@example.com</td>
+                    <td class="age">35</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Oscar</td>
+                    <td class="email">oscar@example.com</td>
+                    <td class="age">52</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Emily</td>
+                    <td class="email">emily@example.com</td>
+                    <td class="age">30</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Jara</td>
+                    <td class="email">jara@example.com</td>
+                    <td class="age">25</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Clark</td>
+                    <td class="email">clark@example.com</td>
+                    <td class="age">39</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Jennifer</td>
+                    <td class="email">jennifer@example.com</td>
+                    <td class="age">52</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Tony</td>
+                    <td class="email">tony@example.com</td>
+                    <td class="age">30</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Tom</td>
+                    <td class="email">tom@example.com</td>
+                    <td class="age">25</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Michael</td>
+                    <td class="email">michael@example.com</td>
+                    <td class="age">39</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Antony</td>
+                    <td class="email">antony@example.com</td>
+                    <td class="age">39</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Raymond</td>
+                    <td class="email">raymond@example.com</td>
+                    <td class="age">52</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Marie</td>
+                    <td class="email">marie@example.com</td>
+                    <td class="age">30</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Cohen</td>
+                    <td class="email">cohen@example.com</td>
+                    <td class="age">25</td>
+                  </tr>
+                  <tr>
+                    <td class="name">Rowen</td>
+                    <td class="email">rowen@example.com</td>
+                    <td class="age">39</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row align-items-center mt-3">
+              <div class="pagination d-none"></div>
+              <div class="col">
+                <p class="mb-0 fs--1">
+                  <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
+                  <span class="d-none d-sm-inline-block"> &mdash; </span>
+                  <a class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1"
+                      data-fa-transform="down-1"></span></a><a class="fw-semi-bold d-none" href="#!"
+                    data-list-view="less">View Less<span class="fas fa-angle-right ms-1"
+                      data-fa-transform="down-1"></span></a>
+                </p>
+              </div>
+              <div class="col-auto d-flex">
+                <button class="btn btn-sm btn-primary" type="button"
+                  data-list-pagination="prev"><span>Previous</span></button>
+                <button class="btn btn-sm btn-primary px-4 ms-2" type="button"
+                  data-list-pagination="next"><span>Next</span></button>
               </div>
             </div>
           </div>
-
-      <div class="row flex-between-center">
-      <div class="col-6 col-sm-auto d-flex align-items-center pe-0">
-        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">{{ table_title }}</h5>
-      </div>
-      <div class="col-6 col-sm-auto ms-auto text-end ps-0">
-        <div class="d-none" id="table-purchases-actions">
-          <div class="d-flex">
-            <select class="form-select form-select-sm" aria-label="Bulk actions">
-              <option selected="">Bulk actions</option>
-              <option value="Delete">Delete</option>
-              <option value="Archive">Archive</option>
-            </select>
-            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
-          </div>
         </div>
-        <div id="table-purchases-replace-element">
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "New" %}</span></button>
-          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "Filter" %}</span></button>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">{% trans "Export" %}</span></button>
+        <div class="tab-pane code-tab-pane" role="tabpanel" aria-labelledby="tab-dom-7bc7ccaf-6598-428d-8dda-212e405162e1"
+          id="dom-7bc7ccaf-6598-428d-8dda-212e405162e1">
+          <pre class="scrollbar rounded-1" style="max-height:420px"><code class="language-html">&lt;div id=&quot;tableExample&quot; data-list='{&quot;valueNames&quot;:[&quot;name&quot;,&quot;email&quot;,&quot;age&quot;],&quot;page&quot;:5,&quot;pagination&quot;:true}'&gt;
+  &lt;div class=&quot;table-responsive scrollbar&quot;&gt;
+  &lt;table class=&quot;table table-bordered table-striped fs--1 mb-0&quot;&gt;
+  &lt;thead class=&quot;bg-200 text-900&quot;&gt;
+  &lt;tr&gt;
+    &lt;th class=&quot;sort&quot; data-sort=&quot;name&quot;&gt;Name&lt;/th&gt;
+    &lt;th class=&quot;sort&quot; data-sort=&quot;email&quot;&gt;Email&lt;/th&gt;
+    &lt;th class=&quot;sort&quot; data-sort=&quot;age&quot;&gt;Age&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class=&quot;list&quot;&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Anna&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;anna@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;18&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Homer&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;homer@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;35&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Oscar&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;oscar@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;52&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Emily&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;emily@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;30&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Jara&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;jara@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;25&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Clark&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;clark@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;39&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Jennifer&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;jennifer@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;52&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Tony&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;tony@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;30&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Tom&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;tom@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;25&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Michael&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;michael@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;39&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Antony&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;antony@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;39&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Raymond&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;raymond@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;52&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Marie&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;marie@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;30&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Cohen&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;cohen@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;25&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;name&quot;&gt;Rowen&lt;/td&gt;
+    &lt;td class=&quot;email&quot;&gt;rowen@example.com&lt;/td&gt;
+    &lt;td class=&quot;age&quot;&gt;39&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row align-items-center mt-3&quot;&gt;
+  &lt;div class=&quot;pagination d-none&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;
+  &lt;p class=&quot;mb-0 fs--1&quot;&gt;
+  &lt;span class=&quot;d-none d-sm-inline-block&quot; data-list-info=&quot;data-list-info&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;d-none d-sm-inline-block&quot;&gt; &amp;mdash; &lt;/span&gt;
+  &lt;a class=&quot;fw-semi-bold&quot; href=&quot;#!&quot; data-list-view=&quot;*&quot;&gt;View all&lt;span class=&quot;fas fa-angle-right ms-1&quot; data-fa-transform=&quot;down-1&quot;&gt;&lt;/span&gt;&lt;/a&gt;&lt;a class=&quot;fw-semi-bold d-none&quot; href=&quot;#!&quot; data-list-view=&quot;less&quot;&gt;View Less&lt;span class=&quot;fas fa-angle-right ms-1&quot; data-fa-transform=&quot;down-1&quot;&gt;&lt;/span&gt;&lt;/a&gt;
+  &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-auto d-flex&quot;&gt;
+  &lt;button class=&quot;btn btn-sm btn-primary&quot; type=&quot;button&quot; data-list-pagination=&quot;prev&quot;&gt;&lt;span&gt;Previous&lt;/span&gt;&lt;/button&gt;
+  &lt;button class=&quot;btn btn-sm btn-primary px-4 ms-2&quot; type=&quot;button&quot; data-list-pagination=&quot;next&quot;&gt;&lt;span&gt;Next&lt;/span&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;/div&gt;</code></pre>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body px-0 py-0">
-    <div class="table-responsive scrollbar">
-      <table class="table table-sm fs--1 mb-0">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-purchases-select" type="checkbox" data-bulk-select='{"body":"table-purchase-body","actions":"table-purchases-actions","replacedElement":"table-purchases-replace-element"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="task">{% trans "Task" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="weather">{% trans "Weather" %}</th>
-              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="wind">{% trans "Wind Speed" %}</th>
-              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="precip">{% trans "24 Hour Precipitation" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="start_date">{% trans "Start Date" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="end_date">{% trans "End Date" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-center" data-sort="is_draft">{% trans "Is Draft" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="assignee">{% trans "Assignee" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="creator">{% trans "Created By" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="status">{% trans "Status" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="plan">{% trans "Plan" %}</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="activity">{% trans "Activity" %}Activity</th>
-            <th class="sort pe-1 align-middle white-space-nowrap text-end" data-sort="location">{% trans "Location" %}</th>
-            <th class="no-sort pe-1 align-middle data-table-row-action"></th>
-          </tr>
-        </thead>
-        <tbody class="list" id="table-purchase-body">
-      {% for task in tasks %}
-          <tr class="btn-reveal-trigger">
-            <td class="align-middle" style="width: 28px;">
-              <div class="form-check mb-0 d-flex align-items-center">
-                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" />
-              </div>
-            </td>
 
-            <td class="align-middle white-space-nowrap task"><a href="{% url 'task_detail' pk=task.id %}">{{ task.task_activity.name }} {{ task.task_plan.crop.name }} in {{ task.task_plan.location.name }}</a></td>
-              <td class="align-middle white-space-nowrap weather">
-                  {% with weather=task_weather|get_item:task.id %}
-                      <img class="rounded-circle" src="
-                                            {% if "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "torrential rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-torrential-rain-50.png" %}
-                                            {% elif "heavy rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-heavy-rain-50.png" %}
-                                            {% elif "moderate rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-moderate-rain-50.png" %}
-                                            {% elif "light rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-rain-50.png" %}
-                                            {% elif "rain" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-50.png" %}
-                                            {% elif "drizzle" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-rain-cloud-50.png" %}
-                                            {% elif "light snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-light-snow-50.png" %}
-                                            {% elif "heavy snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-storm-50.png" %}
-                                            {% elif "snow" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-snow-50.png" %}
-                                            {% elif "storm" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-storm-50.png" %}
-                                            {% elif "fog" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-fog-50.png" %}
-                                            {% elif "hail" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-hail-50.png" %}
-                                            {% elif "clear" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-sun-50.png" %}
-                                            {% elif "cloudy" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-clouds-50.png" %}
-                                            {% elif "overcast" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-onedrive-50.png" %}
-                                            {% elif "humid" in weather.summary.lower %}
-                                                {% static "img/icons/weather/icons8-humidity-50.png" %}
-                                            {% endif %}
-                                        " alt="{{ weather.summary }}" title="{{ weather.summary }}" style="width:50%;height:50%;" />
 
-                      </td>
-                      <td class="align-middle white-space-nowrap wind" data-bs-toggle="tooltip" data-bs-placement="top" title="Current wind speed">
-                              {{ weather.wind_speed }} mph
-                      </td>
-                      <td class="align-middle white-space-nowrap precip" data-bs-toggle="tooltip" data-bs-placement="top" title="Yesterday's estimated precip amount">
-                              {{ weather.yesterdays_precip }} in.
-                      </td>
-                  {% endwith %}
-            <td class="align-middle white-space-nowrap start_date">{{ task.task_start_date }}</td>
-            <td class="align-middle white-space-nowrap end_date">{{ task.task_end_date }}</td>
-              {% if task.is_draft == True %}
-              <td class="align-middle text-center fs-0 white-space-nowrap is_draft"><span class="badge badge rounded-pill badge-soft-success"><span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span>
-            </td>
-              {% else %}
-              <td class="align-middle text-center fs-0 white-space-nowrap is_draft"></td>
-              {% endif %}
-            <td class="align-middle white-space-nowrap assignee">{{ task.task_assignee.first_name }} {{ task.task_assignee.last_name }}</td>
-            <td class="align-middle white-space-nowrap creator">{{ task.task_creator.first_name }} {{ task.task_creator.last_name }}</td>
-            <td class="align-middle white-space-nowrap status">{{ task.task_status.name }}</td>
-            <td class="align-middle white-space-nowrap plan">{{ task.task_plan.location.name }} - {{ task.task_plan.crop.name }}</td>
-            <td class="align-middle white-space-nowrap activity">{{ task.task_activity.name }}</td>
-            <td class="align-middle white-space-nowrap location">{{ task.task_plan.location.name }}</td>
-            <td class="align-middle white-space-nowrap">
-              <div class="dropdown font-sans-serif">
-                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-end" type="button" id="dropdown0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
-                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown0"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">{% trans "Edit" %}</a>
-                  <div class="dropdown-divider"></div><a class="dropdown-item text-warning" href="#!">Archive</a><a class="dropdown-item text-danger" href="#!">{% trans "Delete" %}</a>
-                </div>
-              </div>
-            </td>
-          </tr>
-      {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="card-footer">
-    <div class="row align-items-center">
-      <div class="pagination d-none"></div>
-      <div class="col">
-        <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"> </span><span class="d-none d-sm-inline-block me-2">&mdash;  </span><a class="fw-semi-bold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a></p>
-      </div>
-      <div class="col-auto d-flex">
-        <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>{% trans "Previous" %}</span></button>
-        <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>{% trans "Next" %}</span></button>
-      </div>
-    </div>
-  </div>
+  
 </div>
-
-
-
 {% endblock %}

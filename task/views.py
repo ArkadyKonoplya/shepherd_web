@@ -207,47 +207,48 @@ def overdue_task_list(request):
 
 @login_required
 def task_list(request):
-    today = datetime.now()
-    tasks = generate_task_list(request.user.id)
+    # today = datetime.now()
+    # tasks = generate_task_list(request.user.id)
 
-    weather_info = generate_task_weather(request, tasks)
+    # weather_info = generate_task_weather(request, tasks)
 
-    task_counts = (
-        Task.objects.select_related("task_status")
-            .values("task_status__name")
-            .filter(task_plan__location__farm__member_farms__user__id=request.user.id)
-            .annotate(count=Count("task_status"))
-            .filter(task_start_date__year__gte=today.year)
-    )
+    # task_counts = (
+    #     Task.objects.select_related("task_status")
+    #         .values("task_status__name")
+    #         .filter(task_plan__location__farm__member_farms__user__id=request.user.id)
+    #         .annotate(count=Count("task_status"))
+    #         .filter(task_start_date__year__gte=today.year)
+    # )
 
-    open_tasks = 0
-    in_process_tasks = 0
-    completed_tasks = 0
+    # open_tasks = 0
+    # in_process_tasks = 0
+    # completed_tasks = 0
 
-    for count in task_counts:
-        if count["task_status__name"] in ("assigned", "declined"):
-            open_tasks += count["count"]
+    # for count in task_counts:
+    #     if count["task_status__name"] in ("assigned", "declined"):
+    #         open_tasks += count["count"]
 
-        if count["task_status__name"] in ("accepted"):
-            in_process_tasks += count["count"]
+    #     if count["task_status__name"] in ("accepted"):
+    #         in_process_tasks += count["count"]
 
-        if count["task_status__name"] in ("archived", "declined"):
-            completed_tasks += count["count"]
+    #     if count["task_status__name"] in ("archived", "declined"):
+    #         completed_tasks += count["count"]
 
-    table_title = "Recent Tasks"
+    # table_title = "Recent Tasks"
 
-    return render(
-        request,
-        "tasks/tasks.html",
-        {
-            "tasks": tasks,
-            "open_tasks": open_tasks,
-            "in_process_tasks": in_process_tasks,
-            "completed_tasks": completed_tasks,
-            "table_title": table_title,
-            "task_weather": weather_info
-        },
-    )
+    # return render(
+    #     request,
+    #     "tasks/tasks.html",
+    #     {
+    #         "tasks": tasks,
+    #         "open_tasks": open_tasks,
+    #         "in_process_tasks": in_process_tasks,
+    #         "completed_tasks": completed_tasks,
+    #         "table_title": table_title,
+    #         "task_weather": weather_info
+    #     },
+    # )
+    return render(request, "tasks/tasks.html")
 
 
 @login_required
@@ -270,9 +271,10 @@ def calender_view(request):
 
 @login_required
 def worker_view(request):
-    tasks = generate_kanban_task_list(request.user.id)
+    # tasks = generate_kanban_task_list(request.user.id)
 
-    return render(request, "tasks/workers.html", {"tasks": tasks})
+    # return render(request, "tasks/workers.html", {"tasks": tasks})
+    return render(request, "tasks/workers.html")
 
 
 def determine_task_color(status, start_date, end_date):
