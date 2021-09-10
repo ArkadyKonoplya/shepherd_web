@@ -134,10 +134,10 @@
                 </li>
 
                 <li class="nav-item d-none d-md-block">
-                  <button class="btn btn-success me-1 mb-1" type="button">New Task</button>
+                  <a class="btn btn-success me-1 mb-1" href="{% url 'task_create' %}">New Task</a>
                 </li>
                 <li class="nav-item d-none d-md-block">
-                  <button class="btn btn-primary me-1 mb-1" type="button">New Work Order</button>
+                  <a class="btn btn-primary me-1 mb-1" href="#">New Work Order</a>
                 </li>
 
               </ul>
@@ -302,6 +302,7 @@
     <script src="/staticfiles/vendors/lodash/lodash.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="/staticfiles/vendors/list.js/list.min.js"></script>
+    <script src="/staticfiles/assets/js/flatpickr.js"></script>
     <script src="/staticfiles/assets/js/theme.js"></script>
 
   </body>

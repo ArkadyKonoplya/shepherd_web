@@ -33,32 +33,33 @@ def task_reassign(request, pk, assignee):
 
 @login_required
 def task_create(request):
-    context = {}
+    # context = {}
 
-    form = TaskForm(request.POST or None, request=request)
-    if form.is_valid():
-        task = form.save(commit=False)
-        task.task_creator = request.user
+    # form = TaskForm(request.POST or None, request=request)
+    # if form.is_valid():
+    #     task = form.save(commit=False)
+    #     task.task_creator = request.user
 
-        if not task.task_assignee:
-            task.task_status = TaskStatus.objects.get(name="available")
-        else:
-            task.task_status = TaskStatus.objects.get(name="assigned")
+    #     if not task.task_assignee:
+    #         task.task_status = TaskStatus.objects.get(name="available")
+    #     else:
+    #         task.task_status = TaskStatus.objects.get(name="assigned")
 
-        task.save()
+    #     task.save()
 
-        messages.add_message(
-            request, messages.SUCCESS, "Task was created successfully!"
-        )
+    #     messages.add_message(
+    #         request, messages.SUCCESS, "Task was created successfully!"
+    #     )
 
-        create_notification(action="create", task=task, request=request)
+    #     create_notification(action="create", task=task, request=request)
 
-        return redirect("task_detail", uuid=task.id)
-    else:
-        messages.add_message(request, messages.ERROR, form.errors)
+    #     return redirect("task_detail", uuid=task.id)
+    # else:
+    #     messages.add_message(request, messages.ERROR, form.errors)
 
-    context["form"] = form
-    return render(request, "tasks/create_task.html", context)
+    # context["form"] = form
+    # return render(request, "tasks/create_task.html", context)
+    return render(request, "tasks/create_task.html")
 
 
 @login_required

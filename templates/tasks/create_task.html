@@ -3,34 +3,284 @@
 {% load static %}
 
 {% block content %}
-    <div class="card-header">
-    <h5 class="mb-0">{% trans "Create Task" %}</h5>
-    </div>
-    <div class="card-body bg-light">
+<div class="row g-0">
+    <!-- Colum 1 -->
+    <div class="col-lg-8 pe-lg-2">
+        <div class="card mb-3">
+            <div class="bg-holder d-none d-lg-block bg-card"
+                style="background-image:url(/staticfiles/assets/img/icons/spot-illustrations/corner-4.png);">
+            </div>
+            <!--/.bg-holder-->
 
-        {{ form.non_field_errors }}
-        <form method="post" action="{% url 'task_create' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <table>
-                {{ form.errors }}
-                {{ form.non_field_errors }}
-                {{ form.as_table }}
-            </table>
-        <div class="form-actions">
-            <button class="btn btn-primary btn-lg px-4" type="submit">Save</button>
+            <div class="card-body position-relative">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Layout</h3>
+                        <p class="mb-0">Give your forms some structure—from inline to horizontal to custom grid
+                            implementations—with our form layout options.</p><a class="btn btn-link btn-sm ps-0 mt-2"
+                            href="https://getbootstrap.com/docs/5.1/forms/layout" target="_blank">Form's layout on
+                            Bootstrap<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
+                    </div>
+                </div>
+            </div>
         </div>
-        </form>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row flex-between-end">
+                    <div class="col-auto align-self-center">
+                        <h5 class="mb-0" data-anchor="data-anchor">Form Grid Layout</h5>
+                        <p class="mb-0 mt-2 mb-0">More complex layouts can also be created with the grid system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body bg-light">
+                <div class="row g-0">
+                    <!-- First column inside left card -->
+                    <div class="col-lg-6 pe-lg-3">
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Select a field...</option>
+                                <option value="1">Field 1</option>
+                                <option value="2">Field 2</option>
+                                <option value="3">Field 3</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Select an activity type...</option>
+                                <option value="1">Activity type 1</option>
+                                <option value="2">Activity type 2</option>
+                                <option value="3">Activity type 3</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Select a worker...</option>
+                                <option value="1">Worker 1</option>
+                                <option value="2">Worker 2</option>
+                                <option value="3">Worker 3</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Select a machinery...</option>
+                                <option value="1">Machinery 1</option>
+                                <option value="2">Machinery 2</option>
+                                <option value="3">Machinery 3</option>
+                            </select>
+                        </div>
+
+                        <div class="row g-0">
+                            <div class="mb-3 col-lg-6 pe-lg-1">
+                                <div class="mb-3">
+                                    <label class="form-label" for="timepicker2">Select Time Range</label>
+                            
+                                    <input class="form-control datetimepicker" id="timepicker2" type="text" placeholder="d/m/y to d/m/y"
+                                        data-options='{"mode":"range","dateFormat":"d/m/y","disableMobile":true}' />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 col-lg-6">
+                                <div class="card mb-3">
+                                    <div class="card-body bg-light p-1">
+
+                                        <div class="googlemap" data-latlng="48.8583701,2.2922873,17" data-scrollwheel="false"
+                                            data-icon="/staticfiles/assets/img/icons/map-marker.png" data-zoom="17" data-theme="default" style="height: 150px;">
+                                            <div class="marker-content">
+                                                <h5>Eiffel Tower</h5>
+                                                <p class="mb-0">Gustave Eiffel's iconic, wrought-iron 1889 tower,<br /> with steps and elevators to observation
+                                                    decks.</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+
+                    <!-- Second column inside left card -->
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-form-dob">Inputs Added To This Task</label>
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <div class="row flex-between-end">
+                                        <div class="col-auto align-self-center">
+                                            <h5 class="mb-0" data-anchor="data-anchor">Table Example</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane preview-tab-pane active" role="tabpanel"
+                                            aria-labelledby="tab-dom-6fbb2aac-cb92-40cc-bf70-92352de350f0"
+                                            id="dom-6fbb2aac-cb92-40cc-bf70-92352de350f0">
+                                            <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                                <div class="table-responsive scrollbar">
+                                                    <table class="table table-bordered table-striped fs--1 mb-0">
+                                                        <thead class="bg-200 text-900">
+                                                            <tr>
+                                                                <th class="sort" data-sort="name">Name</th>
+                                                                <th class="sort" data-sort="email">Email</th>
+                                                                <th class="sort" data-sort="age">Age</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list">
+                                                            <tr>
+                                                                <td class="name">Anna</td>
+                                                                <td class="email">anna@example.com</td>
+                                                                <td class="age">18</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Homer</td>
+                                                                <td class="email">homer@example.com</td>
+                                                                <td class="age">35</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Oscar</td>
+                                                                <td class="email">oscar@example.com</td>
+                                                                <td class="age">52</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Emily</td>
+                                                                <td class="email">emily@example.com</td>
+                                                                <td class="age">30</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Jara</td>
+                                                                <td class="email">jara@example.com</td>
+                                                                <td class="age">25</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Clark</td>
+                                                                <td class="email">clark@example.com</td>
+                                                                <td class="age">39</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Jennifer</td>
+                                                                <td class="email">jennifer@example.com</td>
+                                                                <td class="age">52</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Tony</td>
+                                                                <td class="email">tony@example.com</td>
+                                                                <td class="age">30</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Tom</td>
+                                                                <td class="email">tom@example.com</td>
+                                                                <td class="age">25</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Michael</td>
+                                                                <td class="email">michael@example.com</td>
+                                                                <td class="age">39</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Antony</td>
+                                                                <td class="email">antony@example.com</td>
+                                                                <td class="age">39</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Raymond</td>
+                                                                <td class="email">raymond@example.com</td>
+                                                                <td class="age">52</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Marie</td>
+                                                                <td class="email">marie@example.com</td>
+                                                                <td class="age">30</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Cohen</td>
+                                                                <td class="email">cohen@example.com</td>
+                                                                <td class="age">25</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="name">Rowen</td>
+                                                                <td class="email">rowen@example.com</td>
+                                                                <td class="age">39</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row align-items-center mt-3">
+                                                    <div class="pagination d-none"></div>
+                                                    <div class="col">
+                                                        <p class="mb-0 fs--1">
+                                                            <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
+                                                            <span class="d-none d-sm-inline-block"> &mdash; </span>
+                                                            <a class="fw-semi-bold" href="#!" data-list-view="*">View all<span
+                                                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                                                class="fw-semi-bold d-none" href="#!" data-list-view="less">View Less<span
+                                                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-auto d-flex">
+                                                        <button class="btn btn-sm btn-primary" type="button"
+                                                            data-list-pagination="prev"><span>Previous</span></button>
+                                                        <button class="btn btn-sm btn-primary px-4 ms-2" type="button"
+                                                            data-list-pagination="next"><span>Next</span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-form-dob">Notes For This Task</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
+    <!-- Colum 2 -->
+    <div class="col-lg-4 pe-lg-2">
 
-{% endblock %}
+        <div class="card mb-3" style="height: 100vh;">
+            <div class="card-header border-bottom pb-5">
+                <div class="col-auto align-self-center">
+                    <h4 class="mb-0">Tasks About To Be Created</h4>
+                </div>
+            </div>
+            <div class="card-body bg-light p-0">
+                <div class="card m-3 border-dashed" style="border-width: 3px !important;">
+                    <div class="card-body p-1">
+                        <div class="d-flex position-relative"><img class="d-flex align-self-center me-2" src="/staticfiles/assets/img/logos/youtube.png" alt="" height="60" width="60" />
+                            <div class="flex-1">
+                                <h5 class="mb-0 title">Planting Corn</h5>
+                                <p class="mb-0">April 1, 2021 - April 7, 2021</p>
+                            </div>
 
-{% block script %}
+                        </div>
+                        <p class="mb-0"><strong>Status:</strong> Waiting to send to [farmworker name]</p>
+                        <p class="mb-0"><strong>Fields:</strong> Field 1</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light p-0">
+                <div class="d-flex justify-content-end m-3">
+                    <a class="btn btn-success me-1 mb-1" href="#">Save Task</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-
-
-    </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDujo-78U_UXow9eMJPQmfG4QwwO7B7ck0&callback=initMap" async></script>
 
 {% endblock %}
