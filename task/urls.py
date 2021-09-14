@@ -7,6 +7,7 @@ from .views import (
     in_progress_task_list,
     overdue_task_list,
     task_create,
+    work_order_create,
     task_detail,
     task_list,
     task_reassign,
@@ -21,6 +22,7 @@ urlpatterns = [
     path("in-progress/", in_progress_task_list, name="in_progress_tasks"),
     path("task/<uuid:pk>", task_detail, name="task_detail"),
     path("task/new", task_create, name="task_create"),
+    path("work_orders/new", work_order_create, name="work_order_create"),
     path(
         "task/reassign/<uuid:pk>/<uuid:assignee>", task_reassign, name="task_reassign"
     ),

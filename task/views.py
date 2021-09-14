@@ -61,6 +61,10 @@ def task_create(request):
     # return render(request, "tasks/create_task.html", context)
     return render(request, "tasks/create_task.html")
 
+@login_required
+def work_order_create(request):
+    return render(request, "work_orders/create_work_order.html")
+
 
 @login_required
 def task_detail(request, pk):

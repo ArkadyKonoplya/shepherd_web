@@ -22,6 +22,13 @@ def settings(request):
 
     return render(request, "settings.html")
 
+def management_list(request):
+
+    return render(request, "management_list.html")
+
+def new_contact_task(request):
+
+    return render(request, "new_contact_task.html")
 
 def feedback(request):
 

@@ -1,6 +1,343 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block content %}
 
+{% block content %}
+<div class="row g-0">
+    <div class="col-lg-8 pe-lg-2">
+        <div class="card mb-3">
+            <div class="bg-holder d-none d-lg-block bg-card"
+                style="background-image:url(/staticfiles/assets/img/icons/spot-illustrations/corner-4.png);">
+            </div>
+            <!--/.bg-holder-->
+
+            <div class="card-body position-relative">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Layout</h3>
+                        <p class="mb-0">Give your forms some structure—from inline to horizontal to custom grid
+                            implementations—with our form layout options.</p><a class="btn btn-link btn-sm ps-0 mt-2"
+                            href="https://getbootstrap.com/docs/5.1/forms/layout" target="_blank">Form's layout on
+                            Bootstrap<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4 border-lg-end border-bottom border-lg-0 pb-3 pb-lg-0">
+                        <div class="d-flex flex-between-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <a class="d-flex mb-0 align-items-center" href="{% url 'new_contact_task' %}">
+                                    <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-primary">
+                                        <span class="fs--2 fas fa-phone text-primary"></span>
+                                    </div>
+                                    <h6 class="mb-0">New Contact</h6>
+                                </a>
+                            </div>
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-contact" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-contact"><a class="dropdown-item" href="#!">View</a><a
+                                        class="dropdown-item" href="#!">Export</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
+                                        href="#!">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="d-flex">
+                                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">15%</p>
+                                <div class="d-flex flex-column"> <span
+                                        class="me-1 text-success fas fa-caret-up text-primary"></span>
+                                    <p class="fs--2 mb-0 text-nowrap">2500 vs 2683 </p>
+                                </div>
+                            </div>
+                            <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true"
+                                data-echarts='{"series":[{"type":"line","data":[220,230,150,175,200,170,70,160],"color":"#2c7be5","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#2c7be53A"},{"offset":1,"color":"#2c7be50A"}]}}}],"grid":{"bottom":"-10px"}}'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-0">
+                        <div class="d-flex flex-between-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <a class="d-flex mb-0 align-items-center" href="{% url 'new_contact_task' %}">
+                                    <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info">
+                                        <span class="fs--2 fas fa-user text-info"></span>
+                                    </div>
+                                    <h6 class="mb-0">New Users</h6>
+                                </a>
+                            </div>
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-users" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-users"><a class="dropdown-item" href="#!">View</a><a
+                                        class="dropdown-item" href="#!">Export</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
+                                        href="#!">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="d-flex">
+                                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">13%</p>
+                                <div class="d-flex flex-column"> <span
+                                        class="me-1 text-success fas fa-caret-up text-success"></span>
+                                    <p class="fs--2 mb-0 text-nowrap">1635 vs 863 </p>
+                                </div>
+                            </div>
+                            <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true"
+                                data-echarts='{"series":[{"type":"line","data":[90,160,150,120,230,155,220,240],"color":"#27bcfd","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#27bcfd3A"},{"offset":1,"color":"#27bcfd0A"}]}}}],"grid":{"bottom":"-10px"}}'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 pt-3 pt-lg-0">
+                        <div class="d-flex flex-between-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-success">
+                                    <span class="fs--2 fas fa-bolt text-success"></span>
+                                </div>
+                                <h6 class="mb-0">New Leads</h6>
+                            </div>
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-leads" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-leads"><a class="dropdown-item" href="#!">View</a><a
+                                        class="dropdown-item" href="#!">Export</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
+                                        href="#!">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="d-flex">
+                                <p class="font-sans-serif lh-1 mb-1 fs-4 pe-2">16%</p>
+                                <div class="d-flex flex-column"> <span
+                                        class="me-1 text-success fas fa-caret-down text-danger"></span>
+                                    <p class="fs--2 mb-0 text-nowrap">1423 vs 256 </p>
+                                </div>
+                            </div>
+                            <div class="echart-crm-statistics w-100 ms-2" data-echart-responsive="true"
+                                data-echarts='{"series":[{"type":"line","data":[200,150,175,130,150,115,130,100],"color":"#00d27a","areaStyle":{"color":{"colorStops":[{"offset":0,"color":"#00d27a3A"},{"offset":1,"color":"#00d27a0A"}]}}}],"grid":{"bottom":"-10px"}}'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-0">
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-primary me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/subscription.png">
+                    <p class="h4 text-white">Subscription</p>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-primary me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/workers.png">
+                    <p class="h4 text-white">Workers (9)</p>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-primary me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/fields.png">
+                    <p class="h4 text-white">Fields (27)</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-0">
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-primary me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/garage.png""><p class=" h4 text-white">Garage (6)</p></a>
+            </div>
+
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-primary me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/inventory.png">
+                    <p class="h4 text-white">Inventory (11)</p>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-xxl-3 mb-3 p-3 d-flex justify-content-center">
+                <a class="btn btn-danger me-1 mb-1 h-100 w-100" href="{% url 'management_list' %}"
+                    style="-webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px"><img
+                        src="/staticfiles/img/management/help.png">
+                    <p class="h4 text-white">Help / Feedback</p>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 pe-lg-2">
+        <!-- Right Side -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Activity log</h5>
+            </div>
+            <div class="card-body fs--1 p-0">
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🔍</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> Followed <strong>Massachusetts Institute of
+                                Technology</strong></p>
+                        <span class="notification-time">Just Now</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📌</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> Save a <strong>Life Event</strong></p>
+                        <span class="notification-time">Yesterday</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🏷️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Rowan Atkinson</strong> Tagged <strong>Anthony Hopkins</strong> in a
+                            live video
+                        </p>
+                        <span class="notification-time">December 1, 8:00 PM</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">💬</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Robert Downey</strong> mention <strong>Anthony Hopkins</strong> in a
+                            comment</p>
+                        <span class="notification-time">November 27, 12:00 AM</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">😂</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> reacted to a comment of <strong>Anna
+                                Karinina</strong>
+                        </p>
+                        <span class="notification-time">November 20, 8:00 Am</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🎁</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Jennifer Kent</strong> Congratulated <strong>Anthony Hopkins</strong>
+                        </p>
+                        <span class="notification-time">November 13, 5:00 Am</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">🏷️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>California Institute of Technology</strong> tagged <strong>Anthony
+                                Hopkins</strong> in a post.</p>
+                        <span class="notification-time">November 8, 5:00 PM</span>
+
+                    </div>
+                </a>
+
+                <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📋️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Anthony Hopkins</strong> joined <strong>Victory day cultural
+                                Program</strong>
+                            with <strong>Tony Stark</strong></p>
+                        <span class="notification-time">November 01, 11:30 AM</span>
+
+                    </div>
+                </a>
+
+                <a class="notification border-x-0 border-bottom-0 border-300 rounded-top-0" href="#!">
+                    <div class="notification-avatar">
+                        <div class="avatar avatar-xl me-3">
+                            <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📅️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="mb-1"><strong>Massachusetts Institute of Technology</strong> invited <strong>Anthony
+                                Hopkin</strong> to an event</p>
+                        <span class="notification-time">October 28, 12:00 PM</span>
+
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -55,6 +55,7 @@
     <!-- theme style -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <link href="/staticfiles/vendors/choices/choices.min.css" rel="stylesheet">
     <link href="/staticfiles/vendors/glightbox/glightbox.min.css" rel="stylesheet">
     <link href="/staticfiles/vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
     <link href="/staticfiles/vendors/fullcalendar/main.min.css" rel="stylesheet">
@@ -137,7 +138,7 @@
                   <a class="btn btn-success me-1 mb-1" href="{% url 'task_create' %}">New Task</a>
                 </li>
                 <li class="nav-item d-none d-md-block">
-                  <a class="btn btn-primary me-1 mb-1" href="#">New Work Order</a>
+                  <a class="btn btn-primary me-1 mb-1" href="{% url 'work_order_create' %}">New Work Order</a>
                 </li>
 
               </ul>
@@ -272,7 +273,7 @@
                     <a class="dropdown-item" href="#!">Feedback</a>
   
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/staticfiles/pages/user/settings.html">Settings</a>
+                    <a class="dropdown-item" href="{% url 'settings' %}">Management</a>
                     <a class="dropdown-item" href="/staticfiles/pages/authentication/card/logout.html">Logout</a>
                   </div>
                 </div>
@@ -300,6 +301,7 @@
     <script src="/staticfiles/vendors/echarts/echarts.min.js"></script>
     <script src="/staticfiles/vendors/fontawesome/all.min.js"></script>
     <script src="/staticfiles/vendors/lodash/lodash.min.js"></script>
+    <script src="/staticfiles/vendors/choices/choices.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="/staticfiles/vendors/list.js/list.min.js"></script>
     <script src="/staticfiles/assets/js/flatpickr.js"></script>
