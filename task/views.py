@@ -276,10 +276,9 @@ def calender_view(request):
 
 @login_required
 def worker_view(request):
-    # tasks = generate_kanban_task_list(request.user.id)
+    tasks = generate_kanban_task_list(request.user.id)
 
-    # return render(request, "tasks/workers.html", {"tasks": tasks})
-    return render(request, "tasks/workers.html")
+    return render(request, "tasks/workers.html", {"tasks": tasks})
 
 
 def determine_task_color(status, start_date, end_date):
